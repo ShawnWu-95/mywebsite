@@ -10,18 +10,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Palette */
-            --bg-color: #050505;
-            --text-primary: #ffffff;
-            --text-secondary: #a3a3a3;
-            --accent-color: #ccff00;
-            /* Acid Lime */
-            --accent-hover: #b3e600;
-            --border-color: #262626;
-            --card-bg: #0a0a0a;
+            /* Premium Dark Palette */
+            --bg-primary: #030712;
+            --bg-secondary: #0f172a;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --accent-primary: #6366f1;
+            /* Indigo */
+            --accent-secondary: #a855f7;
+            /* Purple */
+            --accent-glow: rgba(99, 102, 241, 0.15);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --card-bg: rgba(15, 23, 42, 0.6);
 
             /* Spacing */
-            --container-width: 900px;
+            --container-width: 1000px;
             --header-height: 80px;
         }
 
@@ -33,17 +36,20 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            background-color: var(--bg-primary);
             color: var(--text-primary);
-            line-height: 1.5;
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08) 0%, transparent 25%);
         }
 
         a {
             text-decoration: none;
             color: inherit;
-            transition: color 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         /* Layout */
@@ -59,23 +65,21 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(10px);
             z-index: 100;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(3, 7, 18, 0.7);
         }
 
         .logo {
-            font-weight: 900;
-            font-size: 20px;
-            letter-spacing: -0.05em;
-            text-transform: uppercase;
-        }
-
-        .logo span {
-            color: var(--accent-color);
+            font-weight: 800;
+            font-size: 24px;
+            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.02em;
         }
 
         nav ul {
@@ -96,136 +100,155 @@
 
         /* Hero Section */
         .hero {
-            padding: 120px 0 80px;
-            position: relative;
+            padding: 160px 0 100px;
+            text-align: center;
         }
 
         .hero h1 {
-            font-size: clamp(48px, 8vw, 96px);
+            font-size: clamp(48px, 6vw, 80px);
             font-weight: 900;
-            line-height: 0.9;
+            line-height: 1.1;
             letter-spacing: -0.04em;
             margin-bottom: 24px;
-            text-transform: uppercase;
-        }
-
-        .hero h1 .highlight {
-            color: transparent;
-            -webkit-text-stroke: 2px var(--accent-color);
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero h1 .highlight::after {
-            content: attr(data-text);
-            position: absolute;
-            left: 4px;
-            top: 4px;
-            color: var(--accent-color);
-            opacity: 0.5;
-            z-index: -1;
-            filter: blur(4px);
+            background: linear-gradient(to bottom right, #fff 30%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .hero p {
             font-size: 20px;
             color: var(--text-secondary);
-            max-width: 500px;
-            margin-bottom: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 400;
         }
 
-        /* Decorative Line */
-        .separator {
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, var(--accent-color), transparent);
-            margin-bottom: 80px;
-            opacity: 0.5;
-        }
-
-        /* Blog List */
+        /* Projects Grid */
         .section-title {
             font-size: 14px;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            color: var(--accent-color);
+            color: var(--accent-primary);
             margin-bottom: 40px;
-            font-weight: 600;
-        }
-
-        .blog-grid {
-            display: grid;
-            gap: 40px;
-        }
-
-        .blog-card {
-            display: block;
-            padding: 32px;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            /* Brutalist sharp corners or slight round */
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-color);
-            box-shadow: 0 10px 30px -10px rgba(204, 255, 0, 0.1);
-        }
-
-        .blog-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--accent-color);
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
-            transform-origin: bottom;
-        }
-
-        .blog-card:hover::before {
-            transform: scaleY(1);
-        }
-
-        .blog-meta {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-bottom: 12px;
+            font-weight: 700;
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        .blog-tag {
-            border: 1px solid var(--border-color);
-            padding: 2px 8px;
-            border-radius: 100px;
+        .section-title::after {
+            content: '';
+            height: 1px;
+            flex: 1;
+            background: linear-gradient(90deg, var(--border-color), transparent);
         }
 
-        .blog-card h2 {
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 32px;
+            margin-bottom: 120px;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-primary);
+            box-shadow: 0 20px 40px -10px var(--accent-glow);
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.03) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .project-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             font-size: 24px;
+            border: 1px solid var(--border-color);
+        }
+
+        .project-tag {
+            font-size: 12px;
+            padding: 4px 12px;
+            border-radius: 100px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .project-card h3 {
+            font-size: 20px;
             font-weight: 700;
             margin-bottom: 12px;
-            letter-spacing: -0.02em;
+            color: var(--text-primary);
         }
 
-        .blog-card p {
+        .project-card p {
+            font-size: 15px;
             color: var(--text-secondary);
-            font-size: 16px;
             line-height: 1.6;
+            flex-grow: 1;
+        }
+
+        .card-arrow {
+            margin-top: 24px;
+            color: var(--accent-primary);
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            transform: translateX(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .card-arrow {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         /* Footer */
         footer {
-            margin-top: 120px;
-            padding: 40px 0;
             border-top: 1px solid var(--border-color);
+            padding: 60px 0;
             color: var(--text-secondary);
             font-size: 14px;
             display: flex;
@@ -235,21 +258,20 @@
 
         .social-links {
             display: flex;
-            gap: 20px;
+            gap: 24px;
         }
 
         .social-links a:hover {
-            color: var(--accent-color);
+            color: var(--text-primary);
         }
 
-        /* Mobile */
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 48px;
+                font-size: 40px;
             }
 
-            .blog-card {
-                padding: 24px;
+            .projects-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -258,10 +280,9 @@
 <body>
     <div class="container">
         <header>
-            <a href="#" class="logo">Shawn<span>.</span></a>
+            <a href="#" class="logo">Shawn.</a>
             <nav>
                 <ul>
-                    <li><a href="#">Thoughts</a></li>
                     <li><a href="#">Projects</a></li>
                     <li><a href="#">About</a></li>
                 </ul>
@@ -269,50 +290,58 @@
         </header>
 
         <section class="hero">
-            <h1>
-                Think Different,<br>
-                <span class="highlight" data-text="THEN THINK BIG">THEN THINK BIG</span>
-            </h1>
-            <p>Exploring the intersection of technical depth and business logic. Building tools that matter.</p>
+            <h1>Building Tools<br>That Empower.</h1>
+            <p>Exploring the intersection of AI, Business Logic, and Design.</p>
         </section>
 
-        <div class="separator"></div>
-
         <main>
-            <div class="section-title">Latest Thoughts</div>
+            <div class="section-title">Selected Projects</div>
 
-            <div class="blog-grid">
-                <!-- Article 1 -->
-                <a href="roi2/" class="blog-card">
-                    <div class="blog-meta">
-                        <span>Nov 24, 2025</span>
-                        <span class="blog-tag">Analytics</span>
+            <div class="projects-grid">
+
+                <!-- Project 1: Google AI Studio Guide -->
+                <a href="google-ai-studio-guide/index.html" class="project-card">
+                    <div class="card-header">
+                        <div class="project-icon">✨</div>
+                        <span class="project-tag">Guide</span>
                     </div>
-                    <h2>ROI2 & Sales Sensitivity Analysis</h2>
-                    <p>An interactive visualization tool to understand the relationship between Return on Investment and
-                        sales expense ratios. Dive into the data.</p>
+                    <h3>Google AI Studio Guide</h3>
+                    <p>A comprehensive guide for users in China to access and master Google's Gemini models via AI
+                        Studio.</p>
+                    <div class="card-arrow">View Guide &rarr;</div>
                 </a>
 
-                <!-- Article 2 -->
-                <a href="compensation/" class="blog-card">
-                    <div class="blog-meta">
-                        <span>Dec 02, 2025</span>
-                        <span class="blog-tag">Tool</span>
+                <!-- Project 2: Compensation Calculator -->
+                <a href="compensation/" class="project-card">
+                    <div class="card-header">
+                        <div class="project-icon">💰</div>
+                        <span class="project-tag">Tool</span>
                     </div>
-                    <h2>Sales Compensation Calculator</h2>
-                    <p>A powerful tool for HR to calculate sales consultant compensation based on Net GMV and ROI
-                        intervals. Configurable matrix support.</p>
+                    <h3>Sales Compensation</h3>
+                    <p>Advanced calculator for sales compensation logic, featuring configurable matrices and ROI
+                        analysis.</p>
+                    <div class="card-arrow">Open Tool &rarr;</div>
                 </a>
 
+                <!-- Project 3: ROI2 Analysis -->
+                <a href="roi2/" class="project-card">
+                    <div class="card-header">
+                        <div class="project-icon">📊</div>
+                        <span class="project-tag">Analytics</span>
+                    </div>
+                    <h3>ROI Sensitivity</h3>
+                    <p>Interactive visualization of Return on Investment sensitivity against sales expense ratios.</p>
+                    <div class="card-arrow">Explore Data &rarr;</div>
+                </a>
 
             </div>
         </main>
 
         <footer>
-            <div>© 2024 Shawn. All rights reserved.</div>
+            <div>© 2025 Shawn. All rights reserved.</div>
             <div class="social-links">
-                <a href="#">Twitter</a>
                 <a href="#">GitHub</a>
+                <a href="#">Twitter</a>
                 <a href="#">Email</a>
             </div>
         </footer>

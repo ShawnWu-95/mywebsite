@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google AI Studio 中国使用指南 - 解锁 Gemini 的力量</title>
+    <meta name="description" content="一份关于如何在中国地区访问并高效使用 Google AI Studio (Gemini) 的完整指南。从账号注册到提示词工程技巧。">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Gemini Guide</div>
+                <!-- Future nav links could go here -->
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Google AI Studio<br>中国开发者指南</h1>
+                <p>探索 Google 最强大的多模态 AI 模型 Gemini。本指南将帮助你突破地域限制，掌握提示词技巧，构建下一代 AI 应用。</p>
+                <a href="https://aistudio.google.com/" target="_blank" class="btn">前往官网开始使用</a>
+            </div>
+        </section>
+
+        <section id="access">
+            <div class="container">
+                <h2 class="section-title">如何在中国访问</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>1. 网络环境准备</h3>
+                        <p>Google AI Studio 目前不对中国大陆 IP 开放。你需要准备一个稳定的网络环境。</p>
+                        <ul class="step-list">
+                            <li><strong>节点选择：</strong> 推荐使用美国、新加坡或日本的节点。</li>
+                            <li><strong>全局模式：</strong> 建议在访问时开启全局代理模式，确保所有流量都经过代理。</li>
+                            <li><strong>浏览器：</strong> 推荐使用 Chrome 或 Edge 浏览器，并开启无痕模式进行初次尝试。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>2. 账号准备</h3>
+                        <p>你需要一个 Google 账号。建议使用个人账号而非企业/学校托管账号。</p>
+                        <ul class="step-list">
+                            <li><strong>登录：</strong> 访问 <a href="https://aistudio.google.com/"
+                                    target="_blank">aistudio.google.com</a>。</li>
+                            <li><strong>协议：</strong> 首次登录需要同意服务条款 (Terms of Service)。</li>
+                            <li><strong>开始：</strong> 同意后即可直接进入聊天界面，无需任何复杂设置。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="usage">
+            <div class="container">
+                <h2 class="section-title">新手入门指南</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>1. 认识界面</h3>
+                        <p>进入官网后，你会看到简洁的界面：</p>
+                        <ul>
+                            <li><strong>左侧栏 (History)：</strong> 这里保存你所有的历史对话记录。</li>
+                            <li><strong>中间 (Chat)：</strong> 最大的区域是聊天框，在这里输入你的问题。</li>
+                            <li><strong>右侧栏 (Settings)：</strong> 可以调整模型的“温度”（创造力）等设置，新手保持默认即可。</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>2. 开始第一次对话</h3>
+                        <p>在底部的输入框中打字，就像和人聊天一样。</p>
+                        <p><strong>试着问：</strong></p>
+                        <ul>
+                            <li>“帮我写一封请假邮件，理由是家里有事。”</li>
+                            <li>“用通俗易懂的语言解释什么是量子力学。”</li>
+                            <li>“给我制定一个去云南旅游的 5 天计划。”</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>3. 让 AI "看" 图片</h3>
+                        <p>Gemini 最强大的功能是它能看懂图片和视频。</p>
+                        <ul>
+                            <li>点击输入框旁边的 <strong>+ 号</strong>图标。</li>
+                            <li>选择 <strong>Upload to Drive</strong> 上传你的图片或视频。</li>
+                            <li>上传后提问，例如：“这张图片里有什么？”或者“帮我把这张表格图片转成 Excel 格式。”</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h3>4. 保存常用的指令</h3>
+                        <p>如果你经常问同一类问题，可以保存下来。</p>
+                        <ul>
+                            <li>点击左上角的 <strong>Create new</strong>。</li>
+                            <li>选择 <strong>System Instructions</strong>（系统指令）。</li>
+                            <li>在这里告诉 AI 它应该扮演什么角色，例如：“你是一个专业的英语翻译，只负责把中文翻译成地道的英文，不要解释。”</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources">
+            <div class="container">
+                <h2 class="section-title">常用资源</h2>
+                <div class="grid">
+                    <div class="card">
+                        <h3>官方文档</h3>
+                        <p>最权威的 API 参考和模型介绍。</p>
+                        <a href="https://ai.google.dev/docs" target="_blank">访问文档 &rarr;</a>
+                    </div>
+                    <div class="card">
+                        <h3>Gemini API Cookbook</h3>
+                        <p>包含大量实用的代码示例和应用场景。</p>
+                        <a href="https://github.com/google-gemini/cookbook" target="_blank">GitHub 仓库 &rarr;</a>
+                    </div>
+                    <div class="card">
+                        <h3>Token 计算器</h3>
+                        <p>了解你的输入消耗了多少 Token。</p>
+                        <a href="https://aistudio.google.com/app/prompts/new_chat" target="_blank">在 AI Studio 中查看
+                            &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Google AI Studio Guide (Unofficial). Created for educational purposes.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
