@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Coding 完全指南 — Electric Studio</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&f[]=cabinet-grotesk@400,500,700,800&display=swap">
+<style>
+/* ===========================================
+   CSS CUSTOM PROPERTIES
+   =========================================== */
+:root {
+    --bg-warm: #f8f7f4;
+    --bg-white: #fff;
+    --bg-dark: #1a1a2e;
+    --bg-card: rgba(26,86,219,0.04);
+    --text-dark: #1a1a1a;
+    --text-body: #4b5563;
+    --text-muted: #9ca3af;
+    --text-white: #fff;
+    --primary: #1a56db;
+    --primary-light: rgba(26,86,219,0.08);
+    --accent: #ff6b35;
+    --accent-light: rgba(255,107,53,0.1);
+    --accent-yellow: #ffc233;
+    --border: #e5e7eb;
+    --border-light: rgba(0,0,0,0.06);
+
+    --font-display: 'Cabinet Grotesk', sans-serif;
+    --font-body: 'General Sans', sans-serif;
+
+    --title-size: clamp(2.5rem, 6vw, 5.5rem);
+    --h2-size: clamp(1.6rem, 3.8vw, 3rem);
+    --h3-size: clamp(1.2rem, 2.4vw, 1.7rem);
+    --body-size: clamp(0.9rem, 1.6vw, 1.25rem);
+    --small-size: clamp(0.75rem, 1.15vw, 1rem);
+    --label-size: clamp(0.65rem, 1vw, 0.85rem);
+
+    --slide-padding: clamp(1.5rem, 5vw, 5rem);
+    --content-gap: clamp(0.5rem, 1.5vw, 1.5rem);
+
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --radius: 12px;
+    --radius-sm: 8px;
+}
+
+/* ===========================================
+   BASE STYLES
+   =========================================== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+    height: 100%;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: var(--font-body);
+    height: 100%;
+    overflow-x: hidden;
+    background: var(--bg-warm);
+    color: var(--text-dark);
+}
+
+/* ===========================================
+   SLIDE BASE
+   =========================================== */
+.slide {
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--slide-padding);
+}
+
+/* Centered content wrapper for all slides */
+.slide > *:not(.chapter-number):not(.divider) {
+    width: 100%;
+    max-width: min(90vw, 900px);
+}
+.slide > .two-col {
+    max-width: min(90vw, 1000px);
+}
+
+/* ===========================================
+   SLIDE VARIANTS
+   =========================================== */
+.slide-warm {
+    background: var(--bg-warm);
+}
+
+.slide-white {
+    background: var(--bg-white);
+}
+
+.slide-dark {
+    background: var(--bg-dark);
+    color: var(--text-white);
+}
+
+/* Section header */
+.slide-section {
+    background: var(--bg-warm);
+    position: relative;
+    text-align: center;
+}
+.slide-section::before {
+    content: '';
+    position: absolute;
+    top: calc(-1 * clamp(60px, 12vw, 150px));
+    right: calc(-1 * clamp(60px, 10vw, 120px));
+    width: clamp(200px, 30vw, 400px);
+    height: clamp(200px, 30vw, 400px);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-yellow));
+    opacity: 0.1;
+}
+.slide-section::after {
+    content: '';
+    position: absolute;
+    bottom: calc(-1 * clamp(40px, 8vw, 100px));
+    left: calc(-1 * clamp(40px, 6vw, 80px));
+    width: clamp(150px, 22vw, 300px);
+    height: clamp(150px, 22vw, 300px);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), #7c3aed);
+    opacity: 0.06;
+}
+
+/* Big chapter number watermark */
+.chapter-number {
+    font-family: var(--font-display);
+    font-size: clamp(8rem, 22vw, 20rem);
+    font-weight: 800;
+    color: rgba(26,86,219,0.04);
+    position: absolute;
+    right: var(--slide-padding);
+    bottom: clamp(-1rem, -2vw, -2rem);
+    line-height: 0.85;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* ===========================================
+   TYPOGRAPHY
+   =========================================== */
+.slide-label {
+    font-size: var(--label-size);
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+}
+.slide-dark .slide-label { color: var(--accent); }
+
+.slide-title {
+    font-family: var(--font-display);
+    font-size: var(--title-size);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+}
+
+.slide-h2 {
+    font-family: var(--font-display);
+    font-size: var(--h2-size);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+}
+
+.slide-h3 {
+    font-family: var(--font-display);
+    font-size: var(--h3-size);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+}
+
+.slide-body {
+    font-size: var(--body-size);
+    line-height: 1.6;
+    color: var(--text-body);
+}
+.slide-dark .slide-body { color: rgba(255,255,255,0.6); }
+
+/* Highlight underline */
+.highlight {
+    color: var(--primary);
+    position: relative;
+    display: inline;
+}
+.highlight::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0.05em;
+    width: 100%;
+    height: 0.12em;
+    background: var(--accent);
+    border-radius: 2px;
+    opacity: 0.7;
+}
+
+.accent-text { color: var(--accent); font-weight: 700; }
+.primary-text { color: var(--primary); font-weight: 700; }
+.bold { font-weight: 700; color: var(--text-dark); }
+.slide-dark .bold { color: var(--text-white); }
+
+/* ===========================================
+   COMPONENTS
+   =========================================== */
+
+/* Tags / Pills */
+.tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: var(--label-size);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.35em 0.9em;
+    border-radius: 6px;
+    border: 1.5px solid var(--border);
+    color: var(--text-body);
+}
+.tag-primary {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+.tag-accent {
+    background: var(--accent-light);
+    color: var(--accent);
+    border-color: transparent;
+}
+.tag-row {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.4rem, 0.8vw, 0.75rem);
+    flex-wrap: wrap;
+}
+
+/* Quote */
+.quote-block {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 2.2vw, 1.6rem);
+    font-weight: 500;
+    line-height: 1.5;
+    max-width: 700px;
+    position: relative;
+    padding-left: clamp(1rem, 2vw, 2rem);
+    border-left: 4px solid var(--accent);
+    color: var(--text-dark);
+}
+.slide-dark .quote-block { color: var(--text-white); }
+.quote-source {
+    font-family: var(--font-body);
+    font-size: var(--small-size);
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: clamp(0.4rem, 0.8vw, 0.75rem);
+}
+
+/* Table */
+.data-table {
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    font-size: var(--body-size);
+}
+.data-table thead th {
+    text-align: left;
+    font-size: var(--small-size);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: clamp(0.3rem, 0.6vw, 0.5rem) clamp(0.5rem, 1vw, 1rem);
+    border-bottom: 2px solid var(--border);
+}
+.slide-dark .data-table thead th { border-bottom-color: rgba(255,255,255,0.1); }
+.data-table td {
+    padding: clamp(0.35rem, 0.7vw, 0.6rem) clamp(0.5rem, 1vw, 1rem);
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: top;
+    line-height: 1.5;
+    color: var(--text-body);
+}
+.slide-dark .data-table td { color: rgba(255,255,255,0.6); border-bottom-color: rgba(255,255,255,0.06); }
+.data-table td:first-child { font-weight: 600; color: var(--text-dark); white-space: nowrap; }
+.slide-dark .data-table td:first-child { color: var(--text-white); }
+.cell-accent { color: var(--accent) !important; font-weight: 700 !important; }
+.cell-primary { color: var(--primary) !important; font-weight: 600 !important; }
+
+/* Cards */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    gap: clamp(0.5rem, 1.2vw, 1rem);
+}
+.card {
+    padding: clamp(0.8rem, 1.6vw, 1.4rem);
+    border-radius: var(--radius);
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+.slide-dark .card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+.slide-dark .card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+.card-num {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.5rem);
+    font-weight: 800;
+    color: var(--primary);
+    opacity: 0.15;
+    line-height: 1;
+    margin-bottom: clamp(0.2rem, 0.4vw, 0.4rem);
+}
+.card-title {
+    font-family: var(--font-display);
+    font-size: var(--h3-size);
+    font-weight: 700;
+    margin-bottom: clamp(0.15rem, 0.3vw, 0.3rem);
+    color: var(--text-dark);
+}
+.slide-dark .card-title { color: var(--text-white); }
+.card-body {
+    font-size: var(--small-size);
+    color: var(--text-body);
+    line-height: 1.55;
+}
+.slide-dark .card-body { color: rgba(255,255,255,0.5); }
+
+/* Bullet list */
+.bullet-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.3rem, 0.7vw, 0.65rem);
+}
+.bullet-list li {
+    font-size: var(--body-size);
+    line-height: 1.55;
+    padding-left: clamp(0.8rem, 1.3vw, 1.3rem);
+    position: relative;
+    color: var(--text-body);
+}
+.bullet-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 6px;
+    border-radius: 2px;
+    background: var(--accent);
+}
+
+/* Code block */
+.code-block {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: var(--small-size);
+    line-height: 1.7;
+    background: var(--bg-dark);
+    color: rgba(255,255,255,0.8);
+    padding: clamp(0.75rem, 1.5vw, 1.25rem);
+    border-radius: var(--radius-sm);
+    white-space: pre-wrap;
+    overflow: hidden;
+}
+.slide-dark .code-block { background: rgba(255,255,255,0.06); }
+
+/* Flow / Steps */
+.flow {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.25rem, 0.7vw, 0.6rem);
+    flex-wrap: wrap;
+    font-size: var(--body-size);
+    font-weight: 600;
+}
+.flow-step {
+    padding: clamp(0.35rem, 0.7vw, 0.55rem) clamp(0.7rem, 1.3vw, 1.1rem);
+    border-radius: var(--radius-sm);
+    background: var(--primary-light);
+    color: var(--primary);
+    white-space: nowrap;
+}
+.slide-dark .flow-step { background: rgba(255,255,255,0.08); color: var(--text-white); }
+.flow-arrow { color: var(--text-muted); font-weight: 400; }
+
+/* Compare */
+.compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(0.5rem, 1.2vw, 1rem);
+}
+.compare-col {
+    padding: clamp(0.7rem, 1.4vw, 1.2rem);
+    border-radius: var(--radius-sm);
+}
+.compare-col.bad { background: rgba(255,107,53,0.06); border: 1px solid rgba(255,107,53,0.15); }
+.compare-col.good { background: rgba(26,86,219,0.06); border: 1px solid rgba(26,86,219,0.15); }
+.compare-label {
+    font-size: var(--label-size);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: clamp(0.2rem, 0.4vw, 0.4rem);
+}
+.compare-col.bad .compare-label { color: var(--accent); }
+.compare-col.good .compare-label { color: var(--primary); }
+.compare-text { font-size: var(--small-size); line-height: 1.55; color: var(--text-body); }
+
+/* Two-column layout */
+.two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(1rem, 3vw, 3rem);
+    align-items: start;
+    text-align: left;
+}
+
+/* Big number */
+.big-num {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1;
+}
+
+/* Divider */
+.divider {
+    width: 40px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 2px;
+    margin: clamp(0.4rem, 0.8vw, 0.75rem) 0;
+}
+.slide-section .divider {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Spacing */
+.gap-xs { margin-top: clamp(0.2rem, 0.4vw, 0.3rem); }
+.gap-sm { margin-top: clamp(0.4rem, 0.7vw, 0.6rem); }
+.gap-md { margin-top: var(--content-gap); }
+.gap-lg { margin-top: clamp(1rem, 2.5vw, 2.5rem); }
+.max-w { max-width: min(90vw, 750px); }
+
+/* Centered single-column slides */
+.slide-centered {
+    text-align: center;
+}
+.slide-centered .data-table {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    width: max-content !important;
+    max-width: min(90vw, 900px) !important;
+}
+.slide-centered .card-grid {
+    text-align: left;
+}
+.slide-centered > ul.bullet-list.reveal {
+    text-align: left;
+    width: max-content !important;
+    max-width: min(90vw, 900px) !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+.slide-centered .compare-grid {
+    text-align: left;
+}
+.slide-centered .flow {
+    justify-content: center;
+}
+.slide-centered .quote-block {
+    margin-left: auto;
+    margin-right: auto;
+}
+.slide-centered .tag-row {
+    justify-content: center;
+}
+.slide-centered .two-col {
+    text-align: left;
+}
+.slide-centered .two-col .data-table {
+    width: 100% !important;
+    margin-left: 0;
+    margin-right: 0;
+}
+.slide-centered .code-block {
+    text-align: left;
+}
+/* Prevent divider from stretching full width */
+.slide-centered .divider {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* ===========================================
+   ANIMATIONS
+   =========================================== */
+.reveal {
+    opacity: 0;
+    transform: translateX(-25px);
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.reveal-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+}
+.slide.visible .reveal,
+.slide.visible .reveal-up {
+    opacity: 1;
+    transform: translate(0);
+}
+.slide.visible .reveal:nth-child(1),
+.slide.visible .reveal-up:nth-child(1) { transition-delay: 0.1s; }
+.slide.visible .reveal:nth-child(2),
+.slide.visible .reveal-up:nth-child(2) { transition-delay: 0.2s; }
+.slide.visible .reveal:nth-child(3),
+.slide.visible .reveal-up:nth-child(3) { transition-delay: 0.3s; }
+.slide.visible .reveal:nth-child(4),
+.slide.visible .reveal-up:nth-child(4) { transition-delay: 0.4s; }
+.slide.visible .reveal:nth-child(5) { transition-delay: 0.5s; }
+.slide.visible .reveal:nth-child(6) { transition-delay: 0.55s; }
+
+/* Card stagger */
+.slide.visible .card { opacity: 0; animation: cardIn 0.5s var(--ease) forwards; }
+.slide.visible .card:nth-child(1) { animation-delay: 0.15s; }
+.slide.visible .card:nth-child(2) { animation-delay: 0.25s; }
+.slide.visible .card:nth-child(3) { animation-delay: 0.35s; }
+.slide.visible .card:nth-child(4) { animation-delay: 0.45s; }
+.slide.visible .card:nth-child(5) { animation-delay: 0.55s; }
+.slide.visible .card:nth-child(6) { animation-delay: 0.65s; }
+@keyframes cardIn { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+
+/* Table row stagger */
+.slide.visible .data-table tbody tr { opacity: 0; animation: rowIn 0.45s var(--ease) forwards; }
+.slide.visible .data-table tbody tr:nth-child(1) { animation-delay: 0.15s; }
+.slide.visible .data-table tbody tr:nth-child(2) { animation-delay: 0.25s; }
+.slide.visible .data-table tbody tr:nth-child(3) { animation-delay: 0.35s; }
+.slide.visible .data-table tbody tr:nth-child(4) { animation-delay: 0.45s; }
+.slide.visible .data-table tbody tr:nth-child(5) { animation-delay: 0.55s; }
+.slide.visible .data-table tbody tr:nth-child(6) { animation-delay: 0.65s; }
+@keyframes rowIn { from { opacity:0; transform:translateX(-12px); } to { opacity:1; transform:translateX(0); } }
+
+/* ===========================================
+   NAVIGATION
+   =========================================== */
+.progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+    z-index: 100;
+    transition: width 0.3s ease;
+}
+.nav-dots {
+    position: fixed;
+    right: clamp(0.6rem, 1.2vw, 1.2rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    z-index: 100;
+}
+.nav-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: rgba(0,0,0,0.12);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+    padding: 0;
+}
+.nav-dot.active {
+    background: var(--primary);
+    transform: scale(1.5);
+}
+.slide-counter {
+    position: fixed;
+    bottom: clamp(0.6rem, 1.2vw, 1.2rem);
+    right: clamp(0.6rem, 1.2vw, 1.2rem);
+    font-size: var(--small-size);
+    font-weight: 500;
+    color: rgba(0,0,0,0.25);
+    z-index: 100;
+    font-variant-numeric: tabular-nums;
+}
+.keyboard-hint {
+    position: fixed;
+    bottom: clamp(0.6rem, 1.2vw, 1.2rem);
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: var(--small-size);
+    color: rgba(0,0,0,0.2);
+    z-index: 100;
+    transition: opacity 2s ease;
+}
+
+/* ===========================================
+   RESPONSIVE
+   =========================================== */
+@media (max-width: 768px) {
+    .two-col { grid-template-columns: 1fr; gap: var(--content-gap); }
+    .compare-grid { grid-template-columns: 1fr; }
+    .nav-dots { display: none; }
+}
+
+@media (max-height: 700px) {
+    :root {
+        --slide-padding: clamp(1rem, 3vw, 2.5rem);
+        --content-gap: clamp(0.4rem, 1vw, 1rem);
+        --title-size: clamp(1.5rem, 4.5vw, 3rem);
+    }
+}
+
+@media (max-height: 600px) {
+    :root {
+        --slide-padding: clamp(0.75rem, 2.5vw, 1.5rem);
+        --title-size: clamp(1.3rem, 4vw, 2.5rem);
+        --body-size: clamp(0.65rem, 1.1vw, 0.9rem);
+    }
+    .chapter-number { display: none; }
+    .nav-dots, .keyboard-hint { display: none; }
+    .slide-section::before, .slide-section::after { display: none; }
+}
+
+@media (max-height: 500px) {
+    :root {
+        --slide-padding: clamp(0.5rem, 2vw, 1rem);
+        --title-size: clamp(1rem, 3.5vw, 2rem);
+        --h2-size: clamp(0.9rem, 2.5vw, 1.5rem);
+        --body-size: clamp(0.6rem, 1vw, 0.8rem);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.2s !important;
+    }
+    html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<nav class="nav-dots" id="navDots"></nav>
+<div class="slide-counter" id="slideCounter"></div>
+<div class="keyboard-hint" id="keyboardHint">← → Space</div>
+
+<!-- ===========================================
+     01: TITLE
+     =========================================== -->
+<section class="slide slide-warm slide-centered" id="s1">
+    <div class="chapter-number">VC</div>
+    <div class="slide-label reveal">AI Engineering Workshop &mdash; 2026</div>
+    <h1 class="slide-title reveal">Vibe Coding<br><span class="highlight">完全指南</span></h1>
+    <p class="slide-body reveal gap-sm max-w">面向产品/设计团队的 AI 编程实战手册</p>
+    <div class="tag-row reveal gap-lg">
+        <span class="tag tag-primary">Workshop</span>
+        <span class="tag">Shawn Wu</span>
+        <span class="tag">7 Chapters</span>
+    </div>
+</section>
+
+<!-- ===========================================
+     02: SECTION — 什么是 Vibe Coding
+     =========================================== -->
+<section class="slide slide-section" id="s2">
+    <div class="chapter-number">01</div>
+    <div class="slide-label reveal">Chapter 01</div>
+    <h2 class="slide-title reveal">什么是<br>Vibe Coding</h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ===========================================
+     03: Karpathy Quote
+     =========================================== -->
+<section class="slide slide-dark slide-centered" id="s3">
+    <div class="slide-label reveal">Origin &mdash; 2025.02</div>
+    <div class="gap-md"></div>
+    <blockquote class="quote-block reveal">
+        "There's a new kind of coding I call 'vibe coding', where you fully give in to the vibes, embrace exponentials, and forget that the code even exists."
+        <div class="quote-source">&mdash; Andrej Karpathy</div>
+    </blockquote>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal max-w">完全顺从 AI 的感觉，不对抗，不细看，让 AI 做，你只管感觉对不对。<br>这个词迅速引爆社区——它说出了很多人已经在做但没有名字的事情。</p>
+</section>
+
+<!-- ===========================================
+     04: 三个阶段
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s4">
+    <div class="slide-label reveal">Evolution</div>
+    <h2 class="slide-h2 reveal gap-xs">人和 AI 的分工如何转移</h2>
+    <div class="gap-md"></div>
+    <table class="data-table">
+        <thead><tr><th>时间</th><th>工具</th><th>人的角色</th><th>AI 的角色</th></tr></thead>
+        <tbody>
+        <tr><td>2022</td><td>GitHub Copilot</td><td>写代码的人</td><td>补全下半句</td></tr>
+        <tr><td>2023-24</td><td>Cursor</td><td>审代码的人</td><td>结对伙伴</td></tr>
+        <tr><td class="cell-primary">2025-</td><td class="cell-primary">Claude Code / Codex</td><td>给指令的人</td><td class="cell-accent">独立工程师团队</td></tr>
+        </tbody>
+    </table>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal" style="color:var(--text-dark);font-weight:700">变的不是技术有多先进，而是你和 AI 之间的关系。</p>
+</section>
+
+<!-- ===========================================
+     05: 控制点上移
+     =========================================== -->
+<section class="slide slide-warm slide-centered" id="s5">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">Key Insight</div>
+            <h2 class="slide-h2 reveal gap-xs">Vibe Coding<br>不是放弃控制</h2>
+            <div class="divider reveal"></div>
+            <p class="slide-body reveal">是<span class="bold">控制点上移</span>。</p>
+            <p class="slide-body reveal gap-sm">从控制每一行代码，变成控制需求质量和验收标准。</p>
+        </div>
+        <div>
+            <ul class="bullet-list reveal-up" style="margin-top:clamp(1rem,2vw,2rem)">
+                <li><span class="bold">Copilot</span> — 你是写代码的人，AI 是你的输入法</li>
+                <li><span class="bold">Cursor</span> — 你是审代码的人，AI 是你的结对伙伴</li>
+                <li><span class="bold">Claude Code</span> — 你是给指令的人，AI 是你的独立工程师团队</li>
+            </ul>
+            <p class="slide-body reveal-up gap-md" style="color:var(--text-dark);font-weight:700">你的价值不再是"怎么写"，<br>而是"写什么"和"写得对不对"。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     06: 真实案例 1-3
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s6">
+    <div class="slide-label reveal">Real Cases</div>
+    <h2 class="slide-h2 reveal gap-xs">这不是营销，是正在发生的现实</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-num">01</div>
+            <div class="card-title">AppStore 付费榜 Top 1</div>
+            <div class="card-body">花叔从未手写过一行代码。所有产品都用 AI 完成，全程只做两件事：说清楚要什么，验证结果。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">02</div>
+            <div class="card-title">一个下午，想法到原型</div>
+            <div class="card-body">Anthropic PM Cat Wu：上午做策略讨论，下午用 Claude Code 把 spec 变成可跑的 demo。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">03</div>
+            <div class="card-title">PM 开始提交代码</div>
+            <div class="card-body">Ramp CPO：2025 年底 50% 代码由 AI 生成。PM 自己写代码、提 PR、上功能，不再等排期。</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     07: 真实案例 4-5
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s7">
+    <div class="slide-label reveal">Real Cases</div>
+    <h2 class="slide-h2 reveal gap-xs">更多真实案例</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))">
+        <div class="card">
+            <div class="card-num">04</div>
+            <div class="card-title">一人推进十几个任务</div>
+            <div class="card-body">Claude Code 创始人 Boris Cherny 同时运行 5 个实例。47 天里有 46 天没手写代码，最长单次 session 跑了 1 天 18 小时 50 分钟。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">05</div>
+            <div class="card-title">非技术 PM 的第一个产品</div>
+            <div class="card-body">一位没有编程背景的 PM，用 Claude Cowork 自然语言描述需求，2 小时完成第一个版本。整个过程没有写过一行代码。</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     08: SECTION — 工具全景
+     =========================================== -->
+<section class="slide slide-section" id="s8">
+    <div class="chapter-number">02</div>
+    <div class="slide-label reveal">Chapter 02</div>
+    <h2 class="slide-title reveal">工具全景<br><span class="highlight">三个名字</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ===========================================
+     09: Claude Code
+     =========================================== -->
+<section class="slide slide-warm slide-centered" id="s9">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">Tool 01</div>
+            <h2 class="slide-h2 reveal gap-xs">Claude Code</h2>
+            <div class="divider reveal"></div>
+            <p class="slide-body reveal">终端里的独立工程师。直接在终端运行，你描述需求，它自己规划、读写代码、跑测试、操作 Git。</p>
+            <p class="reveal gap-md" style="font-size:var(--body-size);font-weight:700;color:var(--primary)">GA 后仅 6 个月 ARR 达 10 亿美元</p>
+        </div>
+        <div>
+            <table class="data-table">
+                <thead><tr><th>维度</th><th>IDE Agent</th><th>终端 Agent</th></tr></thead>
+                <tbody>
+                <tr><td>运行环境</td><td>编辑器内嵌</td><td>终端原生</td></tr>
+                <tr><td>自主度</td><td>需要确认</td><td class="cell-primary">可无人值守</td></tr>
+                <tr><td>记忆</td><td>隐式索引</td><td class="cell-primary">显式 CLAUDE.md</td></tr>
+                <tr><td>并行</td><td>单实例</td><td class="cell-primary">多实例并行</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     10: Codex & OpenClaw
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s10">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">Tool 02</div>
+            <h2 class="slide-h2 reveal gap-xs">Codex</h2>
+            <div class="divider reveal"></div>
+            <p class="slide-body reveal">OpenAI 对标 Claude Code 的产品。</p>
+            <p class="slide-body reveal gap-sm">两者可以组合使用——<span class="bold">生态在融合，不是零和竞争。</span></p>
+        </div>
+        <div>
+            <div class="slide-label reveal">Tool 03</div>
+            <h2 class="slide-h2 reveal gap-xs">OpenClaw</h2>
+            <div class="divider reveal"></div>
+            <p class="slide-body reveal">"别再给 AI 配工具了，<span class="accent-text">给它一台电脑。</span>"</p>
+            <p class="slide-body reveal gap-sm">不是让 AI 调 API，而是给 AI 完整的工作环境——文件系统 + Shell + 浏览器 + 工作区。</p>
+            <p class="slide-body reveal gap-sm bold">门槛从"会写 MCP"降到"会说话"。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     11: SECTION — 底层架构
+     =========================================== -->
+<section class="slide slide-section" id="s11">
+    <div class="chapter-number">03</div>
+    <div class="slide-label reveal">Chapter 03</div>
+    <h2 class="slide-title reveal">底层架构</h2>
+    <div class="divider reveal"></div>
+    <p class="slide-body reveal gap-sm" style="color:var(--text-body)">大模型 &middot; Agent &middot; Skill &middot; Context</p>
+</section>
+
+<!-- ===========================================
+     12: 四个概念
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s12">
+    <div class="slide-label reveal">Concepts</div>
+    <h2 class="slide-h2 reveal gap-xs">用一个类比说清楚</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,155px),1fr))">
+        <div class="card">
+            <div class="card-num">LLM</div>
+            <div class="card-title">大脑</div>
+            <div class="card-body">推理、理解语言、做判断</div>
+        </div>
+        <div class="card">
+            <div class="card-num">Agent</div>
+            <div class="card-title">员工</div>
+            <div class="card-body">有目标、行动力、记忆，执行多步任务</div>
+        </div>
+        <div class="card">
+            <div class="card-num">Skill</div>
+            <div class="card-title">SOP 手册</div>
+            <div class="card-body">可复用操作流程</div>
+        </div>
+        <div class="card" style="border-color:var(--accent);border-width:2px">
+            <div class="card-num" style="color:var(--accent)">CTX</div>
+            <div class="card-title accent-text">血液</div>
+            <div class="card-body">连接三者。没有好的上下文，再强的大脑也帮不上忙</div>
+        </div>
+    </div>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal bold">核心原则：给 Agent 看到它解决当前问题所需的上下文，不是整个项目的百科全书。</p>
+</section>
+
+<!-- ===========================================
+     13: CLAUDE.md + 飞轮
+     =========================================== -->
+<section class="slide slide-warm slide-centered" id="s13">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">Memory System</div>
+            <h2 class="slide-h2 reveal gap-xs">CLAUDE.md</h2>
+            <div class="divider reveal"></div>
+            <p class="slide-body reveal">每次对话自动读取。不是说明书，是你和 AI 之间的<span class="bold">契约</span>。</p>
+            <ul class="bullet-list reveal gap-md">
+                <li>Boris 团队只有 ~2500 tokens / 100 行</li>
+                <li>从护栏开始，别写手册</li>
+                <li>每次 Claude 犯错就加一条规则</li>
+            </ul>
+        </div>
+        <div>
+            <div class="slide-label reveal">Flywheel</div>
+            <h2 class="slide-h3 reveal gap-xs">飞轮机制</h2>
+            <div class="gap-sm"></div>
+            <div class="code-block reveal">Agent 犯错
+→ 记录到 CLAUDE.md / Skill
+→ 下次不再犯
+→ 错误率持续降低</div>
+            <div class="gap-md"></div>
+            <p class="slide-body reveal bold">三个月后，你养出来的 CLAUDE.md 是你最有价值的 AI 资产。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     14: SECTION — 上手指南
+     =========================================== -->
+<section class="slide slide-section" id="s14">
+    <div class="chapter-number">04</div>
+    <div class="slide-label reveal">Chapter 04</div>
+    <h2 class="slide-title reveal">上手指南<br><span class="highlight">第一个项目</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ===========================================
+     15: 基础知识
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s15">
+    <div class="slide-label reveal">Prerequisites</div>
+    <h2 class="slide-h2 reveal gap-xs">不是学编程，是不被 AI 带偏</h2>
+    <div class="gap-md"></div>
+    <ul class="bullet-list reveal">
+        <li><span class="bold">文件系统基础</span> — 文件夹结构、路径写法</li>
+        <li><span class="bold">Git 基本概念</span> — commit、branch、PR，理解 AI 在做什么</li>
+        <li><span class="bold">运行环境基础</span> — 前端/后端/数据库，本地 vs 线上</li>
+        <li><span class="bold">API 基本概念</span> — 能看懂简单的 API 文档</li>
+        <li><span class="bold">错误信息基础</span> — 能把报错完整复制给 AI</li>
+    </ul>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal bold">判断标准：能用一句话描述"出了什么问题"，AI 大概率能帮你解决。</p>
+</section>
+
+<!-- ===========================================
+     16: 入场券任务
+     =========================================== -->
+<section class="slide slide-warm slide-centered" id="s16">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">First Task</div>
+            <h2 class="slide-h2 reveal gap-xs">入场券任务</h2>
+            <div class="divider reveal"></div>
+            <p class="slide-body reveal">找一件满足以下条件的事作为起点：</p>
+            <ul class="bullet-list reveal gap-sm">
+                <li>你已经知道结果应该是什么样</li>
+                <li>原来需要花 1-3 小时</li>
+                <li>失败了没有大影响</li>
+            </ul>
+        </div>
+        <div>
+            <div class="slide-label reveal">Examples</div>
+            <div class="gap-xs"></div>
+            <ul class="bullet-list reveal">
+                <li>竞品调研笔记 → 结构化报告</li>
+                <li>5 个用户访谈录音 → insight 列表</li>
+                <li>团队日常报告模板化，一键生成</li>
+            </ul>
+            <div class="gap-lg"></div>
+            <p class="slide-body reveal accent-text" style="font-size:var(--h3-size);font-family:var(--font-display)">先从这里开始，<br>不要从"做一个完整产品"开始。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     17: 核心循环
+     =========================================== -->
+<section class="slide slide-dark slide-centered" id="s17">
+    <div class="slide-label reveal">Core Loop</div>
+    <h2 class="slide-h2 reveal gap-xs">五步循环</h2>
+    <div class="gap-lg"></div>
+    <div class="flow reveal">
+        <span class="flow-step">描述需求</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">审查方案</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">确认执行</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">验证结果</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">迭代改进</span>
+    </div>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal max-w">不管项目大小，底层模式都是这五步。<br>你始终只做两件事：<span class="bold">说清楚要什么，判断做得对不对。</span></p>
+</section>
+
+<!-- ===========================================
+     18: 三条提问原则
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s18">
+    <div class="slide-label reveal">Prompting Principles</div>
+    <h2 class="slide-h2 reveal gap-xs">三条提问原则</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))">
+        <div class="card">
+            <div class="card-num">01</div>
+            <div class="card-title">具体</div>
+            <div class="card-body">文件名、行号、函数名、期望行为——能给就给，越具体越精准</div>
+        </div>
+        <div class="card">
+            <div class="card-num">02</div>
+            <div class="card-title">指向</div>
+            <div class="card-body">"像那个一样做"比"做一个漂亮的"有效 100 倍。把写得好的部分指给 AI 看</div>
+        </div>
+        <div class="card">
+            <div class="card-num">03</div>
+            <div class="card-title">克制</div>
+            <div class="card-body">一次只做一件事。任务大就分步来，每步确认后再下一步</div>
+        </div>
+    </div>
+    <div class="gap-md"></div>
+    <div class="compare-grid reveal">
+        <div class="compare-col bad">
+            <div class="compare-label">不推荐</div>
+            <div class="compare-text">帮我加个搜索功能</div>
+        </div>
+        <div class="compare-col good">
+            <div class="compare-label">推荐</div>
+            <div class="compare-text">在 Header.tsx 导航栏添加搜索框，用 Fuse.js 做模糊搜索，参考现有 FilterDropdown 样式</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     19: 高级技巧
+     =========================================== -->
+<section class="slide slide-warm slide-centered" id="s19">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">Advanced</div>
+            <h2 class="slide-h2 reveal gap-xs">让 Claude 采访你</h2>
+            <div class="divider reveal"></div>
+            <p class="slide-body reveal">"我想做 X 功能，在动手之前先采访我，问清楚所有你需要知道的事情。"</p>
+            <p class="slide-body reveal gap-sm">Claude 会追问场景和边界情况。这些问题里，至少有一半是你自己还没想清楚的。</p>
+        </div>
+        <div>
+            <div class="slide-label reveal">Workflow</div>
+            <div class="gap-sm"></div>
+            <div class="flow reveal" style="flex-direction:column;align-items:stretch;">
+                <span class="flow-step" style="text-align:center">采访阶段</span>
+                <span class="flow-arrow" style="text-align:center">↓</span>
+                <span class="flow-step" style="text-align:center">生成 Spec</span>
+                <span class="flow-arrow" style="text-align:center">↓</span>
+                <span class="flow-step" style="text-align:center">新会话执行</span>
+            </div>
+            <div class="gap-md"></div>
+            <p class="slide-body reveal"><span class="primary-text">obra/superpowers</span> — Brainstorm → Plan → TDD → 并行执行</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     20: SECTION — 必备 Skill
+     =========================================== -->
+<section class="slide slide-section" id="s20">
+    <div class="chapter-number">05</div>
+    <div class="slide-label reveal">Chapter 05</div>
+    <h2 class="slide-title reveal">必备 Skill<br><span class="highlight">清单</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ===========================================
+     21: 好 Skill 的标准
+     =========================================== -->
+<section class="slide slide-dark slide-centered" id="s21">
+    <div class="slide-label reveal">What Makes a Good Skill</div>
+    <h2 class="slide-h2 reveal gap-xs">三个判断标准</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))">
+        <div class="card">
+            <div class="card-num">01</div>
+            <div class="card-title">能复用</div>
+            <div class="card-body">同类任务用同一个 Skill，不重新描述</div>
+        </div>
+        <div class="card">
+            <div class="card-num">02</div>
+            <div class="card-title">有明确 I/O</div>
+            <div class="card-body">给什么、产出什么，清晰可预期</div>
+        </div>
+        <div class="card">
+            <div class="card-num">03</div>
+            <div class="card-title">包含 Gotchas</div>
+            <div class="card-body">记录真实踩过的坑，这是最有价值的部分</div>
+        </div>
+    </div>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal">好的 Skill 不是文字越多越好，而是<span class="bold">信噪比越高越好</span>。</p>
+</section>
+
+<!-- ===========================================
+     22: 通用层 + 产品层
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s22">
+    <div class="slide-label reveal">Skill Layers</div>
+    <h2 class="slide-h2 reveal gap-xs">按层级推荐</h2>
+    <div class="gap-md"></div>
+    <div class="two-col">
+        <div>
+            <div class="tag tag-primary" style="margin-bottom:clamp(0.3rem,0.6vw,0.5rem)">通用层 &mdash; 所有人</div>
+            <table class="data-table">
+                <tbody>
+                <tr><td>写作风格</td><td>上传样本文章，比规则有效</td></tr>
+                <tr><td>晨间简报</td><td>汇总待办、会议、关注信息</td></tr>
+                <tr><td>会议纪要</td><td>录音 → 纪要 + 行动项</td></tr>
+                <tr><td>竞品分析</td><td>给 URL → 结构化对比</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <div class="tag tag-accent" style="margin-bottom:clamp(0.3rem,0.6vw,0.5rem)">产品层 &mdash; PM / 设计师</div>
+            <table class="data-table">
+                <tbody>
+                <tr><td>PRD 生成</td><td>描述功能 → 规格文档</td></tr>
+                <tr><td>用户研究</td><td>访谈记录 → insight</td></tr>
+                <tr><td>周报更新</td><td>状态 → 多受众版本</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     23: 设计层 + 工程层
+     =========================================== -->
+<section class="slide slide-warm slide-centered" id="s23">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">Design Layer</div>
+            <h2 class="slide-h2 reveal gap-xs">Impeccable</h2>
+            <div class="divider reveal"></div>
+            <p class="slide-body reveal">专门解决 AI 设计"看起来廉价"问题。</p>
+            <ul class="bullet-list reveal gap-sm">
+                <li>七个领域的设计参考指南</li>
+                <li>20 个可直接调用的指令</li>
+                <li><span class="bold">/audit &middot; /critique &middot; /normalize &middot; /polish</span></li>
+            </ul>
+        </div>
+        <div>
+            <div class="slide-label reveal">Engineering Layer</div>
+            <h2 class="slide-h2 reveal gap-xs">gstack</h2>
+            <div class="divider reveal"></div>
+            <p class="slide-body reveal">YC CEO Garry Tan 开源，23+ Agent Skills。</p>
+            <div class="code-block reveal gap-sm">Think → Plan → Build
+→ Review → Test → Ship
+→ Reflect</div>
+            <p class="slide-body reveal gap-sm" style="font-size:var(--small-size)">MIT 开源，社区最完整 Skill 体系之一。</p>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     24: Skill 自动优化
+     =========================================== -->
+<section class="slide slide-dark slide-centered" id="s24">
+    <div class="slide-label reveal">Auto-Optimization</div>
+    <h2 class="slide-h2 reveal gap-xs">Skill 不用全靠手写</h2>
+    <div class="gap-md"></div>
+    <p class="slide-body reveal max-w">Karpathy 的 Autoresearch 方法：定义 3-6 个评分标准（yes/no），让 AI 自我迭代优化 Skill。</p>
+    <div class="gap-lg"></div>
+    <div class="reveal" style="display:flex;align-items:baseline;gap:clamp(0.5rem,1.5vw,1.5rem);justify-content:center">
+        <span class="big-num" style="color:var(--text-muted)">56%</span>
+        <span style="font-size:var(--h2-size);color:var(--text-muted)">→</span>
+        <span class="big-num" style="color:var(--accent)">92%</span>
+    </div>
+    <p class="slide-body reveal gap-sm">Landing page Skill 只用了 4 轮迭代。<br>你唯一需要做的是<span class="bold">定义好评分标准</span>。</p>
+</section>
+
+<!-- ===========================================
+     25: SECTION — 局限性
+     =========================================== -->
+<section class="slide slide-section" id="s25">
+    <div class="chapter-number">06</div>
+    <div class="slide-label reveal">Chapter 06</div>
+    <h2 class="slide-title reveal">局限性<br><span class="highlight">必须知道的边界</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ===========================================
+     26: 局限 1-3
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s26">
+    <div class="slide-label reveal">Limitations</div>
+    <h2 class="slide-h2 reveal gap-xs">不讲局限性的 AI 分享都是在骗你</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-num">01</div>
+            <div class="card-title">能生成 ≠ 能交付</div>
+            <div class="card-body">AI 缺少业务细节。<span class="bold">解法：</span>先做"知识工程"，把业务判断写成规格文档。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">02</div>
+            <div class="card-title">需求越模糊，偏差越大</div>
+            <div class="card-body">"做个好看的页面"，AI 只能猜。<span class="bold">解法：</span>描述最终产物、指定选型、给出数据源。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">03</div>
+            <div class="card-title">讨好倾向</div>
+            <div class="card-body">AI 会"找到"不存在的 bug。<span class="bold">解法：</span>不反复追问，换角度或开新会话。</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     27: 局限 4-6
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s27">
+    <div class="slide-label reveal">Limitations</div>
+    <h2 class="slide-h2 reveal gap-xs">更多边界</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-num">04</div>
+            <div class="card-title">上下文管理是技术活</div>
+            <div class="card-body">一个会话太多事，质量下降。<span class="bold">解法：</span>一个会话一件事，切换就 /clear。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">05</div>
+            <div class="card-title">设计质量需要人把关</div>
+            <div class="card-body">90% 应用看起来廉价。<span class="bold">解法：</span>用 Impeccable 注入设计系统约束。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">06</div>
+            <div class="card-title">必须经过真实验证</div>
+            <div class="card-body">"看起来对" ≠ "是对的"。<span class="bold">解法：</span>用 Maestro 做 UI 测试闭环。</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     28: 六个坑
+     =========================================== -->
+<section class="slide slide-dark slide-centered" id="s28">
+    <div class="slide-label reveal">Pitfalls</div>
+    <h2 class="slide-h2 reveal gap-xs">六个你一定会踩的坑</h2>
+    <div class="gap-md"></div>
+    <table class="data-table" style="max-width:750px">
+        <tbody>
+        <tr><td class="cell-accent">01</td><td>一个会话什么都塞</td><td>→ 聚焦一个任务，做完就 /clear</td></tr>
+        <tr><td class="cell-accent">02</td><td>反复纠正，越改越偏</td><td>→ 纠正两次不行，推倒重来</td></tr>
+        <tr><td class="cell-accent">03</td><td>看着像对的就接受了</td><td>→ 每轮改动实际运行验证</td></tr>
+        <tr><td class="cell-accent">04</td><td>过度微操</td><td>→ 关注结果不关注过程</td></tr>
+        <tr><td class="cell-accent">05</td><td>需求模糊然后怪 AI</td><td>→ 给具体的、可验证的需求</td></tr>
+        <tr><td class="cell-accent">06</td><td>不写 CLAUDE.md</td><td>→ 每次犯错记一条，三个月后最值钱</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ===========================================
+     29: SECTION — 飞轮与未来
+     =========================================== -->
+<section class="slide slide-section" id="s29">
+    <div class="chapter-number">07</div>
+    <div class="slide-label reveal">Chapter 07</div>
+    <h2 class="slide-title reveal">学习曲线<br><span class="highlight">飞轮与未来</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ===========================================
+     30: 学习曲线
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s30">
+    <div class="slide-label reveal">Learning Curve</div>
+    <h2 class="slide-h2 reveal gap-xs">真实的学习曲线</h2>
+    <div class="gap-md"></div>
+    <table class="data-table" style="max-width:700px">
+        <tbody>
+        <tr><td>第 1-3 天</td><td>惊喜期</td><td>"哇，它真的能做！"</td></tr>
+        <tr><td class="cell-accent">第 4-7 天</td><td class="cell-accent">挫折期</td><td>"怎么越来越乱"</td></tr>
+        <tr><td>第 2-4 周</td><td>摸索期</td><td>"开始理解边界在哪"</td></tr>
+        <tr><td>第 1-3 月</td><td>熟练期</td><td>"找到自己的工作方式"</td></tr>
+        <tr><td class="cell-primary">3 个月后</td><td class="cell-primary">飞轮期</td><td>"越用越顺，效率复利增长"</td></tr>
+        </tbody>
+    </table>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal"><span class="accent-text">挫折期是最重要的关口。</span>大多数人在这里放弃。实际上你在学一种新的工作方式。</p>
+</section>
+
+<!-- ===========================================
+     31: 飞轮 + 六步
+     =========================================== -->
+<section class="slide slide-warm slide-centered" id="s31">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">Flywheel</div>
+            <h2 class="slide-h2 reveal gap-xs">两个飞轮</h2>
+            <div class="gap-md"></div>
+            <div class="card reveal" style="margin-bottom:var(--content-gap)">
+                <div class="card-num" style="font-size:var(--body-size)">Personal</div>
+                <div class="card-body">使用 → 踩坑 → 记录 → 下次更顺 → 更多使用 → 更多积累</div>
+            </div>
+            <div class="card reveal">
+                <div class="card-num" style="font-size:var(--body-size)">Knowledge</div>
+                <div class="card-body">完成任务 → 固化 Skill → 被复用 → 被 AI 优化 → 更好的 Skill</div>
+            </div>
+        </div>
+        <div>
+            <div class="slide-label reveal">Practice Path</div>
+            <h2 class="slide-h3 reveal gap-xs">六步路径</h2>
+            <div class="gap-sm"></div>
+            <table class="data-table">
+                <tbody>
+                <tr><td class="cell-primary">1</td><td>用 AI 复刻已有工作</td></tr>
+                <tr><td class="cell-primary">2</td><td>让 Agent 自主完成任务</td></tr>
+                <tr><td class="cell-primary">3</td><td>"必定成功"的任务外包给 AI</td></tr>
+                <tr><td class="cell-primary">4</td><td>每次失败永久修复到配置</td></tr>
+                <tr><td class="cell-primary">5</td><td>让 Skill 自我迭代优化</td></tr>
+                <tr><td class="cell-primary">6</td><td>Agent 全天候自主运行</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     32: 三个转变
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s32">
+    <div class="slide-label reveal">Transformations</div>
+    <h2 class="slide-h2 reveal gap-xs">三个正在发生的转变</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid">
+        <div class="card">
+            <div class="card-num">01</div>
+            <div class="card-title">会编程 → 会表达</div>
+            <div class="card-body">Computer Use 让 AI 看屏幕、控鼠标。PM 可以说"帮我在 Figma 里把按钮改成蓝色"。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">02</div>
+            <div class="card-title">打字 → 说话</div>
+            <div class="card-body">Voice Mode + Computer Use：语音描述，AI 操作屏幕。完全脱离键盘和代码。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">03</div>
+            <div class="card-title">个人工具 → 团队基建</div>
+            <div class="card-body">团队共享 Skill 体系，新人继承 AI 资产。你现在积累的就是最难复制的竞争优势。</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     33: 总结
+     =========================================== -->
+<section class="slide slide-dark" id="s33" style="align-items:center;text-align:center;">
+    <div style="max-width:700px">
+        <div class="slide-label reveal" style="display:inline-block">Takeaway</div>
+        <div class="gap-md"></div>
+        <blockquote class="quote-block reveal" style="border-left:none;padding-left:0;text-align:center;color:var(--text-white)">
+            Vibe Coding 的本质不是<br>"让 AI 帮你写代码"，<br>而是<span class="accent-text">"把你的业务判断力装进系统，<br>让 AI 持续放大它"</span>。
+        </blockquote>
+        <div class="gap-lg"></div>
+        <p class="slide-body reveal">"在 AI 时代，三个月的规划等于传统意义上的三年。"</p>
+        <p class="slide-body reveal gap-xs" style="color:var(--text-muted)">&mdash; Cat Wu, Anthropic</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     34: 推荐资源
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s34">
+    <div class="slide-label reveal">Resources</div>
+    <h2 class="slide-h2 reveal gap-xs">推荐资源</h2>
+    <div class="gap-md"></div>
+    <table class="data-table" style="max-width:800px">
+        <thead><tr><th>仓库</th><th>用途</th></tr></thead>
+        <tbody>
+        <tr><td>mgechev/skills-best-practices</td><td>专业级 Skill 编写指南</td></tr>
+        <tr><td>shanraisshan/claude-code-best-practice</td><td>Claude Code 核心最佳实践</td></tr>
+        <tr><td>obra/superpowers</td><td>结构化 Agentic 开发工作流</td></tr>
+        <tr><td>pbakaus/impeccable</td><td>AI 设计质量提升 Skill</td></tr>
+        <tr><td>garrytan/gstack</td><td>23+ Agent Skills 虚拟工程团队</td></tr>
+        <tr><td>steipete/CodexBar</td><td>macOS 用量监控</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ===========================================
+     35: SECTION — One More Thing
+     =========================================== -->
+<section class="slide slide-dark" id="s35" style="align-items:center;text-align:center;">
+    <div>
+        <div class="slide-label reveal" style="display:inline-block;color:var(--accent)">Bonus</div>
+        <div class="gap-md"></div>
+        <h2 class="slide-title reveal">One More Thing</h2>
+        <div class="gap-md"></div>
+        <p class="slide-body reveal" style="max-width:600px;margin:0 auto">你现在看到的这套演示文稿，<br>就是用 Vibe Coding 的方式做出来的。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+     36: 完整过程 1-3
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s36">
+    <div class="slide-label reveal">How It Was Made</div>
+    <h2 class="slide-h2 reveal gap-xs">完整过程</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))">
+        <div class="card">
+            <div class="card-num">01</div>
+            <div class="card-title">提供源内容</div>
+            <div class="card-body">把 Markdown 大纲直接交给 Claude，理解 7 个章节的内容结构。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">02</div>
+            <div class="card-title">风格发现</div>
+            <div class="card-body">不是直接生成，而是先做一轮风格探索——生成 3 个预览，在浏览器里对比选择。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">03</div>
+            <div class="card-title">生成第一版</div>
+            <div class="card-body">基于选定风格 + 全部内容，一次生成 35 页完整演示文稿。</div>
+        </div>
+    </div>
+</section>
+
+<!-- ===========================================
+     37: 完整过程 4-5
+     =========================================== -->
+<section class="slide slide-white slide-centered" id="s37">
+    <div class="slide-label reveal">How It Was Made</div>
+    <h2 class="slide-h2 reveal gap-xs">迭代与验证</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr))">
+        <div class="card">
+            <div class="card-num">04</div>
+            <div class="card-title">换风格重来</div>
+            <div class="card-body">看完第一版后更喜欢另一个风格，用 Electric Studio 重新生成——改风格不等于重做内容，几分钟搞定。</div>
+        </div>
+        <div class="card">
+            <div class="card-num">05</div>
+            <div class="card-title">迭代修复布局</div>
+            <div class="card-body">Claude 用 /browse 启动浏览器逐页截图自测，主动发现布局问题。然后逐一处理反馈：居中、对齐、选择器作用域。</div>
+        </div>
+    </div>
+    <div class="gap-lg"></div>
+    <table class="data-table" style="max-width:650px">
+        <thead><tr><th>工具</th><th>用途</th></tr></thead>
+        <tbody>
+        <tr><td>/frontend-slides</td><td>完整工作流：内容发现 → 风格探索 → 生成演示文稿</td></tr>
+        <tr><td>/browse (gstack)</td><td>headless 浏览器逐页截图，自测验证布局</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ===========================================
+     38: 这个案例说明了什么
+     =========================================== -->
+<section class="slide slide-dark slide-centered" id="s38">
+    <div class="slide-label reveal">Takeaway</div>
+    <h2 class="slide-h2 reveal gap-xs">这就是五步循环的一次压缩演示</h2>
+    <div class="gap-lg"></div>
+    <div class="flow reveal">
+        <span class="flow-step">描述需求</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">审查方案</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">确认执行</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">验证结果</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">迭代改进</span>
+    </div>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal max-w">整个过程没有打开过 Keynote 或 PowerPoint，没有拖过一个元素，没有手写过一行 CSS。</p>
+    <p class="slide-body reveal gap-sm max-w bold" style="color:var(--text-white)">Vibe Coding 不只是用来做产品的，<br>它可以用在任何有"从想法到成品"需求的地方。</p>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal" style="color:var(--accent);font-family:var(--font-display);font-size:var(--h3-size);font-weight:700">你现在可以开始了。</p>
+</section>
+
+<!-- ===========================================
+     39: END
+     =========================================== -->
+<section class="slide slide-warm" id="s39" style="align-items:center;text-align:center;">
+    <div>
+        <h2 class="slide-title reveal">Thank You</h2>
+        <div class="divider reveal" style="margin:clamp(0.5rem,1vw,1rem) auto"></div>
+        <p class="slide-body reveal">Shawn Wu &middot; 2026</p>
+        <div class="gap-lg"></div>
+        <p class="slide-body reveal bold" style="max-width:400px;margin:0 auto;color:var(--text-dark)">不要等工具更成熟。<br>你现在积累的上下文和 Skill，<br>装的不是 AI 的能力，<br>而是你对自己工作的深度理解。</p>
+    </div>
+</section>
+
+<!-- ===========================================
+   JAVASCRIPT
+   =========================================== -->
+<script>
+class SlidePresentation {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.currentSlide = 0;
+        this.totalSlides = this.slides.length;
+        this.isScrolling = false;
+        this.scrollTimeout = null;
+        this.progressBar = document.getElementById('progressBar');
+        this.navDots = document.getElementById('navDots');
+        this.slideCounter = document.getElementById('slideCounter');
+        this.keyboardHint = document.getElementById('keyboardHint');
+        this.init();
+    }
+
+    init() {
+        this.createNavDots();
+        this.setupIntersectionObserver();
+        this.setupKeyboardNav();
+        this.setupWheelNav();
+        this.setupTouchNav();
+        this.updateUI();
+        setTimeout(() => { if (this.keyboardHint) this.keyboardHint.style.opacity = '0'; }, 4000);
+    }
+
+    createNavDots() {
+        this.slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.className = 'nav-dot';
+            dot.setAttribute('aria-label', `Slide ${i + 1}`);
+            dot.addEventListener('click', () => this.goToSlide(i));
+            this.navDots.appendChild(dot);
+        });
+        this.dots = this.navDots.querySelectorAll('.nav-dot');
+    }
+
+    setupIntersectionObserver() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    const index = Array.from(this.slides).indexOf(entry.target);
+                    if (index !== -1) { this.currentSlide = index; this.updateUI(); }
+                }
+            });
+        }, { threshold: 0.5 });
+        this.slides.forEach(slide => observer.observe(slide));
+    }
+
+    setupKeyboardNav() {
+        document.addEventListener('keydown', (e) => {
+            switch (e.key) {
+                case 'ArrowDown': case 'ArrowRight': case ' ': case 'PageDown':
+                    e.preventDefault(); this.nextSlide(); break;
+                case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+                    e.preventDefault(); this.prevSlide(); break;
+                case 'Home': e.preventDefault(); this.goToSlide(0); break;
+                case 'End': e.preventDefault(); this.goToSlide(this.totalSlides - 1); break;
+            }
+        });
+    }
+
+    setupWheelNav() {
+        document.addEventListener('wheel', (e) => {
+            if (this.isScrolling) return;
+            this.isScrolling = true;
+            if (e.deltaY > 30) this.nextSlide();
+            else if (e.deltaY < -30) this.prevSlide();
+            clearTimeout(this.scrollTimeout);
+            this.scrollTimeout = setTimeout(() => { this.isScrolling = false; }, 800);
+        }, { passive: true });
+    }
+
+    setupTouchNav() {
+        let startY = 0;
+        document.addEventListener('touchstart', (e) => { startY = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+            const diff = startY - e.changedTouches[0].clientY;
+            if (Math.abs(diff) > 50) { diff > 0 ? this.nextSlide() : this.prevSlide(); }
+        }, { passive: true });
+    }
+
+    nextSlide() { if (this.currentSlide < this.totalSlides - 1) this.goToSlide(this.currentSlide + 1); }
+    prevSlide() { if (this.currentSlide > 0) this.goToSlide(this.currentSlide - 1); }
+
+    goToSlide(index) {
+        this.currentSlide = index;
+        this.slides[index].scrollIntoView({ behavior: 'smooth' });
+        this.updateUI();
+    }
+
+    updateUI() {
+        const progress = ((this.currentSlide + 1) / this.totalSlides) * 100;
+        this.progressBar.style.width = progress + '%';
+        this.dots.forEach((dot, i) => dot.classList.toggle('active', i === this.currentSlide));
+        this.slideCounter.textContent = `${this.currentSlide + 1} / ${this.totalSlides}`;
+
+        const s = this.slides[this.currentSlide];
+        const isDark = s.classList.contains('slide-dark');
+        this.slideCounter.style.color = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.25)';
+        this.dots.forEach(dot => {
+            if (!dot.classList.contains('active')) {
+                dot.style.background = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.12)';
+            }
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => new SlidePresentation());
+</script>
+</body>
+</html>
