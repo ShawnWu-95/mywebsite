@@ -1,351 +1,460 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shawn's World</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            /* Premium Dark Palette */
-            --bg-primary: #030712;
-            --bg-secondary: #0f172a;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-primary: #6366f1;
-            /* Indigo */
-            --accent-secondary: #a855f7;
-            /* Purple */
-            --accent-glow: rgba(99, 102, 241, 0.15);
-            --border-color: rgba(255, 255, 255, 0.08);
-            --card-bg: rgba(15, 23, 42, 0.6);
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShawnWu — AI Builder</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&f[]=cabinet-grotesk@500,700,800&display=swap">
+<style>
+:root {
+    --bg: #f8f7f4;
+    --bg-white: #fff;
+    --text-dark: #1a1a1a;
+    --text-body: #4b5563;
+    --text-muted: #9ca3af;
+    --primary: #1a56db;
+    --primary-light: rgba(26,86,219,0.06);
+    --accent: #ff6b35;
+    --accent-light: rgba(255,107,53,0.08);
+    --accent-yellow: #ffc233;
+    --border: #e5e7eb;
+    --border-light: rgba(0,0,0,0.04);
+    --font-display: 'Cabinet Grotesk', sans-serif;
+    --font-body: 'General Sans', sans-serif;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-            /* Spacing */
-            --container-width: 1000px;
-            --header-height: 80px;
-        }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            -webkit-font-smoothing: antialiased;
-            overflow-x: hidden;
-            background-image:
-                radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.08) 0%, transparent 25%),
-                radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.08) 0%, transparent 25%);
-        }
+body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text-dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
 
-        a {
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s ease;
-        }
+a { color: inherit; text-decoration: none; }
 
-        /* Layout */
-        .container {
-            max-width: var(--container-width);
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+/* ── Hero Section — full viewport ── */
+.hero-section {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(2rem, 5vw, 3.5rem) clamp(2rem, 6vw, 5rem);
+    position: relative;
+    overflow: hidden;
+}
 
-        /* Header */
-        header {
-            height: var(--header-height);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(3, 7, 18, 0.7);
-        }
+/* Subtle decorative circles — from the workshop style */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: -8%;
+    right: -5%;
+    width: clamp(300px, 40vw, 550px);
+    height: clamp(300px, 40vw, 550px);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--accent-yellow));
+    opacity: 0.06;
+    pointer-events: none;
+}
 
-        .logo {
-            font-weight: 800;
-            font-size: 24px;
-            background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: -0.02em;
-        }
+.hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    left: -8%;
+    width: clamp(250px, 30vw, 420px);
+    height: clamp(250px, 30vw, 420px);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary), #7c3aed);
+    opacity: 0.05;
+    pointer-events: none;
+}
 
-        nav ul {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-        }
+.hero-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
 
-        nav a {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-secondary);
-        }
+.header-name {
+    font-family: var(--font-display);
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
 
-        nav a:hover {
-            color: var(--text-primary);
-        }
+.header-role {
+    font-size: clamp(0.72rem, 1.1vw, 0.82rem);
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
 
-        /* Hero Section */
-        .hero {
-            padding: 160px 0 100px;
-            text-align: center;
-        }
+.hero-nav {
+    display: flex;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+}
 
-        .hero h1 {
-            font-size: clamp(48px, 6vw, 80px);
-            font-weight: 900;
-            line-height: 1.1;
-            letter-spacing: -0.04em;
-            margin-bottom: 24px;
-            background: linear-gradient(to bottom right, #fff 30%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+.hero-nav a {
+    font-size: clamp(0.78rem, 1.2vw, 0.88rem);
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: color 0.3s ease;
+}
 
-        .hero p {
-            font-size: 20px;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-            font-weight: 400;
-        }
+.hero-nav a:hover { color: var(--text-dark); }
 
-        /* Projects Grid */
-        .section-title {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent-primary);
-            margin-bottom: 40px;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+/* Center content */
+.hero-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 800px;
+    padding: clamp(2rem, 6vw, 4rem) 0;
+}
 
-        .section-title::after {
-            content: '';
-            height: 1px;
-            flex: 1;
-            background: linear-gradient(90deg, var(--border-color), transparent);
-        }
+.hero-tagline {
+    font-family: var(--font-display);
+    font-size: clamp(3.2rem, 8vw, 6rem);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
 
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 32px;
-            margin-bottom: 120px;
-        }
+.hero-tagline .accent {
+    color: var(--accent);
+}
 
-        .project-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 32px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
+.hero-desc {
+    font-size: clamp(1.05rem, 2vw, 1.35rem);
+    line-height: 1.7;
+    color: var(--text-body);
+    max-width: 480px;
+}
 
-        .project-card:hover {
-            transform: translateY(-4px);
-            border-color: var(--accent-primary);
-            box-shadow: 0 20px 40px -10px var(--accent-glow);
-        }
+/* Scroll hint */
+.hero-bottom {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
 
-        .project-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, transparent 0%, rgba(255, 255, 255, 0.03) 100%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
+.scroll-hint {
+    font-size: clamp(0.68rem, 1vw, 0.78rem);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
 
-        .project-card:hover::before {
-            opacity: 1;
-        }
+.scroll-line {
+    width: 40px;
+    height: 1px;
+    background: var(--border);
+    position: relative;
+    overflow: hidden;
+}
 
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
+.scroll-line::after {
+    content: '';
+    position: absolute;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--accent);
+    animation: slideLine 2s var(--ease) infinite;
+}
 
-        .project-icon {
-            width: 48px;
-            height: 48px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            border: 1px solid var(--border-color);
-        }
+@keyframes slideLine {
+    0% { left: -100%; }
+    50% { left: 0; }
+    100% { left: 100%; }
+}
 
-        .project-tag {
-            font-size: 12px;
-            padding: 4px 12px;
-            border-radius: 100px;
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-secondary);
-            border: 1px solid var(--border-color);
-        }
+/* ── Content Section ── */
+.content-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(4rem, 10vw, 8rem) clamp(2rem, 6vw, 5rem);
+}
 
-        .project-card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-primary);
-        }
+.section-label {
+    font-size: clamp(0.65rem, 1vw, 0.78rem);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+}
 
-        .project-card p {
-            font-size: 15px;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            flex-grow: 1;
-        }
+/* ── Project Card — editorial style ── */
+.project-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding: clamp(2rem, 4vw, 3rem);
+    border-radius: 16px;
+    background: var(--bg-white);
+    border: 1px solid var(--border);
+    transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
 
-        .card-arrow {
-            margin-top: 24px;
-            color: var(--accent-primary);
-            font-weight: 600;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            opacity: 0;
-            transform: translateX(-10px);
-            transition: all 0.3s ease;
-        }
+.project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+}
 
-        .project-card:hover .card-arrow {
-            opacity: 1;
-            transform: translateX(0);
-        }
+.project-meta {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.8rem, 1.5vw, 1.2rem);
+}
 
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border-color);
-            padding: 60px 0;
-            color: var(--text-secondary);
-            font-size: 14px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+.project-tag {
+    display: inline-flex;
+    align-self: flex-start;
+    font-size: clamp(0.6rem, 0.9vw, 0.72rem);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35em 0.8em;
+    border-radius: 5px;
+    background: var(--accent-light);
+    color: var(--accent);
+}
 
-        .social-links {
-            display: flex;
-            gap: 24px;
-        }
+.project-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    transition: color 0.3s ease;
+}
 
-        .social-links a:hover {
-            color: var(--text-primary);
-        }
+.project-card:hover .project-title {
+    color: var(--primary);
+}
 
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 40px;
-            }
+.project-desc {
+    font-size: clamp(0.9rem, 1.5vw, 1.05rem);
+    color: var(--text-body);
+    line-height: 1.65;
+}
 
-            .projects-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+.project-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: clamp(0.82rem, 1.3vw, 0.92rem);
+    font-weight: 600;
+    color: var(--primary);
+    margin-top: 0.25rem;
+}
+
+.project-cta span {
+    transition: transform 0.3s var(--ease);
+}
+
+.project-card:hover .project-cta span {
+    transform: translateX(4px);
+}
+
+/* Visual side — abstract preview block */
+.project-visual {
+    aspect-ratio: 4 / 3;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary-light), rgba(255,107,53,0.04));
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.visual-icon {
+    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    opacity: 0.9;
+}
+
+.visual-lines {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: center;
+}
+
+.visual-line {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--primary);
+    opacity: 0.12;
+}
+
+/* ── About blurb ── */
+.about-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(3rem, 8vw, 6rem) clamp(2rem, 6vw, 5rem) clamp(4rem, 10vw, 8rem);
+    border-top: 1px solid var(--border);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+}
+
+.about-label {
+    font-size: clamp(0.65rem, 1vw, 0.78rem);
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--primary);
+    padding-top: 0.3em;
+}
+
+.about-text {
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    line-height: 1.75;
+    color: var(--text-body);
+    max-width: 560px;
+}
+
+.about-text strong {
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+/* ── Footer ── */
+.footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: clamp(2rem, 4vw, 3rem) clamp(2rem, 6vw, 5rem);
+    border-top: 1px solid var(--border-light);
+    font-size: clamp(0.72rem, 1vw, 0.8rem);
+    color: var(--text-muted);
+}
+
+/* ── Entrance animations ── */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.animate {
+    opacity: 0;
+    animation: fadeUp 0.9s var(--ease) forwards;
+}
+
+.delay-1 { animation-delay: 0.08s; }
+.delay-2 { animation-delay: 0.2s; }
+.delay-3 { animation-delay: 0.35s; }
+.delay-4 { animation-delay: 0.5s; }
+.delay-5 { animation-delay: 0.6s; }
+.delay-6 { animation-delay: 0.75s; }
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+    .project-card {
+        grid-template-columns: 1fr;
+    }
+
+    .project-visual {
+        order: -1;
+        aspect-ratio: 16 / 9;
+    }
+
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .hero-nav { display: none; }
+}
+</style>
 </head>
-
 <body>
-    <div class="container">
-        <header>
-            <a href="#" class="logo">Shawn.</a>
-            <nav>
-                <ul>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">About</a></li>
-                </ul>
-            </nav>
-        </header>
 
-        <section class="hero">
-            <h1>Building Tools<br>That Empower.</h1>
-            <p>Exploring the intersection of AI, Business Logic, and Design.</p>
-        </section>
-
-        <main>
-            <div class="section-title">Selected Projects</div>
-
-            <div class="projects-grid">
-
-                <!-- Project 1: Google AI Studio Guide -->
-                <a href="google-ai-studio-guide/index.html" class="project-card">
-                    <div class="card-header">
-                        <div class="project-icon">✨</div>
-                        <span class="project-tag">Guide</span>
-                    </div>
-                    <h3>Google AI Studio Guide</h3>
-                    <p>A comprehensive guide for users in China to access and master Google's Gemini models via AI
-                        Studio.</p>
-                    <div class="card-arrow">View Guide &rarr;</div>
-                </a>
-
-                <!-- Project 2: Compensation Calculator -->
-                <a href="compensation/" class="project-card">
-                    <div class="card-header">
-                        <div class="project-icon">💰</div>
-                        <span class="project-tag">Tool</span>
-                    </div>
-                    <h3>Sales Compensation</h3>
-                    <p>Advanced calculator for sales compensation logic, featuring configurable matrices and ROI
-                        analysis.</p>
-                    <div class="card-arrow">Open Tool &rarr;</div>
-                </a>
-
-                <!-- Project 3: ROI2 Analysis -->
-                <a href="roi2/" class="project-card">
-                    <div class="card-header">
-                        <div class="project-icon">📊</div>
-                        <span class="project-tag">Analytics</span>
-                    </div>
-                    <h3>ROI Sensitivity</h3>
-                    <p>Interactive visualization of Return on Investment sensitivity against sales expense ratios.</p>
-                    <div class="card-arrow">Explore Data &rarr;</div>
-                </a>
-
-            </div>
-        </main>
-
-        <footer>
-            <div>© 2025 Shawn. All rights reserved.</div>
-            <div class="social-links">
-                <a href="#">GitHub</a>
-                <a href="#">Twitter</a>
-                <a href="#">Email</a>
-            </div>
-        </footer>
+<!-- ════ Hero — Full Viewport ════ -->
+<section class="hero-section">
+    <div class="hero-top">
+        <div>
+            <div class="header-name animate delay-1">ShawnWu</div>
+            <div class="header-role animate delay-1">AI Builder</div>
+        </div>
+        <nav class="hero-nav animate delay-1">
+            <a href="#projects">项目</a>
+            <a href="#about">关于</a>
+        </nav>
     </div>
-</body>
 
+    <div class="hero-center">
+        <h1 class="hero-tagline animate delay-2">用 AI 构建，<br>让想法<span class="accent">真正发生</span>。</h1>
+        <p class="hero-desc animate delay-3">关注如何用 AI 工具快速将想法变成可用的产品。<br>在这里分享我的项目、实践和思考。</p>
+    </div>
+
+    <div class="hero-bottom animate delay-4">
+        <div class="scroll-line"></div>
+        <span class="scroll-hint">向下探索</span>
+    </div>
+</section>
+
+<!-- ════ Projects ════ -->
+<section class="content-section" id="projects">
+    <div class="section-label animate delay-5">Projects</div>
+
+    <a href="vibe-coding-workshop/" class="project-card animate delay-5">
+        <div class="project-meta">
+            <span class="project-tag">Workshop</span>
+            <h2 class="project-title">Vibe Coding<br>完全指南</h2>
+            <p class="project-desc">从零开始的 Vibe Coding 实战工作坊，掌握用 AI 编程构建产品的完整方法论。</p>
+            <div class="project-cta">查看详情 <span>→</span></div>
+        </div>
+        <div class="project-visual">
+            <div class="visual-icon">⚡</div>
+            <div class="visual-lines">
+                <div class="visual-line" style="width: 64px;"></div>
+                <div class="visual-line" style="width: 48px;"></div>
+                <div class="visual-line" style="width: 56px;"></div>
+            </div>
+        </div>
+    </a>
+</section>
+
+<!-- ════ About ════ -->
+<section class="about-section" id="about">
+    <div class="about-grid">
+        <div class="about-label">About</div>
+        <p class="about-text">
+            <strong>ShawnWu</strong>，AI Builder。相信最好的工具是自己造出来的。<br>
+            用 AI 把脑海中的想法快速变成真实可用的产品，并在这里记录构建过程中的方法和心得。
+        </p>
+    </div>
+</section>
+
+<!-- ════ Footer ════ -->
+<footer class="footer">
+    <div>© 2025 ShawnWu</div>
+</footer>
+
+</body>
 </html>
