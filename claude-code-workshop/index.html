@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 实战工作坊 — 数据看板</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=general-sans@300,400,500,600,700&f[]=cabinet-grotesk@400,500,700,800&display=swap">
+<style>
+:root {
+    --bg-warm: #f8f7f4; --bg-white: #fff; --bg-dark: #12142a;
+    --text-dark: #1a1a1a; --text-body: #4b5563; --text-muted: #9ca3af; --text-white: #fff;
+    --primary: #1a56db; --primary-light: rgba(26,86,219,0.08);
+    --accent: #ff6b35; --accent-light: rgba(255,107,53,0.1); --accent-yellow: #ffc233;
+    --green: #22c55e; --green-light: rgba(34,197,94,0.1);
+    --border: #e5e7eb;
+    --font-display: 'Cabinet Grotesk', sans-serif;
+    --font-body: 'General Sans', sans-serif;
+    --title-size: clamp(2.5rem, 6vw, 5.5rem);
+    --h2-size: clamp(1.8rem, 4vw, 3.2rem);
+    --h3-size: clamp(1.3rem, 2.5vw, 1.9rem);
+    --body-size: clamp(0.95rem, 1.6vw, 1.3rem);
+    --small-size: clamp(0.85rem, 1.3vw, 1.1rem);
+    --label-size: clamp(0.7rem, 1vw, 0.9rem);
+    --slide-padding: clamp(2rem, 5vw, 5rem);
+    --content-gap: clamp(0.6rem, 1.5vw, 1.5rem);
+    --ease: cubic-bezier(0.16, 1, 0.3, 1); --radius: 12px; --radius-sm: 8px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { height: 100%; scroll-snap-type: y mandatory; scroll-behavior: smooth; overflow-x: hidden; }
+body { font-family: var(--font-body); height: 100%; overflow-x: hidden; background: var(--bg-warm); color: var(--text-dark); }
+
+.slide {
+    width: 100vw; height: 100vh; height: 100dvh; overflow: hidden;
+    scroll-snap-align: start; position: relative;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: var(--slide-padding);
+}
+.slide > *:not(.chapter-number):not(.divider) { width: 100%; max-width: min(92vw, 1100px); }
+.slide > .two-col { max-width: min(92vw, 1200px); }
+.slide-warm { background: var(--bg-warm); }
+.slide-white { background: var(--bg-white); }
+.slide-dark { background: var(--bg-dark); color: var(--text-white); }
+.slide-section { background: var(--bg-warm); position: relative; text-align: center; }
+.slide-section::before {
+    content: ''; position: absolute;
+    top: calc(-1 * clamp(60px,12vw,150px)); right: calc(-1 * clamp(60px,10vw,120px));
+    width: clamp(200px,30vw,400px); height: clamp(200px,30vw,400px);
+    border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-yellow)); opacity: 0.1;
+}
+.slide-section::after {
+    content: ''; position: absolute;
+    bottom: calc(-1 * clamp(40px,8vw,100px)); left: calc(-1 * clamp(40px,6vw,80px));
+    width: clamp(150px,22vw,300px); height: clamp(150px,22vw,300px);
+    border-radius: 50%; background: linear-gradient(135deg, var(--primary), #7c3aed); opacity: 0.06;
+}
+.slide-centered { text-align: left; }
+.chapter-number {
+    font-family: var(--font-display); font-size: clamp(8rem,22vw,20rem); font-weight: 800;
+    color: rgba(26,86,219,0.04); position: absolute; right: var(--slide-padding);
+    bottom: clamp(-1rem,-2vw,-2rem); line-height: 0.85; user-select: none; pointer-events: none;
+}
+.slide-label {
+    font-size: var(--label-size); font-weight: 600; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--primary); margin-bottom: clamp(0.4rem,0.8vw,0.6rem);
+}
+.slide-dark .slide-label { color: var(--accent); }
+.slide-title { font-family: var(--font-display); font-size: var(--title-size); font-weight: 700; line-height: 1.08; letter-spacing: -0.03em; }
+.slide-h2 { font-family: var(--font-display); font-size: var(--h2-size); font-weight: 700; line-height: 1.12; letter-spacing: -0.02em; }
+.slide-h3 { font-family: var(--font-display); font-size: var(--h3-size); font-weight: 600; line-height: 1.2; }
+.slide-body { font-size: var(--body-size); line-height: 1.65; color: var(--text-body); }
+.slide-dark .slide-body { color: rgba(255,255,255,0.7); }
+.highlight { color: var(--accent); }
+.primary-text { color: var(--primary); }
+.accent-text { color: var(--accent); }
+.bold { font-weight: 600; }
+.max-w { max-width: min(85%,600px); }
+
+.divider { width: clamp(40px,8vw,80px); height: 3px; background: var(--accent); margin: clamp(0.5rem,1.2vw,1rem) 0; border-radius: 2px; }
+.slide-dark .divider { background: var(--accent); }
+
+.gap-xs { margin-top: clamp(0.3rem,0.6vw,0.5rem); }
+.gap-sm { margin-top: clamp(0.5rem,1vw,0.8rem); }
+.gap-md { margin-top: clamp(0.8rem,1.5vw,1.2rem); }
+.gap-lg { margin-top: clamp(1.2rem,2.5vw,2rem); }
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(1.5rem,3vw,3rem); align-items: start; }
+@media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+.bullet-list { list-style: none; display: flex; flex-direction: column; gap: clamp(0.3rem,0.6vh,0.6rem); }
+.bullet-list li { font-size: var(--body-size); line-height: 1.5; padding-left: 1.2em; position: relative; color: var(--text-body); }
+.bullet-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 600; }
+.slide-dark .bullet-list li { color: rgba(255,255,255,0.7); }
+
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%,260px),1fr)); gap: clamp(0.6rem,1.5vw,1.2rem); }
+.card {
+    background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: clamp(1rem,2vw,1.6rem); transition: transform 0.3s var(--ease), box-shadow 0.3s;
+}
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+.slide-dark .card { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+.card-num { font-family: var(--font-display); font-size: var(--h2-size); font-weight: 800; color: rgba(26,86,219,0.12); line-height: 1; }
+.slide-dark .card-num { color: rgba(255,107,53,0.2); }
+.card-title { font-family: var(--font-display); font-size: var(--h3-size); font-weight: 600; margin: clamp(0.2rem,0.5vw,0.4rem) 0; white-space: nowrap; }
+.card-body { font-size: var(--small-size); line-height: 1.5; color: var(--text-body); }
+.slide-dark .card-body { color: rgba(255,255,255,0.6); }
+
+.code-block {
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: var(--small-size);
+    background: var(--bg-dark); color: #e2e8f0; padding: clamp(0.8rem,1.5vw,1.4rem);
+    border-radius: var(--radius); line-height: 1.7; white-space: pre-wrap; overflow: hidden;
+}
+.slide-dark .code-block { background: rgba(255,255,255,0.06); }
+
+/* Prompt highlight — special treatment for prompts */
+.prompt-block {
+    font-family: 'SF Mono', 'Fira Code', monospace; font-size: var(--small-size);
+    background: var(--bg-dark); color: #e2e8f0; padding: clamp(1rem,1.8vw,1.6rem);
+    border-radius: var(--radius); line-height: 1.7; white-space: pre-wrap; overflow: hidden;
+    border-left: 4px solid var(--accent); position: relative;
+}
+.prompt-block::before {
+    content: 'PROMPT'; position: absolute; top: clamp(0.4rem,0.8vw,0.6rem); right: clamp(0.6rem,1vw,0.8rem);
+    font-size: var(--label-size); font-weight: 700; letter-spacing: 0.1em;
+    color: var(--accent); font-family: var(--font-body);
+}
+.slide-dark .prompt-block { background: rgba(255,255,255,0.06); border-left-color: var(--accent); }
+
+.flow { display: flex; align-items: center; gap: clamp(0.4rem,1vw,0.8rem); flex-wrap: wrap; justify-content: center; }
+.flow-step {
+    background: rgba(26,86,219,0.08); color: var(--primary); padding: clamp(0.5rem,0.8vw,0.7rem) clamp(0.8rem,1.5vw,1.3rem);
+    border-radius: 24px; font-size: var(--body-size); font-weight: 600; white-space: nowrap;
+}
+.slide-dark .flow-step { background: rgba(255,107,53,0.15); color: var(--accent); }
+.flow-arrow { color: var(--text-muted); font-size: var(--h3-size); }
+
+/* Numbered horizontal steps */
+.steps { display: flex; gap: clamp(0.6rem,1.5vw,1.2rem); align-items: stretch; }
+.step {
+    flex: 1; background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: clamp(0.8rem,1.5vw,1.2rem); position: relative; display: flex; flex-direction: column;
+}
+.slide-dark .step { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.08); }
+.step-num {
+    font-family: var(--font-display); font-size: var(--h3-size); font-weight: 800;
+    color: var(--accent); margin-bottom: clamp(0.2rem,0.4vw,0.3rem);
+}
+.step-title { font-family: var(--font-display); font-size: var(--body-size); font-weight: 600; margin-bottom: clamp(0.2rem,0.3vw,0.3rem); white-space: nowrap; }
+.step-body { font-size: var(--small-size); color: var(--text-body); line-height: 1.5; }
+.slide-dark .step-body { color: rgba(255,255,255,0.6); }
+
+.data-table { width: 100%; border-collapse: collapse; font-size: var(--small-size); }
+.data-table th { text-align: left; padding: clamp(0.3rem,0.5vw,0.5rem) clamp(0.4rem,0.8vw,0.6rem); font-weight: 600; border-bottom: 2px solid var(--border); color: var(--text-muted); font-size: var(--label-size); text-transform: uppercase; letter-spacing: 0.05em; }
+.data-table td { padding: clamp(0.3rem,0.5vw,0.5rem) clamp(0.4rem,0.8vw,0.6rem); border-bottom: 1px solid var(--border); color: var(--text-body); }
+.slide-dark .data-table th { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5); }
+.slide-dark .data-table td { border-color: rgba(255,255,255,0.06); color: rgba(255,255,255,0.7); }
+
+.tag { display: inline-block; font-size: var(--label-size); font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+.tag-blue { background: var(--primary-light); color: var(--primary); }
+.tag-orange { background: var(--accent-light); color: var(--accent); }
+.tag-green { background: var(--green-light); color: var(--green); }
+
+/* Reveal animations */
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+.slide.visible .reveal { opacity: 1; transform: translateY(0); }
+.slide.visible .reveal:nth-child(2) { transition-delay: 0.1s; }
+.slide.visible .reveal:nth-child(3) { transition-delay: 0.15s; }
+.slide.visible .reveal:nth-child(4) { transition-delay: 0.2s; }
+.slide.visible .reveal:nth-child(5) { transition-delay: 0.25s; }
+.slide.visible .reveal:nth-child(6) { transition-delay: 0.3s; }
+
+/* Nav */
+#progressTrack { position: fixed; top: 0; left: 0; height: 3px; z-index: 999; background: rgba(0,0,0,0.06); width: 100%; }
+#progressBar { height: 100%; background: var(--accent); transition: width 0.3s var(--ease); width: 0; }
+#navDots { position: fixed; right: clamp(8px,1.5vw,16px); top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 6px; z-index: 999; }
+.nav-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(0,0,0,0.12); border: none; cursor: pointer; transition: all 0.3s; padding: 0; }
+.nav-dot.active { background: var(--accent); transform: scale(1.3); }
+#slideCounter { position: fixed; bottom: clamp(8px,1.5vw,16px); right: clamp(12px,2vw,24px); font-size: var(--label-size); color: rgba(0,0,0,0.25); z-index: 999; font-variant-numeric: tabular-nums; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.15s !important; }
+    html { scroll-behavior: auto; }
+}
+@media (max-height: 600px) {
+    :root { --slide-padding: clamp(0.8rem,3vw,2rem); --content-gap: clamp(0.3rem,1vw,0.6rem); --title-size: clamp(1.8rem,4.5vw,2.8rem); --h2-size: clamp(1.3rem,3vw,2rem); }
+    #navDots { display: none; }
+}
+@media (max-width: 700px) {
+    .steps { flex-direction: column; }
+}
+@media (max-height: 500px) {
+    :root { --slide-padding: clamp(0.5rem,2vw,1rem); --title-size: clamp(1.2rem,3.5vw,1.8rem); --body-size: clamp(0.65rem,1vw,0.85rem); }
+}
+</style>
+</head>
+<body>
+
+<div id="progressTrack"><div id="progressBar"></div></div>
+<nav id="navDots"></nav>
+<div id="slideCounter"></div>
+
+<!-- ========== 01: TITLE ========== -->
+<section class="slide slide-dark" id="s1" style="text-align:center">
+    <div class="slide-label reveal">Workshop · 2026.04.08</div>
+    <h1 class="slide-title reveal">Claude Code<br><span class="highlight">实战工作坊</span></h1>
+    <div class="divider reveal" style="margin:clamp(0.5rem,1vw,1rem) auto"></div>
+    <p class="slide-body reveal" style="color:rgba(255,255,255,0.6)">从零构建数据看板 · 1 小时 · 全程实操</p>
+    <div class="gap-md"></div>
+    <p class="slide-body reveal" style="color:rgba(255,255,255,0.4)">Shawn Wu</p>
+</section>
+
+<!-- ========== 02: AGENDA ========== -->
+<section class="slide slide-white slide-centered" id="s2">
+    <div class="slide-label reveal">Agenda</div>
+    <h2 class="slide-h2 reveal gap-xs">今天要做什么</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid reveal" style="grid-template-columns:repeat(6,1fr)">
+        <div class="card"><div class="card-num">01</div><div class="card-title" style="white-space:nowrap">环境准备</div><div class="card-body">安装 Claude Code<br>+ 三个插件</div></div>
+        <div class="card"><div class="card-num">02</div><div class="card-title" style="white-space:nowrap">从零到一</div><div class="card-body">读数据<br>→ 生成看板</div></div>
+        <div class="card"><div class="card-num">03</div><div class="card-title" style="white-space:nowrap">迭代优化</div><div class="card-body">筛选 → 图表<br>→ 动画 → AI</div></div>
+        <div class="card"><div class="card-num">04</div><div class="card-title" style="white-space:nowrap">进阶功能</div><div class="card-body">登录 · 权限<br>· 暗黑模式</div></div>
+        <div class="card"><div class="card-num">05</div><div class="card-title" style="white-space:nowrap">插件深度</div><div class="card-body">20 个设计<br>命令详解</div></div>
+        <div class="card"><div class="card-num">06</div><div class="card-title" style="white-space:nowrap">自由发挥</div><div class="card-body">挑战你自己<br>的创意</div></div>
+    </div>
+</section>
+
+<!-- ========== 03: SECTION — 环境准备 ========== -->
+<section class="slide slide-section" id="s3">
+    <div class="chapter-number">01</div>
+    <div class="slide-label reveal">Chapter 01</div>
+    <h2 class="slide-title reveal">环境准备<br><span class="highlight">工具安装</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ========== 04: ENVIRONMENT + BASIC OPS ========== -->
+<section class="slide slide-white slide-centered" id="s4">
+    <div class="slide-label reveal">环境检查 + 基本操作</div>
+    <h2 class="slide-h2 reveal gap-xs">先确认三个前置条件</h2>
+    <div class="gap-md"></div>
+    <div class="steps reveal">
+        <div class="step" style="text-align:center">
+            <div class="step-num">1</div>
+            <div class="step-title">Node.js</div>
+            <div class="step-body"><code>node -v</code><br>≥ v18<br><span style="color:var(--text-muted)">装 Claude Code 需要</span></div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num">2</div>
+            <div class="step-title">Git</div>
+            <div class="step-body"><code>git --version</code><br>≥ v2.x<br><span style="color:var(--text-muted)">装插件需要</span></div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num">3</div>
+            <div class="step-title">Claude Code</div>
+            <div class="step-body"><code>claude --version</code><br>如果没装：<br><code style="font-size:var(--small-size)">npm i -g @anthropic-ai/claude-code</code></div>
+        </div>
+    </div>
+    <div class="gap-md"></div>
+    <table class="data-table reveal" style="max-width:600px">
+        <thead><tr><th>操作</th><th>说明</th></tr></thead>
+        <tbody>
+        <tr><td><code>claude</code></td><td>启动对话（首次会弹浏览器登录）</td></tr>
+        <tr><td>弹出 Allow? → <strong>按 y</strong></td><td>允许创建/修改文件，正常操作</td></tr>
+        <tr><td>输入 <code>/</code></td><td>查看所有可用技能</td></tr>
+        <tr><td><code>Ctrl+C</code></td><td>退出</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ========== 05: INSTALL PLUGINS ========== -->
+<section class="slide slide-dark slide-centered" id="s5">
+    <div class="slide-label reveal">Install</div>
+    <h2 class="slide-h2 reveal gap-xs">安装三个插件</h2>
+    <div class="gap-md"></div>
+    <div class="code-block reveal">claude plugin install superpowers@anthropics/claude-plugins-official
+claude plugin install frontend-design@anthropics/claude-plugins-official
+claude plugin install impeccable@pbakaus/impeccable</div>
+    <div class="gap-md"></div>
+    <p class="slide-body reveal">安装完成后输入 <code style="color:var(--accent)">/</code> 验证 → 能看到 <code style="color:var(--accent)">/polish</code>、<code style="color:var(--accent)">/audit</code>、<code style="color:var(--accent)">/brainstorming</code> 就成功了</p>
+</section>
+
+<!-- ========== 06: THREE PLUGINS ========== -->
+<section class="slide slide-warm slide-centered" id="s6">
+    <div class="slide-label reveal">Plugin System</div>
+    <h2 class="slide-h2 reveal gap-xs">三个插件各做什么</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))">
+        <div class="card">
+            <div class="card-title"><span class="tag tag-blue">Superpowers</span></div>
+            <div class="card-body gap-sm">工程工作流<br><code>/brainstorming</code> 头脑风暴<br><code>/writing-plans</code> 计划制定<br><code>/systematic-debugging</code> 调试</div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="tag tag-green">Frontend Design</span></div>
+            <div class="card-body gap-sm">设计规范<br>生成页面时自动遵循<br>排版、配色、间距等<br>专业标准</div>
+        </div>
+        <div class="card">
+            <div class="card-title"><span class="tag tag-orange">Impeccable</span></div>
+            <div class="card-body gap-sm">设计增强 × 20 命令<br><code>/audit</code> 诊断 → <code>/polish</code> 修复<br><code>/typeset</code> 排版 · <code>/arrange</code> 布局<br><code>/animate</code> 动效 · <code>/delight</code> 惊喜</div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 07: SECTION — 从零到一 ========== -->
+<section class="slide slide-section" id="s7">
+    <div class="chapter-number">02</div>
+    <div class="slide-label reveal">Chapter 02</div>
+    <h2 class="slide-title reveal">从零到一<br><span class="highlight">15 分钟</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ========== 08: DOWNLOAD DATA ========== -->
+<section class="slide slide-white slide-centered" id="s8">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">Step 1</div>
+            <h2 class="slide-h2 reveal gap-xs">下载数据</h2>
+            <div class="divider reveal"></div>
+            <p class="slide-body reveal">从群里的云盘链接下载 <code>data/</code> 文件夹，放到你的工作目录。</p>
+            <div class="gap-sm"></div>
+            <p class="slide-body reveal bold">先用 Excel 打开 CSV 看看数据长啥样。</p>
+        </div>
+        <div>
+            <div class="slide-label reveal">5 个文件</div>
+            <div class="gap-xs"></div>
+            <ul class="bullet-list reveal">
+                <li><code>coffee-data.json</code> — 全量数据（AI 读这个）</li>
+                <li><code>cities-summary.csv</code> — 6 城市核心指标</li>
+                <li><code>cities-monthly.csv</code> — 月度消费量</li>
+                <li><code>cities-monthly-2023.csv</code> — 去年同期</li>
+                <li><code>categories.csv</code> — 品类偏好</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 09: FIRST PROMPT ========== -->
+<section class="slide slide-dark slide-centered" id="s9">
+    <div class="slide-label reveal">Step 2 · 复制粘贴到 Claude Code</div>
+    <h2 class="slide-h2 reveal gap-xs">第一个 Prompt</h2>
+    <div class="gap-md"></div>
+    <div class="prompt-block reveal">当前目录下有一个 data 文件夹，里面是全国咖啡消费趋势的数据文件。
+请先读取 data/coffee-data.json 了解数据结构，
+然后基于这些真实数据创建一个 HTML 数据看板页面。
+
+要求：
+- 单个 HTML 文件，使用 Chart.js
+- 数据从 JSON 文件中读取，不要硬编码假数据
+- 顶部放 4 个数据统计卡片（年消费量、市场规模、门店数、杯均价格）
+- 下方放一个折线图（月度趋势）和一个柱状图（城市排名）
+- 风格要现代简约，浅色背景，圆角卡片</div>
+    <div class="gap-md"></div>
+    <p class="slide-body reveal" style="color:var(--accent);font-weight:600">关键：先读数据 → 再生成页面 → 这是真实工作流</p>
+</section>
+
+<!-- ========== 10: CHECK RESULT ========== -->
+<section class="slide slide-warm slide-centered" id="s10">
+    <div class="slide-label reveal">Step 3 · 打开浏览器验证</div>
+    <h2 class="slide-h2 reveal gap-xs">检查三个点</h2>
+    <div class="gap-lg"></div>
+    <div class="steps reveal">
+        <div class="step" style="text-align:center">
+            <div class="step-num" style="font-size:var(--h2-size);color:var(--green)">✓</div>
+            <div class="step-title">页面能看到？</div>
+            <div class="step-body">浏览器中能打开 HTML 文件</div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num" style="font-size:var(--h2-size);color:var(--green)">✓</div>
+            <div class="step-title">图表正常渲染？</div>
+            <div class="step-body">折线图和柱状图都显示了</div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num" style="font-size:var(--h2-size);color:var(--green)">✓</div>
+            <div class="step-title">卡片有数字？</div>
+            <div class="step-body">统计卡片显示了真实数据</div>
+        </div>
+    </div>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal bold" style="text-align:center;font-size:var(--h3-size)">每个人的结果都不一样——这是正常的</p>
+</section>
+
+<!-- ========== 11: SECTION — 迭代优化 ========== -->
+<section class="slide slide-section" id="s11">
+    <div class="chapter-number">03</div>
+    <div class="slide-label reveal">Chapter 03</div>
+    <h2 class="slide-title reveal">迭代优化<br><span class="highlight">20 分钟</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ========== 12: ITERATION 1 ========== -->
+<section class="slide slide-white slide-centered" id="s12">
+    <div class="slide-label reveal">迭代 1 · 5 min</div>
+    <h2 class="slide-h2 reveal gap-xs">城市筛选联动</h2>
+    <div class="gap-md"></div>
+    <div class="prompt-block reveal">加一个城市筛选下拉框，放在页面顶部右侧。
+选择不同城市后，所有图表和数据卡片要联动更新。</div>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal"><span class="accent-text bold">教学点</span>：一句话描述"联动"，AI 自动实现多图表同步刷新</p>
+</section>
+
+<!-- ========== 13: ITERATION 2 ========== -->
+<section class="slide slide-warm slide-centered" id="s13">
+    <div class="slide-label reveal">迭代 2 · 5 min</div>
+    <h2 class="slide-h2 reveal gap-xs">环形图 + 可排序表格</h2>
+    <div class="gap-md"></div>
+    <div class="prompt-block reveal">再加两个组件：
+1. 一个环形图，显示咖啡品类偏好分布（拿铁、美式、卡布奇诺、摩卡、冷萃、其他）
+2. 一个数据明细表格，显示每个城市的消费量、市场规模、门店数、杯均价、同比增速
+表格要支持点击表头排序</div>
+    <div class="gap-lg"></div>
+    <p class="slide-body reveal"><span class="accent-text bold">教学点</span>：一次提多个需求，AI 批量处理。描述越具体，结果越精准</p>
+</section>
+
+<!-- ========== 14: ITERATION 3 — AUDIT + POLISH ========== -->
+<section class="slide slide-dark slide-centered" id="s14">
+    <div class="slide-label reveal">迭代 3 · 5 min</div>
+    <h2 class="slide-h2 reveal gap-xs">动画 + 插件精修</h2>
+    <div class="gap-md"></div>
+    <div class="steps reveal">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-title">加动画</div>
+            <div class="prompt-block" style="font-size:var(--small-size);padding:clamp(0.5rem,1vw,0.8rem);border-left-width:3px">数据卡片数字从 0 到目标值的计数动画
+所有卡片和图表从下往上入场动画
+卡片 hover 时轻微上浮</div>
+        </div>
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-title">诊断</div>
+            <div class="step-body"><code style="color:var(--accent);font-size:var(--body-size)">/audit</code><br>自动出检查报告<br>不改代码，只看问题</div>
+        </div>
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-title">一键修复</div>
+            <div class="step-body"><code style="color:var(--accent);font-size:var(--body-size)">/polish</code><br>间距 · 配色 · 动画曲线<br>对比度 · 交互状态</div>
+        </div>
+    </div>
+    <div class="gap-md"></div>
+    <p class="slide-body reveal" style="text-align:center;color:var(--accent);font-weight:600">先诊断 → 再修复 → 不盲目优化</p>
+</section>
+
+<!-- ========== 15: IMPECCABLE COMMANDS ========== -->
+<section class="slide slide-white slide-centered" id="s15">
+    <div class="slide-label reveal">Impeccable</div>
+    <h2 class="slide-h2 reveal gap-xs">20 个设计命令速览</h2>
+    <div class="gap-sm"></div>
+    <div class="two-col reveal" style="gap:clamp(0.8rem,1.5vw,1.5rem)">
+        <div>
+            <table class="data-table">
+                <thead><tr><th>类别</th><th>命令</th><th>做什么</th></tr></thead>
+                <tbody>
+                <tr><td><span class="tag tag-blue">设置</span></td><td>/teach-impeccable</td><td>定义风格偏好</td></tr>
+                <tr><td><span class="tag tag-orange">诊断</span></td><td>/audit</td><td>出检查报告</td></tr>
+                <tr><td></td><td>/critique</td><td>UX 评审</td></tr>
+                <tr><td><span class="tag tag-green">修复</span></td><td>/polish</td><td>最终精修</td></tr>
+                <tr><td></td><td>/normalize</td><td>对齐设计系统</td></tr>
+                <tr><td></td><td>/typeset</td><td>修字体排版</td></tr>
+                <tr><td></td><td>/arrange</td><td>修布局节奏</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <table class="data-table">
+                <thead><tr><th>类别</th><th>命令</th><th>做什么</th></tr></thead>
+                <tbody>
+                <tr><td><span class="tag tag-orange">增强</span></td><td>/animate</td><td>加动效</td></tr>
+                <tr><td></td><td>/colorize</td><td>加色彩</td></tr>
+                <tr><td></td><td>/delight</td><td>加惊喜感</td></tr>
+                <tr><td></td><td>/bolder</td><td>变大胆</td></tr>
+                <tr><td></td><td>/quieter</td><td>变柔和</td></tr>
+                <tr><td><span class="tag tag-blue">简化</span></td><td>/distill</td><td>精炼</td></tr>
+                <tr><td></td><td>/clarify</td><td>优化文案</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 16: ITERATION 4 — AI ANALYST ========== -->
+<section class="slide slide-dark slide-centered" id="s16">
+    <div class="slide-label reveal">迭代 4 · 5 min · 最 wow 的一步</div>
+    <h2 class="slide-h2 reveal gap-xs">AI 数据分析师</h2>
+    <div class="gap-md"></div>
+    <div class="prompt-block reveal">在页面右侧加一个固定的侧边栏，做成 AI 数据分析师的对话界面：
+- 顶部显示"AI 数据分析师"头像和名称
+- 中间是聊天消息区域
+- 底部有输入框和发送按钮
+- AI 的回复要能读取页面上的实际数据来回答问题
+- 加几个快捷问题按钮：整体趋势、增长最快、风险预警</div>
+    <div class="gap-md"></div>
+    <p class="slide-body reveal" style="color:var(--accent);font-family:var(--font-display);font-size:var(--h3-size);font-weight:600">AI 能理解"读取页面数据"这种抽象需求</p>
+</section>
+
+<!-- ========== 17: SECTION — 进阶功能 ========== -->
+<section class="slide slide-section" id="s17">
+    <div class="chapter-number">04</div>
+    <div class="slide-label reveal">Chapter 04</div>
+    <h2 class="slide-title reveal">进阶功能<br><span class="highlight">产品级体验</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ========== 18: DARK MODE ========== -->
+<section class="slide slide-white slide-centered" id="s18">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">Dark Mode</div>
+            <h2 class="slide-h2 reveal gap-xs">暗黑模式</h2>
+            <div class="divider reveal"></div>
+            <ul class="bullet-list reveal">
+                <li>CSS 变量 <code>[data-theme="dark"]</code> 覆盖</li>
+                <li>右上角 sun/moon 切换按钮</li>
+                <li>localStorage 记住偏好</li>
+                <li>Chart.js 颜色跟随适配</li>
+            </ul>
+        </div>
+        <div>
+            <div class="code-block reveal" style="font-size:var(--small-size)">给页面加暗黑模式切换按钮
+用 CSS 变量做颜色覆盖
+深色背景用 #0f1117
+localStorage 记住偏好
+图表也要适配</div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 19: LOGIN PAGE ========== -->
+<section class="slide slide-warm slide-centered" id="s19">
+    <div class="two-col">
+        <div>
+            <div class="slide-label reveal">Login Page</div>
+            <h2 class="slide-h2 reveal gap-xs">模拟登录页</h2>
+            <div class="divider reveal"></div>
+            <ul class="bullet-list reveal">
+                <li>左侧品牌区 + 右侧表单</li>
+                <li>邮箱、密码输入框</li>
+                <li>三个快捷账号一键填充</li>
+                <li>localStorage 保存登录状态</li>
+            </ul>
+        </div>
+        <div>
+            <div class="slide-label reveal">三个角色</div>
+            <div class="gap-xs"></div>
+            <div class="card-grid reveal" style="grid-template-columns:1fr">
+                <div class="card"><div class="card-title">张明 · 管理员</div><div class="card-body">全部权限</div></div>
+                <div class="card"><div class="card-title">李雪 · 分析师</div><div class="card-body">看不到收入数据</div></div>
+                <div class="card"><div class="card-title">访客</div><div class="card-body">只能看全国汇总</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 20: PERMISSIONS ========== -->
+<section class="slide slide-dark slide-centered" id="s20">
+    <div class="slide-label reveal">Permissions</div>
+    <h2 class="slide-h2 reveal gap-xs">角色权限矩阵</h2>
+    <div class="gap-md"></div>
+    <table class="data-table reveal">
+        <thead><tr><th>功能</th><th>管理员</th><th>分析师</th><th>访客</th></tr></thead>
+        <tbody>
+        <tr><td>查看所有城市</td><td style="color:var(--green)">✓</td><td style="color:var(--green)">✓</td><td style="color:var(--accent)">✗ 仅汇总</td></tr>
+        <tr><td>收入列</td><td style="color:var(--green)">可见</td><td style="color:var(--accent)">隐藏</td><td style="color:var(--accent)">隐藏</td></tr>
+        <tr><td>城市筛选</td><td style="color:var(--green)">启用</td><td style="color:var(--green)">启用</td><td style="color:var(--accent)">禁用</td></tr>
+        <tr><td>AI 回答范围</td><td style="color:var(--green)">全部</td><td style="color:var(--accent)">无收入相关</td><td style="color:var(--accent)">仅汇总</td></tr>
+        <tr><td>设置面板·用户管理</td><td style="color:var(--green)">可见</td><td style="color:var(--accent)">不可见</td><td style="color:var(--accent)">不可见</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ========== 21: SETTINGS PANEL ========== -->
+<section class="slide slide-white slide-centered" id="s21">
+    <div class="slide-label reveal">Settings</div>
+    <h2 class="slide-h2 reveal gap-xs">设置面板</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))">
+        <div class="card"><div class="card-title">用户信息</div><div class="card-body">头像、姓名、角色、登录时间</div></div>
+        <div class="card"><div class="card-title">外观</div><div class="card-body">深色模式开关</div></div>
+        <div class="card"><div class="card-title">通知</div><div class="card-body">数据更新 · 异常预警 · 周报推送</div></div>
+        <div class="card"><div class="card-title">管理员专属</div><div class="card-body">用户管理列表 · 权限矩阵</div></div>
+    </div>
+    <div class="gap-md"></div>
+    <p class="slide-body reveal">齿轮图标 → 右侧滑出 → 退出登录回到登录页</p>
+</section>
+
+<!-- ========== 22: SECTION — 插件深度 ========== -->
+<section class="slide slide-section" id="s22">
+    <div class="chapter-number">05</div>
+    <div class="slide-label reveal">Chapter 05</div>
+    <h2 class="slide-title reveal">插件深度<br><span class="highlight">解析</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ========== 23: SUPERPOWERS WORKFLOW ========== -->
+<section class="slide slide-dark slide-centered" id="s23">
+    <div class="slide-label reveal">Superpowers · 工程工作流</div>
+    <h2 class="slide-h2 reveal gap-xs">从想法到交付</h2>
+    <div class="gap-lg"></div>
+    <div class="steps reveal">
+        <div class="step" style="text-align:center">
+            <div class="step-num">1</div>
+            <div class="step-title">/brainstorming</div>
+            <div class="step-body">不确定怎么做？<br>发散多种方案</div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num">2</div>
+            <div class="step-title">/writing-plans</div>
+            <div class="step-body">功能比较大？<br>先拆解成步骤</div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num">3</div>
+            <div class="step-title">对话开发</div>
+            <div class="step-body">正常对话<br>+ /frontend-design</div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num">4</div>
+            <div class="step-title">/debugging</div>
+            <div class="step-body">遇到 bug？<br>系统化排查</div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num">5</div>
+            <div class="step-title">/code-review</div>
+            <div class="step-body">做完了<br>审查代码质量</div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 24: IMPECCABLE CHAIN ========== -->
+<section class="slide slide-white slide-centered" id="s24">
+    <div class="slide-label reveal">Impeccable · 设计精修链路</div>
+    <h2 class="slide-h2 reveal gap-xs">从诊断到精修</h2>
+    <div class="gap-lg"></div>
+    <div class="steps reveal">
+        <div class="step" style="text-align:center">
+            <div class="step-num">0</div>
+            <div class="step-title">/teach-impeccable</div>
+            <div class="step-body">定义风格偏好<br><span style="color:var(--text-muted)">只需做一次</span></div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num">1</div>
+            <div class="step-title">/audit</div>
+            <div class="step-body">出诊断报告<br>不改代码</div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num">2</div>
+            <div class="step-title">/normalize</div>
+            <div class="step-body">对齐设计系统<br>间距 · 颜色 · 字号</div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num">3</div>
+            <div class="step-title">/typeset + /arrange</div>
+            <div class="step-body">修字体排版<br>修布局节奏</div>
+        </div>
+        <div class="step" style="text-align:center">
+            <div class="step-num">4</div>
+            <div class="step-title">/polish</div>
+            <div class="step-body">最终精修<br><strong style="color:var(--accent)">出货前最后一步</strong></div>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 25: SKILL TIMING ========== -->
+<section class="slide slide-warm slide-centered" id="s25">
+    <div class="slide-label reveal">When to Use</div>
+    <h2 class="slide-h2 reveal gap-xs">技能使用时机</h2>
+    <div class="gap-md"></div>
+    <table class="data-table reveal">
+        <thead><tr><th>阶段</th><th>技能</th><th>来源</th></tr></thead>
+        <tbody>
+        <tr><td>项目启动</td><td><code>/teach-impeccable</code></td><td>Impeccable</td></tr>
+        <tr><td>不确定怎么做</td><td><code>/brainstorming</code></td><td>Superpowers</td></tr>
+        <tr><td>开始写代码</td><td><code>/frontend-design</code></td><td>Frontend Design</td></tr>
+        <tr><td>遇到 bug</td><td><code>/systematic-debugging</code></td><td>Superpowers</td></tr>
+        <tr><td>功能做完</td><td><code>/audit</code> → <code>/polish</code></td><td>Impeccable</td></tr>
+        <tr><td>确认质量</td><td><code>/requesting-code-review</code></td><td>Superpowers</td></tr>
+        </tbody>
+    </table>
+</section>
+
+<!-- ========== 26: SECTION — 自由发挥 ========== -->
+<section class="slide slide-section" id="s26">
+    <div class="chapter-number">06</div>
+    <div class="slide-label reveal">Chapter 06</div>
+    <h2 class="slide-title reveal">自由发挥<br><span class="highlight">10 分钟</span></h2>
+    <div class="divider reveal"></div>
+</section>
+
+<!-- ========== 27: CHALLENGE LIST ========== -->
+<section class="slide slide-dark slide-centered" id="s27">
+    <div class="slide-label reveal">Challenges</div>
+    <h2 class="slide-h2 reveal gap-xs">挑战清单</h2>
+    <div class="gap-md"></div>
+    <div class="two-col reveal" style="gap:clamp(1rem,2vw,2rem)">
+        <div>
+            <p class="slide-body bold" style="color:var(--green)">入门级</p>
+            <ul class="bullet-list gap-sm">
+                <li>换数据主题（新能源汽车？奶茶？）</li>
+                <li>换图标（用 Lucide 图标库）</li>
+                <li><code>/audit</code> 看看你的页面能打几分</li>
+            </ul>
+            <div class="gap-md"></div>
+            <p class="slide-body bold" style="color:var(--accent-yellow)">进阶级</p>
+            <ul class="bullet-list gap-sm">
+                <li>加雷达图对比城市</li>
+                <li><code>/typeset</code> + <code>/arrange</code> + <code>/delight</code></li>
+                <li>加暗黑模式切换</li>
+            </ul>
+        </div>
+        <div>
+            <p class="slide-body bold" style="color:var(--accent)">挑战级</p>
+            <ul class="bullet-list gap-sm">
+                <li>加模拟登录页（左右分栏）</li>
+                <li>做角色权限（管理员/分析师/访客）</li>
+                <li>让 AI 按角色限制回答</li>
+                <li>加设置面板（齿轮图标滑出）</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ========== 28: TAKEAWAY ========== -->
+<section class="slide slide-white slide-centered" id="s28">
+    <div class="slide-label reveal">Takeaway</div>
+    <h2 class="slide-h2 reveal gap-xs">核心收获</h2>
+    <div class="gap-md"></div>
+    <div class="card-grid reveal" style="grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))">
+        <div class="card"><div class="card-num">01</div><div class="card-title">Prompt 即编程</div><div class="card-body">描述越清晰，结果越好</div></div>
+        <div class="card"><div class="card-num">02</div><div class="card-title">迭代是方法论</div><div class="card-body">MVP → 交互 → 动画 → AI → 登录 → 权限</div></div>
+        <div class="card"><div class="card-num">03</div><div class="card-title">插件是倍增器</div><div class="card-body">/audit → /polish 把 70 分变 90 分</div></div>
+        <div class="card"><div class="card-num">04</div><div class="card-title">完整产品原型</div><div class="card-body">登录 · 权限 · 暗黑 · AI · 设置，全部对话生成</div></div>
+    </div>
+</section>
+
+<!-- ========== 29: ONE MORE THING ========== -->
+<section class="slide slide-dark" id="s29" style="text-align:center">
+    <div>
+        <div class="slide-label reveal" style="color:var(--accent)">Bonus</div>
+        <div class="gap-md"></div>
+        <h2 class="slide-title reveal">One More Thing</h2>
+        <div class="gap-md"></div>
+        <p class="slide-body reveal max-w" style="margin:0 auto">你现在看到的这套幻灯片<br>也是用 Claude Code 生成的。</p>
+        <div class="gap-sm"></div>
+        <p class="slide-body reveal" style="color:rgba(255,255,255,0.4)">使用 /frontend-slides skill · 全程对话 · 零手写 CSS</p>
+    </div>
+</section>
+
+<!-- ========== 31: THANK YOU ========== -->
+<section class="slide slide-warm" id="s30" style="text-align:center">
+    <div>
+        <h2 class="slide-title reveal">Thank You</h2>
+        <div class="divider reveal" style="margin:clamp(0.5rem,1vw,1rem) auto"></div>
+        <p class="slide-body reveal">Shawn Wu · 2026</p>
+        <div class="gap-lg"></div>
+        <p class="slide-body reveal bold" style="max-width:450px;margin:0 auto;color:var(--text-dark)">Claude Code 不只是写代码的工具。<br>它是你把想法变成产品的最短路径。</p>
+        <div class="gap-md"></div>
+        <p class="slide-body reveal" style="color:var(--accent);font-family:var(--font-display);font-size:var(--h3-size);font-weight:700">现在就开始。</p>
+    </div>
+</section>
+
+<script>
+class SlidePresentation {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.currentSlide = 0;
+        this.totalSlides = this.slides.length;
+        this.isScrolling = false;
+        this.scrollTimeout = null;
+        this.progressBar = document.getElementById('progressBar');
+        this.navDots = document.getElementById('navDots');
+        this.slideCounter = document.getElementById('slideCounter');
+        this.init();
+    }
+    init() {
+        this.createNavDots();
+        this.setupIntersectionObserver();
+        this.setupKeyboardNav();
+        this.setupWheelNav();
+        this.setupTouchNav();
+        this.updateUI();
+    }
+    createNavDots() {
+        this.slides.forEach(function(_, i) {
+            var dot = document.createElement('button');
+            dot.className = 'nav-dot';
+            dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+            dot.addEventListener('click', this.goToSlide.bind(this, i));
+            this.navDots.appendChild(dot);
+        }.bind(this));
+        this.dots = this.navDots.querySelectorAll('.nav-dot');
+    }
+    setupIntersectionObserver() {
+        var self = this;
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    var index = Array.from(self.slides).indexOf(entry.target);
+                    if (index !== -1) { self.currentSlide = index; self.updateUI(); }
+                }
+            });
+        }, { threshold: 0.5 });
+        this.slides.forEach(function(slide) { observer.observe(slide); });
+    }
+    setupKeyboardNav() {
+        var self = this;
+        document.addEventListener('keydown', function(e) {
+            switch (e.key) {
+                case 'ArrowDown': case 'ArrowRight': case ' ': case 'PageDown':
+                    e.preventDefault(); self.nextSlide(); break;
+                case 'ArrowUp': case 'ArrowLeft': case 'PageUp':
+                    e.preventDefault(); self.prevSlide(); break;
+                case 'Home': e.preventDefault(); self.goToSlide(0); break;
+                case 'End': e.preventDefault(); self.goToSlide(self.totalSlides - 1); break;
+            }
+        });
+    }
+    setupWheelNav() {
+        var self = this;
+        document.addEventListener('wheel', function(e) {
+            if (self.isScrolling) return;
+            self.isScrolling = true;
+            if (e.deltaY > 30) self.nextSlide();
+            else if (e.deltaY < -30) self.prevSlide();
+            clearTimeout(self.scrollTimeout);
+            self.scrollTimeout = setTimeout(function() { self.isScrolling = false; }, 800);
+        }, { passive: true });
+    }
+    setupTouchNav() {
+        var self = this, startY = 0;
+        document.addEventListener('touchstart', function(e) { startY = e.touches[0].clientY; }, { passive: true });
+        document.addEventListener('touchend', function(e) {
+            var diff = startY - e.changedTouches[0].clientY;
+            if (Math.abs(diff) > 50) { diff > 0 ? self.nextSlide() : self.prevSlide(); }
+        }, { passive: true });
+    }
+    nextSlide() { if (this.currentSlide < this.totalSlides - 1) this.goToSlide(this.currentSlide + 1); }
+    prevSlide() { if (this.currentSlide > 0) this.goToSlide(this.currentSlide - 1); }
+    goToSlide(index) {
+        this.currentSlide = index;
+        this.slides[index].scrollIntoView({ behavior: 'smooth' });
+        this.updateUI();
+    }
+    updateUI() {
+        var progress = ((this.currentSlide + 1) / this.totalSlides) * 100;
+        this.progressBar.style.width = progress + '%';
+        var self = this;
+        this.dots.forEach(function(dot, i) { dot.classList.toggle('active', i === self.currentSlide); });
+        this.slideCounter.textContent = (this.currentSlide + 1) + ' / ' + this.totalSlides;
+        var s = this.slides[this.currentSlide];
+        var isDark = s.classList.contains('slide-dark');
+        this.slideCounter.style.color = isDark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.25)';
+        this.dots.forEach(function(dot) {
+            if (!dot.classList.contains('active')) {
+                dot.style.background = isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.12)';
+            }
+        });
+    }
+}
+document.addEventListener('DOMContentLoaded', function() { new SlidePresentation(); });
+</script>
+</body>
+</html>
