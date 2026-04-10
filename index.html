@@ -218,6 +218,10 @@ a { color: inherit; text-decoration: none; }
     box-shadow: 0 12px 40px rgba(0,0,0,0.06);
 }
 
+.project-card + .project-card {
+    margin-top: clamp(1.25rem, 2.5vw, 2rem);
+}
+
 .project-meta {
     display: flex;
     flex-direction: column;
@@ -274,38 +278,27 @@ a { color: inherit; text-decoration: none; }
     transform: translateX(4px);
 }
 
-/* Visual side — abstract preview block */
+/* Visual side — live page thumbnail */
 .project-visual {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 3 / 2;
     border-radius: 12px;
-    background: linear-gradient(135deg, var(--primary-light), rgba(255,107,53,0.04));
     border: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 0.75rem;
     position: relative;
     overflow: hidden;
+    background: var(--bg);
 }
 
-.visual-icon {
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
-    opacity: 0.9;
+.project-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.6s var(--ease);
 }
 
-.visual-lines {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: center;
-}
-
-.visual-line {
-    height: 3px;
-    border-radius: 2px;
-    background: var(--primary);
-    opacity: 0.12;
+.project-card:hover .project-visual img {
+    transform: scale(1.03);
 }
 
 /* ── About blurb ── */
@@ -424,18 +417,25 @@ a { color: inherit; text-decoration: none; }
 
     <a href="vibe-coding-workshop/" class="project-card animate delay-5">
         <div class="project-meta">
-            <span class="project-tag">Workshop</span>
+            <span class="project-tag">Workshop · 方法论</span>
             <h2 class="project-title">Vibe Coding<br>完全指南</h2>
-            <p class="project-desc">从零开始的 Vibe Coding 实战工作坊，掌握用 AI 编程构建产品的完整方法论。</p>
+            <p class="project-desc">从概念到工具全景，讲清 Vibe Coding 是什么、底层架构如何运作，以及如何上手第一个项目。</p>
             <div class="project-cta">查看详情 <span>→</span></div>
         </div>
         <div class="project-visual">
-            <div class="visual-icon">⚡</div>
-            <div class="visual-lines">
-                <div class="visual-line" style="width: 64px;"></div>
-                <div class="visual-line" style="width: 48px;"></div>
-                <div class="visual-line" style="width: 56px;"></div>
-            </div>
+            <img src="vibe-coding-workshop/preview.png" alt="Vibe Coding 完全指南 首页预览" loading="lazy">
+        </div>
+    </a>
+
+    <a href="claude-code-workshop/" class="project-card animate delay-6">
+        <div class="project-meta">
+            <span class="project-tag">Workshop · 实战</span>
+            <h2 class="project-title">Claude Code<br>数据看板实战</h2>
+            <p class="project-desc">一场动手工作坊：从环境准备到数据看板上线，覆盖迭代优化、进阶功能与插件深度使用。</p>
+            <div class="project-cta">查看详情 <span>→</span></div>
+        </div>
+        <div class="project-visual">
+            <img src="claude-code-workshop/preview.png" alt="Claude Code 数据看板实战 首页预览" loading="lazy">
         </div>
     </a>
 </section>
