@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 4 课 · 资本结构 — 公司财务Ⅱ期末冲刺</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div id="readbar"></div>
+<header class="site-head"><div class="in">
+  <a class="logo" href="../index.html">公司财务Ⅱ<span>期末冲刺</span></a>
+  <nav>
+    <a href="../index.html">首页</a>
+    <a href="../reference/cheatsheet.html">考前速记</a>
+    <a href="0008-mock-exam.html">模拟卷</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <p class="kicker">Lesson 04 · 资本结构</p>
+  <h1>资本结构：MM 定理及其修正</h1>
+  <p class="sub">第二高频章节（20–25%），选择题多道出自这里，也是第 5 课估值计算题的理论底座。主线一句话：MM 说融资不影响价值，税盾、财务危机、信息不对称各自修正了它。</p>
+  <div class="meta">
+    <span class="tag hot">考频 20–25%</span><span class="tag">MM 四条命题必默写</span><span class="tag">优序顺序必背</span>
+  </div>
+
+  <h2><span class="no">一</span>资本结构与股票风险的来源</h2>
+  <p><em class="term">资本结构</em>：企业资金来源中债务与股权的构成比例（资产负债表右侧），常用指标为资产负债率或 D/E。为什么重要：①影响公司风险与资本成本；②影响公司价值；③宏观上多数金融危机本质是债务危机（2008 次贷危机；中国 1999/2004/2011/2016 四轮去杠杆）。</p>
+  <p><b>股票风险的三大来源（三个风险放大器）：</b></p>
+  <ul>
+    <li><b>产品类型</b>：决定收入波动性。强周期行业（造船、钢铁）波动大，日用消费品稳定。</li>
+    <li><b>营业杠杆</b>：源于固定成本占比，度量为 EBIT 对销售收入的弹性。固定成本占比越高，利润对收入越敏感。</li>
+    <li><b>财务杠杆</b>：源于利息这一固定财务成本，放大净利润（ROE、EPS）的波动。</li>
+  </ul>
+  <p><b>经典对比：</b>苹果——营业杠杆低（约 1.4 倍，轻资产）、财务杠杆低，但产品风险高，β 仍达 1.3–1.4；麦当劳——营业杠杆高、财务杠杆高，但产品需求稳定，β 仅约 0.5。启示：可通过降低营业杠杆为提高财务杠杆腾出空间。</p>
+  <div class="callout memo">营业杠杆与财务杠杆本质相同：都是固定成本引起的风险放大机制。</div>
+
+  <h2><span class="no">二</span>MM 定理（无税）</h2>
+  <p>MM 世界 = 完全完美资本市场：无税、无交易成本、个人与企业借贷利率相同、无成本解决利益冲突（信息对称）。</p>
+  <div class="formula"><span class="fname">MM 命题Ⅰ（无税）</span>V<sub>L</sub> = V<sub>U</sub> = V<sub>A</sub>　（公司价值与资本结构无关）</div>
+  <div class="formula"><span class="fname">MM 命题Ⅱ（无税）</span>r<sub>E</sub> = r<sub>A</sub> + (r<sub>A</sub> − r<sub>D</sub>)·D/E</div>
+  <p><b>命题Ⅰ实质：</b>公司价值取决于资金的使用（资产、盈利能力、风险），而非资金来源（融资方式）。「披萨比喻」：饼的大小不因切法而改变。</p>
+  <p><b>命题Ⅱ实质：</b>举债虽然用了便宜的债（r<sub>D</sub> ＜ r<sub>E</sub>），但同时推高了股权风险和股权成本，两者恰好抵消——所以无税时 WACC 恒定、公司价值不变。</p>
+  <p><b>方法论意义：</b>MM 定理首次引入无套利定价方法，是现代金融学最重要的分析工具（第 3 课期权平价定理用的正是同一方法）。</p>
+  <div class="chart-grid">
+    <figure class="chart">
+      <svg viewBox="0 0 260 150" role="img" aria-label="无税 MM">
+        <line class="ax" x1="24" y1="126" x2="248" y2="126"/><line class="ax" x1="28" y1="14" x2="28" y2="136"/>
+        <polyline class="pl" points="32,86 235,18"/>
+        <polyline class="pl2" points="32,86 235,86"/>
+        <polyline class="pl3" points="32,112 235,112"/>
+        <text class="lblB" x="150" y="34">r_E 线性上升</text>
+        <text class="lbl" x="180" y="80">WACC = r_A 恒定</text>
+        <text class="lbl" x="196" y="107">r_D</text>
+        <text class="lbl" x="212" y="140">杠杆 D/E</text>
+      </svg>
+      <figcaption>无税：便宜的债被更贵的股权成本抵消，WACC 恒定</figcaption>
+    </figure>
+    <figure class="chart">
+      <svg viewBox="0 0 260 150" role="img" aria-label="有税 MM">
+        <line class="ax" x1="24" y1="126" x2="248" y2="126"/><line class="ax" x1="28" y1="14" x2="28" y2="136"/>
+        <polyline class="pl" points="32,86 235,24"/>
+        <polyline class="pl2" points="32,86 90,94 160,101 235,106"/>
+        <text class="lblB" x="150" y="40">r_E 上升（斜率更缓）</text>
+        <text class="lbl" x="150" y="120">WACC 随杠杆下降（税盾）</text>
+        <text class="lbl" x="212" y="140">杠杆 D/E</text>
+      </svg>
+      <figcaption>有税：税盾使税后 WACC 随杠杆下降</figcaption>
+    </figure>
+  </div>
+  <div class="callout trap">「MM 定理成立是因为资本市场很有效率」是<b>错误理解</b>。正确表述：<b>投资决策决定公司的价值，融资决策决定价值的分配</b>。（真题原题，见自测）</div>
+
+  <h2><span class="no">三</span>MM 定理（有税）：利息税盾</h2>
+  <div class="formula"><span class="fname">税盾现值（永久债务）</span>D·r<sub>D</sub>·τ<sub>c</sub> / r<sub>D</sub> = τ<sub>c</sub>·D</div>
+  <div class="formula"><span class="fname">MM 命题Ⅰ（有税）</span>V<sub>L</sub> = V<sub>U</sub> + τ<sub>c</sub>·D</div>
+  <div class="formula"><span class="fname">MM 命题Ⅱ（有税）</span>r<sub>E</sub> = r<sub>A</sub> + (1−τ<sub>c</sub>)(r<sub>A</sub> − r<sub>D</sub>)·D/E</div>
+  <div class="formula"><span class="fname">税后加权平均资本成本</span>WACC = (E/V)·r<sub>E</sub> + (D/V)·r<sub>D</sub>·(1−τ<sub>c</sub>)</div>
+  <p>利息在税前扣除，减少应纳税所得额，政府「分饼」的份额变小，股东与债权人可分配的总价值变大——这就是举债创造价值的本质（价值守恒逻辑不变，只是分配方改变）。<b>数字直觉：</b>每增加 1 亿元永久债务，25% 税率下创造 2500 万税盾价值；35% 税率下 3500 万。税率越高，举债动力越强。</p>
+
+  <h3>课堂例题：杠杆化策略（发债回购股票）</h3>
+  <p>总资产 1 万元、全股权融资、500 股、股价 20 元/股。宣布发行 5000 元债券回购股票，τ<sub>c</sub>=40%：</p>
+  <ol>
+    <li>税盾价值 = 5000×40% = 2000 元，公司新价值 = 10000 + 2000 = 12000 元；</li>
+    <li><b>公告日股价立即上涨</b>：12000÷500 = 24 元/股（不等回购完成，市场立刻反应）；</li>
+    <li>按 24 元回购 5000÷24 ≈ 208.33 股，剩余股权价值 = 12000 − 5000 = 7000 元；</li>
+    <li>r<sub>U</sub>=12%、r<sub>D</sub>=8% 时，r<sub>E</sub> = 12% + (1−40%)(12%−8%)×(5000/7000) ≈ 13.7%，股权成本上升。</li>
+  </ol>
+  <div class="callout trap">公告即涨价：股价在宣布发债回购的<b>当天</b>就涨到 24 元，回购是按新价格进行的。计算题里不要用旧股价算回购数量——这是本类题最常见错误。</div>
+
+  <h2><span class="no">四</span>rA 与 WACC：谁与杠杆有关？（明示必考）</h2>
+  <div class="callout teacher">「rA 跟杠杆比例没关系，我们考试的时候是肯定会考这个的。」</div>
+  <p><b>r<sub>A</sub>（资产资本成本/无杠杆资本成本）：</b>由公司资产端的经营风险决定，跟怎么融资无关——杠杆再高，资产还是那些资产，所以与资产负债比例<b>无关</b>。</p>
+  <p><b>税后 WACC：</b>因为含税盾项 (1−τ<sub>c</sub>)，杠杆上升 → 抵税利息增多 → WACC 下降——与资产负债比例<b>有关</b>。易混点：在无税 MM 世界里 WACC 才恒定不变；考题问的 WACC 通常是税后口径，会随杠杆下降。</p>
+
+  <h2><span class="no">五</span>财务危机成本与权衡理论</h2>
+  <table>
+    <tr><th>类型</th><th>内容</th><th>例子</th></tr>
+    <tr><td><b>直接成本</b></td><td>破产/重组过程中支付给中介机构的费用</td><td>律师费、会计师费、投行费、清算费（占公司价值比例较小）</td></tr>
+    <tr><td><b>间接成本</b></td><td>财务困境对经营的实质性损害</td><td>供应商收紧信用、员工流失、客户信心下降、丧失商业机会</td></tr>
+    <tr><td><b>代理成本</b></td><td>困境中股东与债权人利益冲突引发的价值损失</td><td>过度风险投资、投资不足、过度投资（见下节）</td></tr>
+  </table>
+  <p><b>事前承担原则：</b>财务危机成本事后由多方分担，但<b>事前全部由股东承担</b>——体现为债权人要求更高的信用利差，抬高融资成本。</p>
+  <div class="formula"><span class="fname">权衡理论</span>V<sub>L</sub> = V<sub>U</sub> + 税盾现值 − 财务危机成本现值</div>
+  <figure class="chart">
+    <svg viewBox="0 0 340 170" role="img" aria-label="权衡理论倒U形">
+      <line class="ax" x1="24" y1="146" x2="326" y2="146"/><line class="ax" x1="28" y1="14" x2="28" y2="156"/>
+      <polyline class="pl2" points="32,110 316,20"/>
+      <polyline class="pl3" points="32,110 316,110"/>
+      <polyline class="pl" points="32,110 100,88 170,72 220,68 268,76 316,96"/>
+      <line class="tick" x1="220" y1="68" x2="220" y2="146"/>
+      <text class="lbl" x="204" y="160">D*（最优）</text><text class="lbl" x="286" y="160">债务 D</text>
+      <text class="lbl" x="240" y="34">V_U + 税盾（只算好处）</text>
+      <text class="lbl" x="252" y="124">V_U</text>
+      <text class="lblB" x="60" y="60">实际公司价值（倒 U）</text>
+    </svg>
+    <figcaption>蓝虚线与红实线的差距 = 财务危机成本现值；倒 U 顶点即最优资本结构 D*</figcaption>
+  </figure>
+  <p><b>权衡理论的四条预测与现实：</b>√ 同行业公司杠杆相近（税率与资产特征相似）；√ 税率越高杠杆越高；√ 有形资产/可变现资产多的企业债务融资多（清算价值稳定、财务危机成本低）；<b>✗ 盈利能力强的企业杠杆反而更低——与预测相反（要靠优序理论解释）；✗ 发股公告后股价下跌——权衡理论无法解释（优序理论可以）。</b></p>
+  <p><b>应用含义：</b>经营风险高的企业不应高负债；有形资产多、应税收入多的企业应增加债务融资。</p>
+
+  <h2><span class="no">六</span>股东与债权人的代理成本（点名要会分类）</h2>
+  <div class="callout teacher">「你需要知道股东与债权人之间代理成本的基本类型，哪些是代理成本、哪些不是；背后如何发挥作用的逻辑不要求。」</div>
+  <table>
+    <tr><th>类型</th><th>行为</th><th>机理（了解）</th></tr>
+    <tr><td><b>① 过度风险投资</b>（资产替代/赌一把）</td><td>投 NPV＜0 的高风险项目</td><td>困境中股东「输了算债权人的，赢了归自己」——股票是看涨期权，波动率越大越值钱</td></tr>
+    <tr><td><b>② 投资不足</b>（债务积压）</td><td>放弃 NPV＞0 的好项目</td><td>投资收益主要归债权人，股东不愿再掏钱（有限责任）</td></tr>
+    <tr><td><b>③ 过度投资</b></td><td>维持规模、推迟破产、无效扩张</td><td>管理层/股东为私利烧债权人的钱</td></tr>
+  </table>
+  <p><b>数字化演示（往届三问计算题 Scallywag）：</b>公司 1 期需偿债本息 103 万、现有现金 25 万。(1) 不投资、存银行：25×1.03 = 25.75 ＜ 103，全归债权人，股东权益 = 0；(2) 投项目 A（0.1 概率得 135 万、0.9 概率得 10 万）：E<sub>A</sub> = 0.1×max(135−103,0) = 3.2 万；(3) 投项目 B（0.6 概率得 50 万、0.4 概率得 15 万）：两种情形都不够偿债，E<sub>B</sub> = 0。<b>启示：B 的 NPV 为正但股东得 0（投资不足）；A 的 NPV 为负但股东偏好（过度风险投资）</b>——有限责任下股东权益 = max(项目收入−债务本息, 0)，再按概率加权。</p>
+
+  <h2><span class="no">七</span>优序融资理论（必背顺序）</h2>
+  <div class="callout teacher">「优序融资理论的基本结论你还是需要知道……考试的时候会考。不要求掌握为什么这个理论成立。」</div>
+  <p>前提：信息不对称——管理层比外部投资者更了解公司真实价值。信息不对称成本从低到高排：</p>
+  <div class="card brand" style="text-align:center;font-weight:650;font-size:16.5px">
+    ① 内部融资（留存收益）→ ② 高等级债券 → ③ 低等级债券 → ④ 可转债 → ⑤ 普通股（最后选择）
+  </div>
+  <p><b>简记：</b>先内后外、先债后股，可转债在债与股之间，股票永远是最后选择。记忆：越像「固定收益」的证券对信息越不敏感、越先发；股票对私有信息最敏感、永远最后。</p>
+  <p><b>解释力：</b>完美解释「发股利空」——市场认为公司只有认为股价被高估/迫不得已才发股，故视为负面信号；也解释了「盈利强的公司杠杆低」——它们内源融资充足，无需举债。<b>中美对比：</b>美国企业普遍遵循优序；A 股呈「股权融资偏好」——只要符合条件就积极增发，反映制度环境差异。</p>
+
+  <h2><span class="no">八</span>自测（全部为真题）</h2>
+
+  <div class="quiz" data-answer="B" data-explain="MM 的核心洞见：公司价值由资产端（投资项目的盈利能力与风险）创造，融资结构只决定这块「饼」在债权人与股东（有税时加上政府）之间怎么切。C「市场有效」是 MM 的假设背景而非结论本身。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>MM 定理告诉我们，在一定条件下公司价值与资本结构（资金来源）无关，即（选择最合理的选项）——。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>由于融资对公司价值的影响太复杂，因此将其忽略</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>投资决策决定公司的价值，融资决策决定价值的分配</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>资本市场很有效率</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>资金使用者比资金提供者更聪明</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="C" data-explain="WACC = 0.7×18% + 0.3×10%×(1−40%) = 12.6% + 1.8% = 14.4%，落在 (14%,16%]。最常见错误是忘乘 (1−τc) 得 15.6%——债务成本必须用税后。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>某公司税前债务成本 10%，普通股期望收益率 18%，债务占 30%、普通股占 70%，所得税率 40%。该公司的 WACC 落在——之中。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>[10%, 12%]</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>(12%, 14%]</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>(14%, 16%]</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>(16%, 18%]</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="D" data-explain="发股公告导致股价下跌是信息不对称（优序理论）的推论，权衡理论框架里没有信息不对称，解释不了。A 同行杠杆相近、C 税率高杠杆高是权衡理论直接预测；B 高增长公司杠杆低也可用权衡解释（无形资产多、财务危机成本高）。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>下述现象中，——与资本结构的权衡理论（the trade-off theory）不吻合。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>同行业的公司具有相近的财务杠杆比例</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>高增长公司的财务杠杆比例较低</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>所得税率高的公司具有较高的财务杠杆比例</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>股票发行公告导致股价下跌</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="A" data-explain="外部融资降序：高级债券 → 低级债券 → 可转债 → 普通股。越「固定收益」越先发，股票对私有信息最敏感、永远最后。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>根据优序融资理论，公司外部融资的最优顺序为——（依优先级的降序排列）。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>高级债券、可转债、普通股</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>可转债、高级债券、普通股</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>高级债券、普通股、可转债</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>普通股、可转债、高级债券</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="C" data-explain="题目找「不属于」。给高管定超高报酬是股东（董事会）与管理层之间的代理问题，与债权人无关。A=过度风险投资（资产替代），B=投资不足，D=推迟破产（过度投资）——三者都是财务困境中股东损害债权人的经典行为。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>财务危机可能会产生股东与债权人之间的代理成本，——不属于此类代理成本。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>公司选择投资净现值小于零的高风险项目</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>公司放弃投资净现值大于零的项目</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>公司给高管制定超高的报酬标准</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>公司推迟破产</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="A" data-explain="可提前偿还 = 公司持有「赎回权」（call）：利率下行时公司还旧借新，好处归公司、坏处归债权人 → 降低债券价值。口诀：给债务人的权利降低债券价值；给债权人的权利（B 可转换、C 抵押、D 可回售）抬高债券价值。可转债 = 普通债 + 看涨期权。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>下面关于公司债券的合约条款中，——会降低债券的价值。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>债务人有权在债券到期之前偿还债务</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>债券可以转换成普通股</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>债务人为债券提供抵押</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>债权人有权在到期前以既定价格将债券回售给债务人</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="pager">
+    <a href="0003-parity-arbitrage.html"><span class="dir">← 上一课</span><div class="name">第 3 课 · 平价定理与套利</div></a>
+    <a class="next" href="0005-valuation.html"><span class="dir">下一课 →</span><div class="name">第 5 课 · 公司估值（计算题②）</div></a>
+  </div>
+
+  <div class="foot">过关标准：MM 四条命题（无税/有税 × Ⅰ/Ⅱ）+ WACC 公式闭卷默写；优序融资顺序倒背如流；代理成本三类型能判断「哪些是、哪些不是」。</div>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

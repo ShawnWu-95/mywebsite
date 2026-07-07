@@ -1,0 +1,198 @@
+/* ============================================================
+   公司财务Ⅱ 期末冲刺 · 设计系统 v2
+   学术纸感 · 燕园红 · 零依赖 · 移动端与打印友好
+   ============================================================ */
+:root{
+  --paper:#faf8f4; --card:#ffffff; --ink:#211d1a; --muted:#8a8178; --faint:#b8afa5;
+  --line:#e7e1d8; --line-strong:#d6cec2;
+  --brand:#94070a; --brand-deep:#6d0508; --brand-soft:#fbf0ef; --brand-line:#ecd3d2;
+  --navy:#1f3a5f; --navy-soft:#eef3f9;
+  --gold:#9a6b1f; --gold-soft:#faf3e3; --gold-line:#eadfc2;
+  --good:#166534; --good-soft:#e8f5eb; --bad:#b91c1c; --bad-soft:#fdeaea;
+  --serif:"Songti SC","STSong","Noto Serif SC",Georgia,serif;
+  --sans:-apple-system,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:"SF Mono",Menlo,Consolas,"Courier New",monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.75;-webkit-font-smoothing:antialiased}
+
+/* ---------- 顶部进度条 + 站点头 ---------- */
+#readbar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--brand);z-index:99;transition:width .1s}
+.site-head{position:sticky;top:0;z-index:50;background:rgba(250,248,244,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line)}
+.site-head .in{max-width:880px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;gap:14px}
+.site-head .logo{font-family:var(--serif);font-weight:700;font-size:16px;color:var(--brand);
+  text-decoration:none;letter-spacing:.5px;white-space:nowrap}
+.site-head .logo span{color:var(--muted);font-weight:400;font-size:13px;margin-left:6px}
+.site-head nav{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap}
+.site-head nav a{font-size:13.5px;color:var(--muted);text-decoration:none;padding:5px 10px;border-radius:8px}
+.site-head nav a:hover{color:var(--brand);background:var(--brand-soft)}
+.site-head nav a.on{color:var(--brand);font-weight:600}
+
+/* ---------- 版面 ---------- */
+.wrap{max-width:880px;margin:0 auto;padding:44px 24px 90px}
+.kicker{font-size:13px;letter-spacing:2.5px;color:var(--brand);font-weight:700;text-transform:uppercase;margin:0 0 10px}
+h1{font-family:var(--serif);font-size:34px;line-height:1.3;margin:0 0 10px;letter-spacing:.5px}
+h2{font-family:var(--serif);font-size:24px;margin:52px 0 16px;padding-bottom:10px;
+  border-bottom:1px solid var(--line-strong);letter-spacing:.3px}
+h2 .no{color:var(--brand);font-style:italic;margin-right:10px;font-size:20px}
+h3{font-size:18px;margin:30px 0 10px;color:var(--navy)}
+.sub{color:var(--muted);font-size:15.5px;margin:0 0 8px;max-width:64ch}
+p{margin:12px 0}
+ul,ol{margin:10px 0;padding-left:24px}
+li{margin:7px 0}
+b,strong{font-weight:650}
+em.term{font-style:normal;border-bottom:2px solid var(--gold-line);padding-bottom:1px}
+hr{border:none;border-top:1px solid var(--line);margin:36px 0}
+a{color:var(--brand)}
+
+/* ---------- 元信息行 ---------- */
+.meta{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 6px}
+.meta .tag{font-size:12.5px;padding:4px 12px;border-radius:999px;background:var(--card);
+  border:1px solid var(--line-strong);color:var(--muted)}
+.meta .tag.hot{background:var(--brand-soft);border-color:var(--brand-line);color:var(--brand);font-weight:600}
+
+/* ---------- 卡片与提示块 ---------- */
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:20px 0;
+  box-shadow:0 1px 3px rgba(60,45,30,.04)}
+.card.brand{background:var(--brand-soft);border-color:var(--brand-line)}
+.callout{border-radius:12px;padding:14px 18px;margin:18px 0;font-size:15.5px;border:1px solid}
+.callout.teacher{background:var(--good-soft);border-color:#cde8d3;color:#14532d}
+.callout.teacher::before{content:"📌 老师划重点 ";font-weight:700;display:block;margin-bottom:2px}
+.callout.trap{background:var(--bad-soft);border-color:#f5cfcf;color:#7f1d1d}
+.callout.trap::before{content:"⚠️ 易错警示 ";font-weight:700;display:block;margin-bottom:2px}
+.callout.memo{background:var(--gold-soft);border-color:var(--gold-line);color:#6b4a12}
+.callout.memo::before{content:"🧠 一句话记住 ";font-weight:700;display:block;margin-bottom:2px}
+
+/* ---------- 公式 ---------- */
+.formula{background:var(--card);border:1px solid var(--line-strong);border-left:4px solid var(--brand);
+  border-radius:10px;padding:14px 20px;margin:16px 0;font-family:var(--mono);font-size:15px;
+  overflow-x:auto;line-height:2}
+.formula .fname{font-family:var(--sans);font-size:12.5px;color:var(--muted);display:block;letter-spacing:1px}
+sub,sup{font-size:.72em}
+
+/* ---------- 表格 ---------- */
+table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;background:var(--card);
+  border-radius:12px;overflow:hidden;box-shadow:0 0 0 1px var(--line)}
+th,td{border-bottom:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+th{background:#f4efe7;font-weight:650;font-size:13.5px;letter-spacing:.5px}
+tr:last-child td{border-bottom:none}
+td.c,th.c{text-align:center}
+.up{color:var(--good);font-weight:700}.dn{color:var(--bad);font-weight:700}
+
+/* ---------- SVG 盈亏图 ---------- */
+figure.chart{margin:22px 0;background:var(--card);border:1px solid var(--line);border-radius:14px;
+  padding:18px 18px 10px;text-align:center}
+figure.chart svg{max-width:100%;height:auto}
+figure.chart figcaption{font-size:13.5px;color:var(--muted);margin-top:6px}
+.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:640px){.chart-grid{grid-template-columns:1fr}}
+svg .ax{stroke:var(--faint);stroke-width:1.5}
+svg .pl{stroke:var(--brand);stroke-width:3;fill:none;stroke-linejoin:round;stroke-linecap:round}
+svg .pl2{stroke:var(--navy);stroke-width:2;fill:none;stroke-dasharray:6 5;stroke-linejoin:round}
+svg .pl3{stroke:var(--gold);stroke-width:2;fill:none;stroke-dasharray:2 4;stroke-linejoin:round}
+svg .lbl{font-family:var(--sans);font-size:12px;fill:var(--muted)}
+svg .lblB{font-family:var(--sans);font-size:12.5px;fill:var(--ink);font-weight:600}
+svg .tick{stroke:var(--faint);stroke-width:1;stroke-dasharray:3 4}
+
+/* ---------- 分步揭示（先试后看） ---------- */
+details.step{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:12px 0;overflow:hidden}
+details.step summary{cursor:pointer;padding:13px 18px;font-weight:600;list-style:none;
+  display:flex;align-items:center;gap:10px;user-select:none}
+details.step summary::-webkit-details-marker{display:none}
+details.step summary .n{flex:none;width:26px;height:26px;border-radius:50%;background:var(--navy-soft);
+  color:var(--navy);font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center}
+details.step summary::after{content:"展开 ▾";margin-left:auto;font-size:12.5px;color:var(--muted);font-weight:400}
+details.step[open] summary::after{content:"收起 ▴"}
+details.step[open] summary{border-bottom:1px dashed var(--line)}
+details.step .body{padding:14px 20px 16px}
+.try-first{font-size:13.5px;color:var(--gold);margin:14px 0 6px;font-weight:600}
+
+/* ---------- 默写模式 ---------- */
+.recall-btn{display:inline-flex;align-items:center;gap:8px;background:var(--navy);color:#fff;border:none;
+  border-radius:10px;padding:10px 18px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:var(--sans)}
+.recall-btn:hover{background:#16304f}
+body.recall .blur-target{filter:blur(7px);cursor:pointer;transition:filter .25s;user-select:none}
+body.recall .blur-target.peek{filter:none}
+.recall-hint{display:none;font-size:13.5px;color:var(--navy);background:var(--navy-soft);
+  border-radius:10px;padding:10px 14px;margin:12px 0}
+body.recall .recall-hint{display:block}
+
+/* ---------- Quiz ---------- */
+.quiz{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:24px 0;
+  box-shadow:0 1px 3px rgba(60,45,30,.04)}
+.quiz h4{margin:0 0 6px;font-size:16.5px;line-height:1.6}
+.quiz .qsrc{font-size:12px;color:var(--faint);letter-spacing:.5px;margin-bottom:8px}
+.q-opts{display:flex;flex-direction:column;gap:9px;margin:14px 0 4px}
+.q-opt{border:1px solid var(--line-strong);border-radius:10px;padding:10px 14px 10px 12px;cursor:pointer;
+  background:var(--paper);font-size:15.5px;transition:.15s;display:flex;gap:10px;align-items:baseline}
+.q-opt .k{flex:none;font-weight:700;font-size:13px;color:var(--muted);width:18px}
+.q-opt:hover{border-color:var(--brand);background:#fff}
+.q-opt.correct{background:var(--good-soft);border-color:var(--good)}
+.q-opt.correct .k{color:var(--good)}
+.q-opt.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.q-opt.wrong .k{color:var(--bad)}
+.q-feedback{margin-top:12px;font-size:14.5px;padding:11px 15px;border-radius:10px;display:none;line-height:1.7}
+.q-feedback.show{display:block}
+.q-feedback.ok{background:var(--good-soft);color:#14532d}
+.q-feedback.no{background:var(--bad-soft);color:#7f1d1d}
+
+/* ---------- 模拟卷计分条 ---------- */
+#scorebar{position:sticky;top:49px;z-index:40;background:var(--ink);color:#f5f0e8;border-radius:12px;
+  padding:11px 20px;font-size:14.5px;display:flex;gap:20px;align-items:center;margin:22px 0;flex-wrap:wrap}
+#scorebar b{color:#7cd992}#scorebar .miss{color:#ff9d9d}
+#scorebar .bar{flex:1;min-width:120px;height:6px;background:#4a443d;border-radius:3px;overflow:hidden}
+#scorebar .bar i{display:block;height:100%;width:0;background:var(--brand);transition:width .3s}
+
+/* ---------- 首页组件 ---------- */
+.hero{padding:26px 0 8px}
+.hero h1{font-size:40px}
+.hero .lede{font-size:17.5px;color:var(--muted);max-width:60ch}
+.statgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:26px 0}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px}
+.stat .v{font-family:var(--serif);font-size:26px;font-weight:700;color:var(--brand)}
+.stat .l{font-size:13px;color:var(--muted);margin-top:2px}
+.weightbar{display:flex;border-radius:10px;overflow:hidden;height:38px;margin:14px 0 6px;
+  box-shadow:0 0 0 1px var(--line)}
+.weightbar div{display:flex;align-items:center;justify-content:center;font-size:12px;color:#fff;
+  font-weight:600;white-space:nowrap;overflow:hidden}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-bottom:6px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px}
+.lesson-list{display:flex;flex-direction:column;gap:12px;margin:22px 0}
+.lesson-item{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;padding:16px 20px;text-decoration:none;color:var(--ink);transition:.15s}
+.lesson-item:hover{border-color:var(--brand);box-shadow:0 3px 12px rgba(148,7,10,.07);transform:translateY(-1px)}
+.lesson-item .num{flex:none;font-family:var(--serif);font-size:22px;font-style:italic;color:var(--brand);
+  width:36px;text-align:center;padding-top:2px}
+.lesson-item .t{font-weight:650;font-size:16.5px}
+.lesson-item .d{font-size:13.5px;color:var(--muted);margin-top:3px;line-height:1.6}
+.lesson-item .w{margin-left:auto;flex:none;font-size:12px;color:var(--brand);background:var(--brand-soft);
+  border:1px solid var(--brand-line);border-radius:999px;padding:3px 10px;white-space:nowrap;margin-top:4px}
+@media(max-width:560px){.lesson-item .w{display:none}}
+
+/* ---------- 课末导航 ---------- */
+.pager{display:flex;gap:12px;margin:52px 0 0}
+.pager a{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;
+  text-decoration:none;color:var(--ink);transition:.15s}
+.pager a:hover{border-color:var(--brand)}
+.pager .dir{font-size:12px;color:var(--muted);letter-spacing:1px}
+.pager .name{font-weight:650;font-size:15px;margin-top:2px;color:var(--brand)}
+.pager a.next{text-align:right}
+.pager a.off{visibility:hidden}
+
+.foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--faint);font-size:13.5px;
+  line-height:1.8}
+
+/* ---------- 打印 ---------- */
+@media print{
+  .site-head,#readbar,.pager,.recall-btn,.recall-hint,#scorebar{display:none!important}
+  body{background:#fff;font-size:12px}
+  .wrap{padding:0;max-width:none}
+  .quiz .q-opt{cursor:default}
+  h2{page-break-after:avoid}
+  .card,.quiz,table,figure.chart{page-break-inside:avoid;box-shadow:none}
+  details.step{page-break-inside:avoid}
+  details.step .body{display:block}
+}

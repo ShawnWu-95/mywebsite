@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>考前速记页 · 公式 / 结论 / 流程卡 — 公司财务Ⅱ期末冲刺</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div id="readbar"></div>
+<header class="site-head"><div class="in">
+  <a class="logo" href="../index.html">公司财务Ⅱ<span>期末冲刺</span></a>
+  <nav>
+    <a href="../index.html">首页</a>
+    <a href="cheatsheet.html" class="on">考前速记</a>
+    <a href="../lessons/0008-mock-exam.html">模拟卷</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <p class="kicker">Reference · 考前一晚只看这页</p>
+  <h1>考前速记：公式 · 结论 · 流程卡</h1>
+  <p class="sub">全课程的压缩包：15 条必背公式、六因素表、30 条必背结论、三道大题的答题流程卡、考场提醒。支持打印（⌘/Ctrl+P）；闭卷考试，建议用默写模式自测——先回忆，再点击揭示。</p>
+  <p><button class="recall-btn" data-recall-toggle>✍️ 开启默写模式</button></p>
+  <div class="recall-hint">默写模式已开启：答案已模糊。先在心里（或纸上）默出内容，再点击模糊区域核对。全部能默出才算过关。</div>
+
+  <h2><span class="no">一</span>必背公式表（闭卷，全部默写）</h2>
+  <table>
+    <tr><th style="width:34%">主题</th><th>公式</th></tr>
+    <tr><td>MM Ⅰ（无税）</td><td class="blur-target">V<sub>L</sub> = V<sub>U</sub> = V<sub>A</sub></td></tr>
+    <tr><td>MM Ⅱ（无税）</td><td class="blur-target">r<sub>E</sub> = r<sub>A</sub> + (r<sub>A</sub> − r<sub>D</sub>)·D/E</td></tr>
+    <tr><td>MM Ⅰ（有税）</td><td class="blur-target">V<sub>L</sub> = V<sub>U</sub> + τ<sub>c</sub>·D　（永久债税盾现值 = τ<sub>c</sub>·D）</td></tr>
+    <tr><td>MM Ⅱ（有税）</td><td class="blur-target">r<sub>E</sub> = r<sub>A</sub> + (1−τ<sub>c</sub>)(r<sub>A</sub> − r<sub>D</sub>)·D/E</td></tr>
+    <tr><td>WACC</td><td class="blur-target">WACC = (E/V)·r<sub>E</sub> + (D/V)·r<sub>D</sub>·(1−τ<sub>c</sub>)</td></tr>
+    <tr><td>股权价值（永续）</td><td class="blur-target">E = (EBIT − r<sub>D</sub>·D)(1−τ<sub>c</sub>) / r<sub>E</sub></td></tr>
+    <tr><td>资产回报率</td><td class="blur-target">r<sub>A</sub> = EBIT·(1−τ<sub>c</sub>) / V<sub>U</sub>　（分母必须是 V<sub>U</sub>！）</td></tr>
+    <tr><td>自由现金流</td><td class="blur-target">FCF = EBIT(1−τ<sub>c</sub>) + 折旧摊销 − 资本支出 − ΔNWC（+ 最后处置年份的资产销售税后收入）</td></tr>
+    <tr><td>年金现值</td><td class="blur-target">PV = (C/r)·[1 − (1+r)<sup>−T</sup>]</td></tr>
+    <tr><td>常增长（Gordon）/ 残值</td><td class="blur-target">PV = C<sub>1</sub>/(r−g)；残值 TV<sub>T</sub> = CF<sub>T+1</sub>/(r−g)，<b>还要再贴现回 0 时刻</b></td></tr>
+    <tr><td>APV</td><td class="blur-target">APV = V<sub>U</sub>（FCF 按 r<sub>A</sub> 贴现）+ 税盾现值（r<sub>D</sub> 或 r<sub>A</sub> 贴现）</td></tr>
+    <tr><td>加杠杆隐式方程（通解）</td><td class="blur-target">V′ = V<sub>U</sub> / (1 − τ<sub>c</sub>·w)　（w = 目标债务率 D′/V′；新发债 = w·V′ − 旧债）</td></tr>
+    <tr><td>期权平价定理</td><td class="blur-target">c + X/(1+r)<sup>T</sup> = p + S<sub>0</sub>　（连续复利版：c + X·e<sup>−rT</sup> = p + S<sub>0</sub>；有股利：左边 + D）</td></tr>
+    <tr><td>期权支付</td><td class="blur-target">call 多头 max(S<sub>T</sub>−X, 0)；put 多头 max(X−S<sub>T</sub>, 0)；空头取负号</td></tr>
+    <tr><td>远期价格</td><td class="blur-target">F = S<sub>0</sub>·(1+r)　（+ FV 持有成本 − FV 持有收益）</td></tr>
+    <tr><td>二项式复制</td><td class="blur-target">解 Δ·S<sub>u</sub> + B(1+r) = c<sub>u</sub>，Δ·S<sub>d</sub> + B(1+r) = c<sub>d</sub>；价格 = Δ·S<sub>0</sub> + B</td></tr>
+    <tr><td>配股除权价</td><td class="blur-target">P′ = (N·P<sub>0</sub> + M·S)/(N+M)；配股权价值 = P′ − S</td></tr>
+  </table>
+  <div class="callout trap">两版平价公式完全等价，做题以题目的利率口径为准：给「非年化期间利率」用离散版；给连续复利才用 e<sup>−rT</sup> 版。往届考卷给过公式表但符号写法可能不同——公式表只能救急、不能依赖。</div>
+
+  <h2><span class="no">二</span>期权六因素方向表（每年必考）</h2>
+  <table>
+    <tr><th>因素 ↑</th><th class="c">Call</th><th class="c">Put</th></tr>
+    <tr><td>标的价 S<sub>0</sub></td><td class="c blur-target"><span class="up">↑</span></td><td class="c blur-target"><span class="dn">↓</span></td></tr>
+    <tr><td>执行价 X</td><td class="c blur-target"><span class="dn">↓</span></td><td class="c blur-target"><span class="up">↑</span></td></tr>
+    <tr><td>期限 T</td><td class="c blur-target"><span class="up">↑</span>（美式确定）</td><td class="c blur-target"><span class="up">↑</span>（美式确定）</td></tr>
+    <tr><td>波动率 σ</td><td class="c blur-target"><span class="up">↑</span></td><td class="c blur-target"><span class="up">↑</span></td></tr>
+    <tr><td>无风险利率 r</td><td class="c blur-target"><span class="up">↑</span></td><td class="c blur-target"><span class="dn">↓</span></td></tr>
+    <tr><td>现金股利 δ</td><td class="c blur-target"><span class="dn">↓</span></td><td class="c blur-target"><span class="up">↑</span></td></tr>
+  </table>
+  <p>口诀（对 Call）：<b>标↑、价↓、期↑、波↑、利↑、红↓</b>；σ 与 T 是唯二「同向双升」，Put 其余全反向。</p>
+
+  <h2><span class="no">三</span>必背结论 30 条</h2>
+  <ol>
+    <li>MM 命题Ⅰ实质：<span class="blur-target">投资决策决定公司价值，融资决策决定价值的分配（不是「市场有效」）</span></li>
+    <li>无税 MM 世界：<span class="blur-target">WACC 恒定、与资本结构无关；有税：税后 WACC 随杠杆上升而下降</span></li>
+    <li>rA 与 WACC（必考）：<span class="blur-target">rA 与资产负债比例无关；税后 WACC 与资产负债比例有关</span></li>
+    <li>税盾：<span class="blur-target">每 1 元永久债务创造 τc 元税盾价值；税率越高，举债动力越强</span></li>
+    <li>财务危机成本三类：<span class="blur-target">直接（中介费用）、间接（经营损害）、代理成本；事前全部由股东承担</span></li>
+    <li>股东-债权人代理成本三类型：<span class="blur-target">过度风险投资（资产替代）、投资不足、过度投资；「高管超高薪酬」不属于此类</span></li>
+    <li>权衡理论解释不了：<span class="blur-target">盈利强的公司杠杆低、发股公告股价下跌——这两个靠优序理论解释</span></li>
+    <li>优序融资顺序：<span class="blur-target">内部融资 → 高等级债 → 低等级债 → 可转债 → 普通股</span></li>
+    <li>公司分配只有两种：<span class="blur-target">现金股利和股份回购；送转拆股不是分配</span></li>
+    <li>MM 股利无关：<span class="blur-target">完美市场中投资者可「自制股利」，股利政策不影响价值</span></li>
+    <li>美国股利特征：<span class="blur-target">有粘性；管理层关注股利变化而非水平；增派利好、削减利空</span></li>
+    <li>回购三动机：<span class="blur-target">税收优势（低税率+递延）、传递低估信号、储备股权激励用股</span></li>
+    <li>问答核心数据：<span class="blur-target">美国 1997 年后回购超过股利；A 股年分红约 2 万亿 vs 回购约 1 千亿</span></li>
+    <li>A 股不回购的根本原因：<span class="blur-target">企业家不认为股价被低估（+ 半强制分红制度 + 大股东偏好现金）</span></li>
+    <li>A 股半强制分红：<span class="blur-target">2004 年起分红与再融资资格挂钩（三年不分红丧失资格）；A 股分红需股东大会批准，美国仅需董事会</span></li>
+    <li>美国 IPO：<span class="blur-target">包销最主流；折价发行；择时；规模越大费用率越低</span></li>
+    <li>A 股 IPO 分水岭：<span class="blur-target">2019 科创板前是实质审批制（审发行价格、审盈利能力）；注册制都不审，投资者自行判断</span></li>
+    <li>A 股 IPO 折价程度：<span class="blur-target">2001 年以来全球名列前茅</span></li>
+    <li>WACC 法贴出来的是：<span class="blur-target">公司价值！减去债务等才是股权价值（点名的高频错误）</span></li>
+    <li>收购估值贴现率：<span class="blur-target">用目标公司的 WACC 贴现目标公司的 FCF（风险匹配原则）</span></li>
+    <li>APV 税盾贴现：<span class="blur-target">债务总量固定用 rD、负债比率固定用 rA；拿不准时 rD 永远不算错</span></li>
+    <li>期权六因素：<span class="blur-target">S₀、σ、T（美式）、r 升 → call 升；X、股利升 → call 降；put 方向相反（σ、T 同向都升）</span></li>
+    <li>投资者要求的收益率（β/CAPM）：<span class="blur-target">与期权价值无关；CAPM 不能给期权定价（收益非正态）</span></li>
+    <li>波动率上升：<span class="blur-target">call 和 put 价值都上升（下行有底、上行无限）</span></li>
+    <li>套利方向：<span class="blur-target">卖高估、买低估；四笔交易 + 现金流表验证（＋利润, 0, 0）</span></li>
+    <li>美式期权：<span class="blur-target">无分红美式 call 不应提前行权、价值 = 欧式 call（可转债提前转股同理非理性）；美式 put 无解析解</span></li>
+    <li>期权视角：<span class="blur-target">股票 = 以 D 为执行价的看涨期权；债券 = 无风险债 − put；可转债 = 纯债 + call（票息低 ≠ 融资便宜）</span></li>
+    <li>无协同的多元化：<span class="blur-target">降低 σ → 降低股权价值（期权视角），价值转移给债权人</span></li>
+    <li>董事会最重要权力：<span class="blur-target">任免高管；外部治理四件套：资本市场、法律、产品市场、经理人市场</span></li>
+    <li>代理问题主角：<span class="blur-target">中国 = 大股东 vs 中小股东；美国 = 管理层 vs 股东</span></li>
+  </ol>
+
+  <h2><span class="no">四</span>计算题与问答题 · 答题流程卡</h2>
+  <div class="card">
+    <b>计算题①（期权套利，20 分）：</b><span class="blur-target">默写平价公式 → 算 p<sup>fair</sup>（或 c<sup>fair</sup>）→ 与市价比较判断高/低估 → 写四笔交易（卖贵买便宜）→ t=0 净现金流 = 套利利润 → 到期两情形现金流表，验证（利润, 0, 0）</span>
+  </div>
+  <div class="card">
+    <b>计算题②（估值/资本结构，20 分）：</b><span class="blur-target">① E = (EBIT−r<sub>D</sub>D)(1−τ<sub>c</sub>)/r<sub>E</sub> → ② V = E + D → ③ 税盾 = τ<sub>c</sub>D，V<sub>U</sub> = V − τ<sub>c</sub>D → ④ r<sub>A</sub> = EBIT(1−τ<sub>c</sub>)/V<sub>U</sub> → ⑤ WACC（验算 EBIT(1−τ<sub>c</sub>)/V）→ ⑥ 若改资本结构：解隐式方程 V′ = V<sub>U</sub> + τ<sub>c</sub>·w·V′ → 新 D、新增发债 → 新 r<sub>E</sub>（有税 MMⅡ）→ 新 WACC → 股东财富变化 = 新增税盾</span>
+  </div>
+  <div class="card">
+    <b>问答题（A 股回购 vs 股利，20 分）：</b><span class="blur-target">现象（数据对比：2 万亿 vs 1 千亿；美国 1997 分水岭）→ 成因①估值判断（企业家不认为低估，减持佐证——最根本）②半强制分红制度 ③税收悖论（税制利好回购却没人做）④大股东股权结构 → 对比美国（低估判断 + 股东回报文化）→ 结论句。点睛句：「企业家行动是最真实的市场信号」</span>
+  </div>
+
+  <h2><span class="no">五</span>考场提醒</h2>
+  <ul>
+    <li>单选题「选最正确的那个」，每题有且只有一个答案；覆盖每一章，不要押题不全。</li>
+    <li><b>问答题只答自己班老师的题！答错班级的题目记 0 分。</b></li>
+    <li>闭卷：平价公式、MM 公式、WACC 公式必须默写，不指望考卷给公式。</li>
+    <li>画图题：先标坐标轴（横轴 S<sub>T</sub>、纵轴收益）、执行价 X、期权费截距，再画折线。</li>
+    <li>计算题写清步骤和公式再代数——过程分很重要。</li>
+  </ul>
+
+  <div class="pager">
+    <a href="../lessons/0008-mock-exam.html"><span class="dir">← 返回</span><div class="name">第 8 课 · 全真模拟卷</div></a>
+    <a class="next" href="../index.html"><span class="dir">回到 →</span><div class="name">课程首页</div></a>
+  </div>
+
+  <div class="foot">建议考前一晚：开默写模式把本页过一遍，卡壳的条目回到对应课复习。打印版：⌘/Ctrl+P（默写模糊不会被打印）。</div>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 2 课 · 期权基础与策略应用 — 公司财务Ⅱ期末冲刺</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div id="readbar"></div>
+<header class="site-head"><div class="in">
+  <a class="logo" href="../index.html">公司财务Ⅱ<span>期末冲刺</span></a>
+  <nav>
+    <a href="../index.html">首页</a>
+    <a href="../reference/cheatsheet.html">考前速记</a>
+    <a href="0008-mock-exam.html">模拟卷</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <p class="kicker">Lesson 02 · 期权（上）</p>
+  <h1>期权基础与策略应用</h1>
+  <p class="sub">期权是全卷最高频章节（35–40%）。这一课打底：四种头寸的盈亏图（画图题母版）、四大策略场景（2024 真题连考三题）、六因素表（每年必考）。</p>
+  <div class="meta">
+    <span class="tag hot">考频 35–40%</span><span class="tag">画图题母版</span><span class="tag">六因素每年必考</span>
+  </div>
+
+  <h2><span class="no">一</span>衍生品与远期：三句话 + 一个公式</h2>
+  <p>四类衍生证券：<em class="term">远期 Forwards</em>、<em class="term">期货 Futures</em>、<em class="term">期权 Options</em>、<em class="term">互换 Swaps</em>。交易市场：交易所（约 5% 交易量，标准化、低信用风险）vs 柜台 OTC（约 95%，定制化、有信用风险）。</p>
+  <p>课上三句话（选择/判断素材）：① 实业（非金融）企业永远不应该在衍生品交易上做投机；② 套期保值的目的不是更多利润，而是减少或消除风险、缩小利润波动；③ 所有衍生品交易是零和游戏，不创造财富，头寸可以无限创造。</p>
+  <div class="formula"><span class="fname">远期定价（无成本收益时）</span>F = S<sub>0</sub> × (1 + r)　　（一般形式：现货价 + FV(持有成本) − FV(持有收益)）</div>
+  <p><b>真题一行算：</b>黄金现价 1700 美元、一年期利率 3.5%，一年期黄金远期价格 = 1700 × 1.035 = <b>1759.5 美元</b>。逻辑：今天借钱买金持有到期，成本就是本息，远期价高于此就可套利。</p>
+  <p><b>期权 vs 远期：</b>期权多头方有权利无义务（付期权费买选择权）；远期双方都有履约义务（初始现金流为零）。</p>
+
+  <h2><span class="no">二</span>四种基本头寸：payoff 与盈亏图（画图题母版）</h2>
+  <table>
+    <tr><th>头寸</th><th>到期支付 payoff</th><th>盈亏（含期权费）</th><th>风险特征</th></tr>
+    <tr><td><b>Call 多头</b>（买入看涨）</td><td>max(S<sub>T</sub>−X, 0)</td><td>支付 − c</td><td>最大损失 = 期权费 c；上涨收益无限</td></tr>
+    <tr><td><b>Call 空头</b>（卖出看涨）</td><td>−max(S<sub>T</sub>−X, 0)</td><td>+ c − 支付</td><td>最大收益 = c；<b>上涨损失无上限（最危险！）</b></td></tr>
+    <tr><td><b>Put 多头</b>（买入看跌）</td><td>max(X−S<sub>T</sub>, 0)</td><td>支付 − p</td><td>最大损失 = 期权费 p；下跌最大收益 X − p</td></tr>
+    <tr><td><b>Put 空头</b>（卖出看跌）</td><td>−max(X−S<sub>T</sub>, 0)</td><td>+ p − 支付</td><td>最大收益 = p；下跌最大损失接近 X</td></tr>
+  </table>
+
+  <div class="chart-grid">
+    <figure class="chart">
+      <svg viewBox="0 0 260 150" role="img" aria-label="Call 多头盈亏图">
+        <line class="ax" x1="18" y1="75" x2="248" y2="75"/><line class="ax" x1="22" y1="12" x2="22" y2="138"/>
+        <line class="tick" x1="135" y1="45" x2="135" y2="105"/>
+        <polyline class="pl" points="26,95 135,95 235,25"/>
+        <text class="lbl" x="128" y="118">X</text><text class="lbl" x="232" y="90">S<tspan baseline-shift="sub" font-size="9">T</tspan></text>
+        <text class="lbl" x="2" y="99">−c</text><text class="lbl" x="8" y="79">0</text>
+        <text class="lblB" x="90" y="26">Call 多头</text>
+      </svg>
+      <figcaption>X 之前水平（−c），X 之后 45° 向上；上涨收益无限</figcaption>
+    </figure>
+    <figure class="chart">
+      <svg viewBox="0 0 260 150" role="img" aria-label="Call 空头盈亏图">
+        <line class="ax" x1="18" y1="75" x2="248" y2="75"/><line class="ax" x1="22" y1="12" x2="22" y2="138"/>
+        <line class="tick" x1="135" y1="45" x2="135" y2="105"/>
+        <polyline class="pl" points="26,55 135,55 235,125"/>
+        <text class="lbl" x="128" y="118">X</text><text class="lbl" x="232" y="90">S<tspan baseline-shift="sub" font-size="9">T</tspan></text>
+        <text class="lbl" x="2" y="59">+c</text><text class="lbl" x="8" y="79">0</text>
+        <text class="lblB" x="90" y="26">Call 空头</text>
+      </svg>
+      <figcaption>多头图沿横轴翻转；上涨损失无上限（2024 真题第 1 题即画此图）</figcaption>
+    </figure>
+    <figure class="chart">
+      <svg viewBox="0 0 260 150" role="img" aria-label="Put 多头盈亏图">
+        <line class="ax" x1="18" y1="75" x2="248" y2="75"/><line class="ax" x1="22" y1="12" x2="22" y2="138"/>
+        <line class="tick" x1="135" y1="45" x2="135" y2="105"/>
+        <polyline class="pl" points="26,20 135,95 235,95"/>
+        <text class="lbl" x="128" y="118">X</text><text class="lbl" x="232" y="90">S<tspan baseline-shift="sub" font-size="9">T</tspan></text>
+        <text class="lbl" x="2" y="99">−p</text><text class="lbl" x="8" y="79">0</text>
+        <text class="lblB" x="90" y="26">Put 多头</text>
+      </svg>
+      <figcaption>X 之前 45° 向下→0 处最高（X−p），X 之后水平（−p）</figcaption>
+    </figure>
+    <figure class="chart">
+      <svg viewBox="0 0 260 150" role="img" aria-label="Put 空头盈亏图">
+        <line class="ax" x1="18" y1="75" x2="248" y2="75"/><line class="ax" x1="22" y1="12" x2="22" y2="138"/>
+        <line class="tick" x1="135" y1="45" x2="135" y2="105"/>
+        <polyline class="pl" points="26,130 135,55 235,55"/>
+        <text class="lbl" x="128" y="118">X</text><text class="lbl" x="232" y="90">S<tspan baseline-shift="sub" font-size="9">T</tspan></text>
+        <text class="lbl" x="2" y="59">+p</text><text class="lbl" x="8" y="79">0</text>
+        <text class="lblB" x="90" y="26">Put 空头</text>
+      </svg>
+      <figcaption>多头图沿横轴翻转；下跌最大损失接近 X</figcaption>
+    </figure>
+  </div>
+
+  <div class="callout memo">画图口诀——Call 多头：X 之前水平（−c）、X 之后 45° 向上；Put 多头：X 之前 45° 向下、X 之后水平（−p）；<b>空头图 = 多头图沿横轴翻转</b>。画图题先标出 X 和期权费截距。若题目不考虑期权费，水平段画在 0。</div>
+  <div class="callout trap">「裸卖 Call」（未持有标的就卖出看涨期权）损失无上限，历史上多次导致倾家荡产（国储铜、中信泰富澳元期权）。若已持有标的再卖 call = 备兑看涨（Covered Call），风险被对冲。<b>非线性是期权的本质</b>：支付函数收益不对称，是期权区别于股票、债券、远期的根本特征。</div>
+
+  <h2><span class="no">三</span>期权策略应用（2024 真题连考三题的题型）</h2>
+  <table>
+    <tr><th>需求场景</th><th>策略</th><th>图形要点</th></tr>
+    <tr><td>持有股票组合，担心市场下跌（基金经理管理 500 亿多元化组合）</td><td>买入看跌期权 = <b>保护性看跌 Protective Put</b>（给组合买保险）</td><td>股票多头 + put 多头 = 合成 call 形状：下跌被锁定在 X，上涨保留收益</td></tr>
+    <tr><td>未来要买原料，锁定最高成本（航空公司锁定航油 ≤125 美元/桶）</td><td>买入执行价 125 的<b>看涨期权</b></td><td>油价&lt;125 直接市价买；油价&gt;125 行权，实际成本恒为 125（上限锁定）</td></tr>
+    <tr><td>预期大波动但方向不明（通胀不确定、股市可能大涨大跌）</td><td>同时买入同执行价 K 的 call 和 put = <b>跨式组合 Straddle</b></td><td>V 形：S<sub>T</sub>&lt;K 行权 put、S<sub>T</sub>&gt;K 行权 call；收益 |S<sub>T</sub>−K|，越偏离 K 赚越多</td></tr>
+    <tr><td>持有股票，愿意在高位卖出并增强收益</td><td>持股 + 卖出 call = <b>备兑看涨 Covered Call</b></td><td>上涨收益封顶于 X，用股票对冲 call 空头风险</td></tr>
+  </table>
+
+  <div class="chart-grid">
+    <figure class="chart">
+      <svg viewBox="0 0 260 150" role="img" aria-label="保护性看跌">
+        <line class="ax" x1="18" y1="75" x2="248" y2="75"/><line class="ax" x1="22" y1="12" x2="22" y2="138"/>
+        <line class="tick" x1="135" y1="45" x2="135" y2="105"/>
+        <polyline class="pl2" points="26,132 235,22"/>
+        <polyline class="pl3" points="26,22 135,96 235,96"/>
+        <polyline class="pl" points="26,92 135,92 235,25"/>
+        <text class="lbl" x="128" y="118">X</text><text class="lblB" x="66" y="26">保护性看跌</text>
+        <text class="lbl" x="180" y="140">━ 组合　╌ 股票　┈ put</text>
+      </svg>
+      <figcaption>组合 = 股票 + put：下跌被锁定、上涨保留（2024 真题 Q4）</figcaption>
+    </figure>
+    <figure class="chart">
+      <svg viewBox="0 0 260 150" role="img" aria-label="买 call 锁定成本上限">
+        <line class="ax" x1="18" y1="130" x2="248" y2="130"/><line class="ax" x1="22" y1="12" x2="22" y2="138"/>
+        <line class="tick" x1="135" y1="40" x2="135" y2="130"/>
+        <line class="tick" x1="22" y1="55" x2="235" y2="55"/>
+        <polyline class="pl2" points="26,118 235,18"/>
+        <polyline class="pl" points="26,112 135,55 235,55"/>
+        <text class="lbl" x="126" y="144">125</text><text class="lbl" x="2" y="59">125</text>
+        <text class="lblB" x="60" y="26">锁定成本上限</text>
+        <text class="lbl" x="164" y="146">━ 买call后实际成本　╌ 不对冲</text>
+      </svg>
+      <figcaption>油价&gt;125 行权，实际买入成本封顶在 125（2024 真题 Q5）</figcaption>
+    </figure>
+    <figure class="chart">
+      <svg viewBox="0 0 260 150" role="img" aria-label="跨式组合">
+        <line class="ax" x1="18" y1="75" x2="248" y2="75"/><line class="ax" x1="22" y1="12" x2="22" y2="138"/>
+        <line class="tick" x1="135" y1="45" x2="135" y2="118"/>
+        <polyline class="pl3" points="26,30 135,100 235,100"/>
+        <polyline class="pl2" points="26,100 135,100 235,32"/>
+        <polyline class="pl" points="26,18 135,112 235,22"/>
+        <text class="lbl" x="130" y="132">K</text><text class="lblB" x="90" y="26">跨式组合</text>
+        <text class="lbl" x="168" y="146">━ 跨式（V形）　╌ call　┈ put</text>
+      </svg>
+      <figcaption>赌大波动、不赌方向；仅当 |S<sub>T</sub>−K| 超过两笔权费之和才盈利（2024 真题 Q6）</figcaption>
+    </figure>
+    <figure class="chart">
+      <svg viewBox="0 0 260 150" role="img" aria-label="备兑看涨">
+        <line class="ax" x1="18" y1="75" x2="248" y2="75"/><line class="ax" x1="22" y1="12" x2="22" y2="138"/>
+        <line class="tick" x1="135" y1="35" x2="135" y2="105"/>
+        <polyline class="pl2" points="26,125 235,18"/>
+        <polyline class="pl3" points="26,48 135,48 235,122"/>
+        <polyline class="pl" points="26,120 135,48 235,48"/>
+        <text class="lbl" x="128" y="118">X</text><text class="lblB" x="80" y="26">备兑看涨</text>
+        <text class="lbl" x="158" y="146">━ 备兑组合　╌ 股票　┈ call空头</text>
+      </svg>
+      <figcaption>持股 + 卖 call：上涨收益封顶于 X，权费增强收益</figcaption>
+    </figure>
+  </div>
+  <p><b>答题格式（三步）：</b>① 说明买入什么期权（方向 + 执行价）；② 解释两种情形下的结果；③ 画图（标出 X、组合支付线）。</p>
+
+  <h2><span class="no">四</span>期权价值的六个决定因素（每年必考的表）</h2>
+  <div class="callout teacher">「这个表的结论肯定是我们会考的，而且每年都会考。」</div>
+  <table>
+    <tr><th>因素 ↑</th><th class="c">Call 价值</th><th class="c">Put 价值</th><th>记忆逻辑</th></tr>
+    <tr><td>标的股票价格 S<sub>0</sub></td><td class="c up">↑</td><td class="c dn">↓</td><td>S 越高，买权越赚、卖权越亏</td></tr>
+    <tr><td>执行价格 X</td><td class="c dn">↓</td><td class="c up">↑</td><td>买入价越高越不划算；卖出价越高越划算</td></tr>
+    <tr><td>到期时间 T</td><td class="c up">↑（美式确定）</td><td class="c up">↑（美式确定）</td><td>时间越长选择越多（欧式一般也成立，理论上有例外）</td></tr>
+    <tr><td>波动率 σ</td><td class="c up">↑</td><td class="c up">↑</td><td>上行收益无限、下行损失有底（期权费），不确定性对期权持有人是好事</td></tr>
+    <tr><td>无风险利率 r</td><td class="c up">↑</td><td class="c dn">↓</td><td>行权价现值 X/(1+r)<sup>T</sup> 变小</td></tr>
+    <tr><td>现金股利 δ</td><td class="c dn">↓</td><td class="c up">↑</td><td>分红使股价除息下跌</td></tr>
+  </table>
+  <div class="callout memo">对 Call 的口诀：<b>标↑、价↓、期↑、波↑、利↑、红↓</b>。Put 除了 T、σ 同向为 ↑，其余全部与 Call 反向。σ 和 T 是「同向双升」——记住这两个特例。</div>
+  <div class="callout trap">两个陷阱：① <b>投资者对标的资产要求的收益率（β、CAPM、市场风险溢价）不影响期权价值</b>——其影响已包含在当前股价 S<sub>0</sub> 中；② CAPM 不能用于期权定价，因为期权收益分布非正态。期权定价用的是无套利/复制方法（下一课）。</div>
+
+  <h2><span class="no">五</span>期权的杠杆效应（真题一行算）</h2>
+  <p>投资者一个月前以 50 元/股买入 100 股，现价 55 元；同期该股票买权价格由 4 元升至 8 元。若当初同样资金投资于买权：</p>
+  <p>股票：5000 元买 100 股，赚 (55−50)×100 = 500 元，收益率 10%。期权：5000÷4 = 1250 份，每份赚 8−4 = 4 元，共赚 5000 元，收益率 100%。<b>5000÷500 = 10 倍</b>——「期权以小博大」的杠杆直觉。</p>
+
+  <h2><span class="no">六</span>自测</h2>
+
+  <div class="quiz" data-answer="C" data-explain="max(X−S_T,0)=「到期股价低于执行价时按差额获利」，是看跌期权买方的支付，即 put 多头。四个支付函数都要背：call 多头 max(S_T−X,0)、call 空头 −max(S_T−X,0)、put 多头 max(X−S_T,0)、put 空头 −max(X−S_T,0)。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>用 X 表示执行价格，S_T 表示标的资产到期日价值。下述期权头寸中，到期日支付等于 max(X−S_T, 0) 的是？</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>买权（call）多头</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>买权（call）空头</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>卖权（put）多头</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>卖权（put）空头</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="C" data-explain="call 是「以 X 为成本买入价值 S 的资产」的权利：S 越高买到手越值钱，X 越低买入成本越低，call 越贵。put 方向正好相反。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>其他条件相同，标的股票的价格——，执行价格——，买权的价格就越高。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>越高；越高</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>越低；越高</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>越高；越低</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>越低；越低</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="B" data-explain="波动率上升代表不确定性增加：标的大幅下跌的可能性增加，put 被行权获利的可能性上升；而期权的下行损失锁定在期权费、上行收益随波动放大——所以 σ 上升对 call 和 put 都是正向影响（六因素表里唯二同向的因素之一）。">
+    <div class="qsrc">2024 课堂考试</div>
+    <h4>标的资产的波动率上升（其他参数不变）时，看涨期权价格会上升，看跌期权的价格如何变化？</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>下降——波动利好看涨就必然利空看跌</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>上升——下行损失有底、上行收益放大</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>不变——波动率与看跌期权价值无关</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>不确定——取决于股价高于还是低于执行价</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="B" data-explain="股票：5000 元赚 500 元（10%）；期权：5000÷4=1250 份 × 4 元 = 5000 元（100%）。收益金额之比 = 收益率之比 = 10 倍（本金相同）。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>投资者一个月前以 50 元/股买入 100 股，现价 55 元；买权价格同期由 4 元升到 8 元。若当初同样资金投资于买权，收益是投资股票的——。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>5 倍</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>10 倍</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>8 倍</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>2 倍</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="pager">
+    <a href="0001-exam-map.html"><span class="dir">← 上一课</span><div class="name">第 1 课 · 考试地图与复习策略</div></a>
+    <a class="next" href="0003-parity-arbitrage.html"><span class="dir">下一课 →</span><div class="name">第 3 课 · 平价定理与套利（计算题①）</div></a>
+  </div>
+
+  <div class="foot">过关标准：闭卷手画四种头寸盈亏图（标 X 与期权费截距）；六因素方向表默写全对。不懂就随时问你的 AI 复习教练。</div>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

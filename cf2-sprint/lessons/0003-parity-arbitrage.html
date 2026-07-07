@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 3 课 · 平价定理与套利 — 公司财务Ⅱ期末冲刺</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div id="readbar"></div>
+<header class="site-head"><div class="in">
+  <a class="logo" href="../index.html">公司财务Ⅱ<span>期末冲刺</span></a>
+  <nav>
+    <a href="../index.html">首页</a>
+    <a href="../reference/cheatsheet.html">考前速记</a>
+    <a href="0008-mock-exam.html">模拟卷</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <p class="kicker">Lesson 03 · 期权（下）</p>
+  <h1>平价定理与套利：拿下计算题①</h1>
+  <p class="sub">全卷分值最高的 20 分就在这里。历届计算题①只换数字不换套路——学完这课，你要能闭卷默写「平价公式 → 判高低估 → 四笔交易 → 现金流表」全流程。</p>
+  <div class="meta">
+    <span class="tag hot">计算题① · 20 分</span><span class="tag">历届原题级复现</span><span class="tag">先试后看设计</span>
+  </div>
+
+  <h2><span class="no">一</span>欧式期权平价定理（Put-Call Parity）</h2>
+  <div class="formula"><span class="fname">平价定理 · 离散利率版（考题常给「非年化」期间利率，直接用）</span>c + X/(1+r)<sup>T</sup> = p + S<sub>0</sub></div>
+  <div class="formula"><span class="fname">连续复利版（完全等价，题目给连续复利才用）</span>c + X·e<sup>−rT</sup> = p + S<sub>0</sub></div>
+  <p>适用条件：欧式期权、相同标的、相同执行价 X、相同到期日 T。r 为对应期限的无风险利率。若标的在期内分红，公式左边加股利现值 D：c + X·e<sup>−rT</sup> + D = p + S<sub>0</sub>。</p>
+
+  <h3>公式拆解：这条式子到底在说什么</h3>
+  <table>
+    <tr><th style="width:22%">符号</th><th>含义</th><th>怎么理解</th></tr>
+    <tr><td>c</td><td>欧式看涨期权现价</td><td>「涨了跟涨」的权利，今天值多少钱</td></tr>
+    <tr><td>X/(1+r)<sup>T</sup></td><td>执行价 X 的<b>现值</b></td><td>今天存入这么多钱，到期恰好变成 X——一张「保底 X」的无风险债券</td></tr>
+    <tr><td>p</td><td>欧式看跌期权现价</td><td>「跌破 X 可按 X 卖出」的保险，今天的保费</td></tr>
+    <tr><td>S<sub>0</sub></td><td>标的股票现价</td><td>—</td></tr>
+  </table>
+  <p><b>公式的读法：</b>左边 =「call + 保底钱」——跌了债券到期给你 X 保底，涨了行权跟涨；右边 =「股票 + 保险」——涨了股票跟涨，跌破 X 用 put 按 X 卖出保底。两个组合到期都值 <b>max(X, S<sub>T</sub>)</b>，是同一个东西的两种做法，所以今天必须同价。</p>
+  <ul>
+    <li><b>为什么 X 用无风险利率贴现：</b>债券面值 X 是确定支付，确定的钱只能按无风险利率折现，且 r 必须与期限 T 匹配（题给 6 个月利率就用一期 1+r，不要年化折半或平方）。</li>
+    <li><b>离散 vs 连续：</b>X/(1+r)<sup>T</sup> 与 X·e<sup>−rT</sup> 都是「X 的现值」，只是复利口径不同，两版完全等价——以题目给的利率口径为准。</li>
+  </ul>
+  <p><b>移项就是合成——四种资产任取三种可复制第四种：</b></p>
+  <table>
+    <tr><th>想合成什么</th><th>移项结果</th><th>操作</th></tr>
+    <tr><td>股票</td><td>S<sub>0</sub> = c − p + X/(1+r)<sup>T</sup></td><td>买 call、卖 put、存入 X 的现值（受限不能直接持股的机构这样「持股」）</td></tr>
+    <tr><td>看涨期权</td><td>c = p + S<sub>0</sub> − X/(1+r)<sup>T</sup></td><td>买 put、买股票、借入 X 的现值</td></tr>
+    <tr><td>看跌期权</td><td>p = c − S<sub>0</sub> + X/(1+r)<sup>T</sup></td><td>买 call、卖空股票、存入 X 的现值</td></tr>
+  </table>
+  <div class="callout memo">记忆口诀：<b>「看涨带保底 = 看跌抱股票」</b>（c + PV(X) = p + S₀）。套利题的本质就一句：市价偏离哪一边，就<b>卖那一边、买另一边的合成品</b>——四笔交易正是「卖高估的它 + 买它的三件套复制品」。</div>
+
+  <h3>无套利证明（证明题可考，三步逻辑要会讲）</h3>
+  <ol>
+    <li><b>组合 A</b> = 1 份欧式 call + 面值 X 的无风险债券（现值 X/(1+r)<sup>T</sup>）。到期价值：S<sub>T</sub>≤X 时 = X；S<sub>T</sub>&gt;X 时 = (S<sub>T</sub>−X) + X = S<sub>T</sub>。</li>
+    <li><b>组合 B</b> = 1 股标的股票 + 1 份欧式 put。到期价值：S<sub>T</sub>≤X 时 = S<sub>T</sub> + (X−S<sub>T</sub>) = X；S<sub>T</sub>&gt;X 时 = S<sub>T</sub>。</li>
+    <li>两组合到期现金流在任何情形下<b>完全相同</b> → 无套利要求当前价值必须相等；否则买便宜的、卖贵的，可实现零成本无风险套利。</li>
+  </ol>
+  <figure class="chart">
+    <svg viewBox="0 0 520 160" role="img" aria-label="平价定理证明图解">
+      <line class="ax" x1="30" y1="120" x2="240" y2="120"/><line class="ax" x1="34" y1="20" x2="34" y2="130"/>
+      <line class="tick" x1="130" y1="60" x2="130" y2="120"/>
+      <line class="tick" x1="34" y1="60" x2="130" y2="60"/>
+      <polyline class="pl" points="38,60 130,60 228,18"/>
+      <text class="lbl" x="124" y="136">X</text><text class="lbl" x="12" y="64">X</text>
+      <text class="lblB" x="52" y="34">组合 A = call + 债券</text>
+      <line class="ax" x1="300" y1="120" x2="510" y2="120"/><line class="ax" x1="304" y1="20" x2="304" y2="130"/>
+      <line class="tick" x1="400" y1="60" x2="400" y2="120"/>
+      <line class="tick" x1="304" y1="60" x2="400" y2="60"/>
+      <polyline class="pl" points="308,60 400,60 498,18"/>
+      <text class="lbl" x="394" y="136">X</text><text class="lbl" x="282" y="64">X</text>
+      <text class="lblB" x="318" y="34">组合 B = 股票 + put</text>
+    </svg>
+    <figcaption>两组合到期支付线完全重合（S<sub>T</sub>≤X 时都 = X，S<sub>T</sub>&gt;X 时都 = S<sub>T</sub>）→ 现在必须等价</figcaption>
+  </figure>
+  <div class="callout memo">复制含义：四种资产（call、put、股票、无风险资产）任取三种可复制第四种。给定其中三个价格，第四个的「应有价格」就被锁死——这正是套利题的原理。</div>
+
+  <h2><span class="no">二</span>套利题标准模板（20 分大题 · 四步）</h2>
+  <p><b>母题（2024 课堂考试）：</b>6 个月到期、执行价 $30 的欧式看涨期权价格 $2.5；标的股价 $29；6 个月无风险利率 2.0%（非年化）。同标的、同期限、执行价 $30 的欧式看跌期权价格 $3.0。是否存在套利机会？如有，写出套利策略、交易细节与现金流。</p>
+  <p class="try-first">✍️ 建议先在纸上自己算，再逐步展开对照——这才是长在自己身上的 20 分。</p>
+
+  <details class="step">
+    <summary><span class="n">1</span>用平价公式算理论价</summary>
+    <div class="body">
+      <div class="formula">p<sup>fair</sup> = c + X/(1+r) − S<sub>0</sub> = 2.5 + 30/1.02 − 29 = 2.5 + 29.41 − 29 = <b>2.91</b></div>
+      <p>平价公式把四种资产绑在一起：给定 call、股票、债券三个价格，put 的公平价格就被锁死为 2.91。</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">2</span>与市价比较，判断高低估</summary>
+    <div class="body">
+      <p>市场 put 报价 3.0 ＞ 理论价 2.91 → <b>put 被高估 0.09</b>。</p>
+      <p>原则：<b>卖高估、买低估</b>。等价判断：c + X/(1+r) = 31.91 ＜ p + S<sub>0</sub> = 32.0，右边贵 → 卖右买左。</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">3</span>写出四笔交易（卖贵组合、买便宜组合）</summary>
+    <div class="body">
+      <ol>
+        <li>卖出一份看跌期权（+3.0）</li>
+        <li>卖空一股标的股票（+29）</li>
+        <li>买入一份看涨期权（−2.5）</li>
+        <li>买入面值 $30、6 个月到期的无风险债券（−30/1.02 = −29.41）</li>
+      </ol>
+      <p>t=0 净现金流（套利利润）= 3.0 + 29 − 2.5 − 29.41 = <b>+0.09</b>（恰好 = p<sub>market</sub> − p<sub>fair</sub>，立即落袋）。</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">4</span>到期现金流表：证明零风险（过程分所在）</summary>
+    <div class="body">
+      <table>
+        <tr><th>交易</th><th class="c">t = 0</th><th class="c">到期 S_T ＜ 30</th><th class="c">到期 S_T ≥ 30</th></tr>
+        <tr><td>卖出 put</td><td class="c">+3.0</td><td class="c">−(30−S_T)</td><td class="c">0</td></tr>
+        <tr><td>卖空股票（买回归还）</td><td class="c">+29</td><td class="c">−S_T</td><td class="c">−S_T</td></tr>
+        <tr><td>买入 call</td><td class="c">−2.5</td><td class="c">0</td><td class="c">+(S_T−30)</td></tr>
+        <tr><td>买入债券（到期收面值）</td><td class="c">−29.41</td><td class="c">+30</td><td class="c">+30</td></tr>
+        <tr><td><b>合计</b></td><td class="c"><b>+0.09</b></td><td class="c"><b>0</b></td><td class="c"><b>0</b></td></tr>
+      </table>
+      <p>今天稳赚 0.09，到期无论股价如何现金流为 0——无风险套利成立。<b>答题时逐格写出这张表并验证合计行 =（＋利润，0，0）。</b></p>
+    </div>
+  </details>
+
+  <div class="callout trap">三大易错：① 四笔交易一笔都不能少、方向不能错；② 现金流表必须每行每列写全并验证「合计」为（＋利润，0，0）；③ 若算出 p<sup>fair</sup> ＞ p<sup>market</sup>（put 被<b>低估</b>），则四笔<b>全部反向</b>：买 put、买股票、卖 call、卖空债券（借入资金）。规律一句话：<b>永远卖高估的那个，同时买它的复制组合。</b></div>
+
+  <h3>考场技巧：这 20 分怎么写才不丢分</h3>
+  <div class="card">
+    <b>① 答卷顺序固定五行：</b>默写平价公式 → 代数算理论价 → 一句话判断（「市场 put 高估 0.09，存在套利机会」）→ 列四笔交易（每笔标注现金流正负）→ 画现金流表 + 结论句。<br><br>
+    <b>② 结论句模板（最后必须点破）：</b>「t=0 锁定利润 $0.09，到期无论股价高低净现金流均为 0，该利润无风险，套利成立。」——阅卷看的就是你有没有<b>证明「无风险」</b>，只写四笔不写表会丢一半过程分。<br><br>
+    <b>③ 三个防坑：</b>利率口径——题给「6 个月利率 2%（非年化）」就直接用 1.02，切勿再年化、折半或平方；若题目说期内分红——平价左边先加股利现值再判偏离；若问的是 <b>call</b> 错价——c<sup>fair</sup> = p + S<sub>0</sub> − X/(1+r)，套路完全一样，只是四笔换主角。<br><br>
+    <b>④ 快检验算：</b>t=0 净现金流必须恰好等于 |p<sup>market</sup> − p<sup>fair</sup>|。对不上说明四笔中有一笔方向或金额写错了——这是 10 秒钟就能做的自查。<br><br>
+    <b>⑤ 时间分配：</b>整题控制在 15 分钟内；先写公式字母式再代数字，步骤分才能拿满。
+  </div>
+
+  <h3>历届数字变式（务必全练，考试极可能只换数字）</h3>
+  <table>
+    <tr><th>版本</th><th class="c">c</th><th class="c">X</th><th class="c">S₀</th><th class="c">r（期间）</th><th class="c">put 市价</th><th>p<sup>fair</sup></th><th>结论</th></tr>
+    <tr><td>2024 课堂（母题）</td><td class="c">2.5</td><td class="c">30</td><td class="c">29</td><td class="c">2%</td><td class="c">3.0</td><td>2.5+29.41−29 = 2.91</td><td>put 高估 0.09</td></tr>
+    <tr><td>19 级期末</td><td class="c">2.00</td><td class="c">32</td><td class="c">30</td><td class="c">3%</td><td class="c">3.65</td><td>2+31.07−30 = 3.07</td><td>put 高估 0.58</td></tr>
+    <tr><td>20 级期末</td><td class="c">2.5</td><td class="c">30</td><td class="c">29</td><td class="c">3%</td><td class="c">3.0</td><td>2.5+29.13−29 = 2.63</td><td>put 高估 0.37</td></tr>
+    <tr><td>21-22 期末</td><td class="c">2.8</td><td class="c">30</td><td class="c">29</td><td class="c">2%</td><td class="c">3.6</td><td>2.8+29.41−29 = 3.21</td><td>put 高估 0.39</td></tr>
+    <tr><td>课堂测验</td><td class="c">2.0</td><td class="c">32</td><td class="c">29</td><td class="c">5%</td><td class="c">4.0</td><td>2+30.48−29 = 3.48</td><td>put 高估 0.52</td></tr>
+  </table>
+  <p>练法：盖住后两列，限时 15 分钟独立写完整过程（判偏离 → 四笔 → 现金流表），再对照。</p>
+
+  <h2><span class="no">三</span>平价公式的五种问法（防变式）</h2>
+  <p>平价公式五个量 c、p、S<sub>0</sub>、X、r——<b>任意给四个都能解第五个</b>。往届练习把所有问法都考过：</p>
+  <ul>
+    <li><b>反推股价：</b>call $10、put $8、X=80、一年期、r=12%：S<sub>0</sub> = c + X/(1+r) − p = 10 + 80/1.12 − 8 = <b>73.43</b>。</li>
+    <li><b>反解利率：</b>股价 $50，call $12 与 put $2 执行价均 $48、一年期：12 + 48/(1+r) = 2 + 50 → 48/(1+r) = 40 → <b>r = 20%</b>。</li>
+    <li><b>买 put 最大获利：</b>股价跌到 0 时行权收入最大 = X；扣除权费后最大净获利 = X − p（题目说明不考虑期权费则答 X）。</li>
+    <li><b>买 call 最大获利：</b>股价上不封顶，获利无限——这正是 call 与 put 的不对称。</li>
+    <li><b>call 错价套利：</b>由平价推 call 公平价 c<sup>fair</sup> = p + S<sub>0</sub> − X/(1+r)。市场 c ＞ c<sup>fair</sup> → 卖 call、买股票、买 put、借入 X/(1+r)；c ＜ c<sup>fair</sup> → 四笔全反向。</li>
+  </ul>
+
+  <h2><span class="no">四</span>二项式定价：复制组合三步法（备选计算）</h2>
+  <p><b>例题（课堂测验）：</b>股票现价 $40，3 个月后要么 $45 要么 $35，无风险利率 2%/季度。求执行价 $40 的 3 个月欧式 put 的价值。</p>
+  <details class="step">
+    <summary><span class="n">1</span>写出两种情形下期权的到期支付</summary>
+    <div class="body"><p>上行 S=45 → p<sub>u</sub> = max(40−45, 0) = 0；下行 S=35 → p<sub>d</sub> = max(40−35, 0) = 5。</p></div>
+  </details>
+  <details class="step">
+    <summary><span class="n">2</span>用「Δ 股股票 + B 元无风险资产」复制期权支付</summary>
+    <div class="body">
+      <p>解方程组：Δ×45 + B×1.02 = 0 且 Δ×35 + B×1.02 = 5。两式相减：10Δ = −5 → <b>Δ = −0.5</b>（负号 = 卖空半股）；代回 <b>B = 22.06</b>（正号 = 存钱）。</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">3</span>无套利定价：期权价值 = 复制成本</summary>
+    <div class="body">
+      <p>p = Δ·S<sub>0</sub> + B = −0.5×40 + 22.06 = <b>2.06</b>。逻辑：复制组合与期权到期支付完全相同，今天必须同价，否则可套利。</p>
+    </div>
+  </details>
+  <div class="callout memo">复制组合法三步：<b>列支付 → 解 Δ 和 B → 价格 = Δ·S₀ + B</b>。Δ 的直觉：<b>Δ =（期权上行支付 − 下行支付）÷（股价上行 − 下行）</b>，就是期权支付对股价的「斜率」（对冲比率）——put 的支付随股价上涨而减少，斜率为负，所以复制 put 要卖空股票；B 是把剩余支付配平的无风险头寸。镜像规律：复制 call 的 Δ 为正（买股票）、B 为负（借钱）；复制 put 的 Δ 为负（卖空）、B 为正（存钱）。</div>
+  <p><b>call 版对照（往届练习）：</b>股价 $50，2 个月后 $53 或 $48，r=1%（非年化），X=49：c<sub>u</sub>=4、c<sub>d</sub>=0 → Δ = 4÷(53−48) = 0.8（买入 0.8 股），B = −38.02（借入）→ c = 0.8×50 − 38.02 = <b>1.98</b>。</p>
+  <p><b>思想的一般化（状态价格套利）：</b>两个经济状态下，任何证券的支付都可由另两个线性无关的证券组合出来。若复制成本 ≠ 市价，就套利——平价套利、二项式、MM 套利本质是同一招：<b>算复制成本 → 卖贵买复制</b>。</p>
+
+  <h2><span class="no">五</span>美式期权与 Black-Scholes（概念题）</h2>
+  <ul>
+    <li><b>美式买权（无分红标的）不应提前行权：</b>由平价关系可推 c ≥ S<sub>0</sub> − X/(1+r)<sup>T</sup> ＞ S<sub>0</sub> − X（未到期时），持有期权的价值始终高于立即行权的内在价值，最优策略是等到到期——因此无分红美式 call 价值 = 欧式 call。可转债内嵌转股权是美式期权，<b>同理提前转股非理性</b>。</li>
+    <li><b>美式卖权无解析解</b>：只能数值方法近似。</li>
+    <li><b>Black-Scholes：</b>为欧式期权提供解析解，假设股价服从几何布朗运动；N(d₁)、N(d₂) 为累积正态分布。只需知道其地位，不考推导计算。</li>
+  </ul>
+
+  <h2><span class="no">六</span>期权视角看公司证券（本章应用必考点）</h2>
+  <table>
+    <tr><th>证券</th><th>期权解读</th></tr>
+    <tr><td><b>股票（股东）</b></td><td>相当于持有以债务面值 D 为执行价、以公司资产为标的的<b>看涨期权</b>（有限责任：资产＜D 时一走了之）</td></tr>
+    <tr><td><b>债券（债权人）</b></td><td>相当于持有面值 D 的无风险债券 + 卖出以 D 为执行价的看跌期权</td></tr>
+    <tr><td><b>可转债</b></td><td>纯债券 + 看涨期权（所以票面利率低于普通债——<b>不是「更便宜的融资」</b>，期权是有价值的，定价是公允的）</td></tr>
+    <tr><td><b>认股权证</b></td><td>具有期权性质，相当于股票看涨期权</td></tr>
+  </table>
+  <figure class="chart">
+    <svg viewBox="0 0 340 180" role="img" aria-label="股权是公司资产的看涨期权">
+      <line class="ax" x1="24" y1="140" x2="326" y2="140"/><line class="ax" x1="28" y1="16" x2="28" y2="150"/>
+      <line class="tick" x1="170" y1="40" x2="170" y2="140"/>
+      <polyline class="pl2" points="32,136 170,44 316,44"/>
+      <polyline class="pl" points="32,136 170,136 316,40"/>
+      <text class="lbl" x="158" y="156">D（债务面值）</text><text class="lbl" x="272" y="156">到期公司资产 V</text>
+      <text class="lblB" x="196" y="120">股权 = max(V−D, 0)</text>
+      <text class="lbl" x="196" y="34">债权 = min(V, D)</text>
+    </svg>
+    <figcaption>V＜D：股东有限责任、一走了之；V＞D：偿债后剩余全归股东</figcaption>
+  </figure>
+  <p><b>两条推论（都考过）：</b></p>
+  <ul>
+    <li><b>财务困境行为：</b>股票是看涨期权 → 波动率越大越值钱 → 困境中股东有动机过度冒险（资产替代）、投资不足——与第 4 课的代理成本呼应。</li>
+    <li><b>多元化损害股东价值：</b>多元化经营降低资产波动率 σ，而股票是资产的看涨期权，σ 下降 → 股权价值下降，价值从股东转移给债权人（债务变安全）。<b>无协同效应的多元化损害股东</b>。</li>
+  </ul>
+  <p><b>高管期权一行算（曾出现在真题中，会算即可）：</b>CEO 六年前获得 500 万股期权、授予时股价 12 美元、现价 18 美元，行权收益 =（市价 − 行权价）× 股数 = (18−12)×500 万 = <b>3000 万美元</b>。</p>
+
+  <h2><span class="no">七</span>自测</h2>
+
+  <div class="quiz" data-answer="B" data-explain="期权定价用无套利/复制方法，复制成本只取决于 S₀、X、T、σ、r（及股利）。投资者对标的要求的收益率（风险偏好、β、CAPM）不进入定价——其影响已经全部体现在当前股价 S₀ 里。这正是无套利定价与均衡定价（CAPM）的区别。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>在下述各种因素中，期权价值与——无关。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>标的资产的价格</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>投资者投资于标的资产要求的收益率</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>执行价格</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>距期权到期日的时间</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="B" data-explain="p_fair = 2.5 + 30/1.03 − 29 = 2.63 ＜ 市价 3.0 → put 高估 0.37，卖出 put 并买入其复制组合（卖空股票、买 call、买债券）。">
+    <div class="qsrc">20 级期末 · 计算题数字</div>
+    <h4>c=2.5、X=30、S₀=29、6 个月期间利率 3%、put 市价 3.0。判断：</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>put 低估 0.37，应买入 put 并卖空其复制组合</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>put 高估 0.37，应卖出 put 并买入其复制组合</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>put 高估 0.09，应卖出 put 并买入其复制组合</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>平价成立，不存在任何套利机会</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="C" data-explain="套利成立的标志：t=0 净流入 = 错价幅度，到期两种情形现金流均为 0——今天稳赚、以后两清。这是现金流表「合计」行的必然形态。">
+    <div class="qsrc">套利模板核心</div>
+    <h4>平价套利的现金流表中，「合计」行的正确形态是？</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>（0，＋利润，＋利润）——到期才结算利润</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>（−成本，＋利润，＋利润）——先投入后回收</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>（＋利润，0，0）——今天落袋，到期两清</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>（＋利润，＋利润，＋利润）——三个时点都赚</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="A" data-explain="平价：12 + 48/(1+r) = 2 + 50 → 48/(1+r) = 40 → 1+r = 1.2 → r = 20%。要点：平价公式五个量任意给四个都能解第五个。">
+    <div class="qsrc">20 级练习 · 反解利率</div>
+    <h4>T 公司股价 $50，call 与 put 执行价均 $48、一年期，价格分别为 $12 和 $2。恰当的无风险利率是？</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>20%</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>12%</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>25%</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>16%</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="B" data-explain="股票 = 以债务面值 D 为执行价、以公司资产为标的的看涨期权。多元化使资产收益更稳定 = σ 下降，期权价值随 σ 下降而下降 → 股权价值下降，价值从股东转移给债权人。「无协同的多元化损害股东」——课堂明确采用的口径（个别往届资料曾标 C，考试以课堂口径 B 为准）。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>某公司通过多元化经营降低了经营风险，使资产收益率更加稳定，但业务间没有协同效应。多元化将导致——。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>公司股权价值的上升</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>公司股权价值的下降</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>公司股权价值不变</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>公司股票收益率波动上升</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="pager">
+    <a href="0002-option-basics.html"><span class="dir">← 上一课</span><div class="name">第 2 课 · 期权基础与策略应用</div></a>
+    <a class="next" href="0004-capital-structure.html"><span class="dir">下一课 →</span><div class="name">第 4 课 · 资本结构</div></a>
+  </div>
+
+  <div class="foot">过关标准：任选一组数字变式，限时 15 分钟闭卷写出完整四步（含现金流表）。这 20 分是全卷确定性最高的分数。</div>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>

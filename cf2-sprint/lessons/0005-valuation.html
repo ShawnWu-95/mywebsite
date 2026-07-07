@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>第 5 课 · 公司估值：拿下计算题② — 公司财务Ⅱ期末冲刺</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<div id="readbar"></div>
+<header class="site-head"><div class="in">
+  <a class="logo" href="../index.html">公司财务Ⅱ<span>期末冲刺</span></a>
+  <nav>
+    <a href="../index.html">首页</a>
+    <a href="../reference/cheatsheet.html">考前速记</a>
+    <a href="0008-mock-exam.html">模拟卷</a>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <p class="kicker">Lesson 05 · 公司估值</p>
+  <h1>公司估值：拿下计算题②</h1>
+  <p class="sub">「公司估值这一章毫无疑问是重中之重。」计算题②就是估值的价格评估——Pet-One 题在 2024 真题、课堂测验、往届资料中反复出现，本课的六步模板必须做到闭卷独立写出。</p>
+  <div class="meta">
+    <span class="tag hot">计算题② · 20 分</span><span class="tag">考频 15–20%</span><span class="tag">Pet-One 连考三届</span>
+  </div>
+
+  <h2><span class="no">一</span>两种现金流：自由现金流 vs 资本现金流</h2>
+  <p><em class="term">资本现金流</em>：归属于股东和债权人的全部现金流。<em class="term">自由现金流 FCF</em>：假设公司全股权融资（无债）情形下产生的现金流，是一个「人造」但应用最广的概念。FCF = 资本现金流 − 利息税盾。</p>
+  <div class="formula"><span class="fname">自由现金流（从 EBIT 出发）</span>FCF = EBIT·(1−τ<sub>c</sub>) + 折旧摊销 − 资本支出 − ΔNWC（净流动资金投资）<br>　　　+ 资产销售税后收入（最后处置的年份需要加，中间运营的年份不需要加）</div>
+  <p>计算起点是 EBIT（息税前利润），EBIT×(1−τc) 称为 EBIAT。<b>注意：利息不扣</b>——因为假设全股权融资；税盾的价值在贴现率（WACC）或单独项（APV）中体现，<b>不能两头都算</b>。</p>
+
+  <h2><span class="no">二</span>估值框架与残值</h2>
+  <p><b>两阶段框架：</b>前期（通常 5–10 年）逐年预测现金流；之后进入永续稳定增长期用残值（终值）整体估算。高速增长期设定严禁超过 10 年。残值三种估法：</p>
+  <ul>
+    <li><b>永续增长模型（最常用）：</b>TV<sub>T</sub> = CF<sub>T+1</sub> / (r − g)。注意分子 CF<sub>T+1</sub> 应独立预测，而非简单取 CF<sub>T</sub>×(1+g)；残值对整体估值影响巨大，参数要谨慎。</li>
+    <li><b>可比公司法（乘数法）：</b>基于期末公司状态用 P/E、P/B 等倍数。</li>
+    <li><b>清算法：</b>仅适用于非永续项目（如明确 30 年后清算），一般不用于持续经营企业。</li>
+  </ul>
+  <div class="callout trap">残值 TV<sub>T</sub> 是 T 时点的价值，<b>还要再贴现回 0 时刻（两步贴现）</b>。这是计算题经典失分点。</div>
+
+  <h2><span class="no">三</span>三种 DCF 方法</h2>
+  <table>
+    <tr><th>方法</th><th>贴什么现金流</th><th>用什么折现率</th><th>备注</th></tr>
+    <tr><td><b>WACC 法</b></td><td>公司自由现金流 FCF</td><td>公司 WACC</td><td>最常用（实务 &gt;80%），计算题②主方法</td></tr>
+    <tr><td><b>APV 法</b></td><td>无杠杆 FCF + 税盾单列</td><td>FCF 按 r<sub>A</sub> 贴；税盾按 r<sub>D</sub> 或 r<sub>A</sub> 贴</td><td>V = V<sub>U</sub> + PV(税盾)；适合融资副作用复杂的情形（LBO、项目融资）</td></tr>
+    <tr><td><b>FTE 法</b></td><td>股权现金流</td><td>股权成本 r<sub>E</sub></td><td>直接得到股权价值 E；了解即可</td></tr>
+  </table>
+  <div class="formula"><span class="fname">WACC 法</span>WACC = (E/V)·r<sub>E</sub> + (D/V)·r<sub>D</sub>·(1−τ<sub>c</sub>)　　公司价值 V = Σ FCF<sub>t</sub>/(1+WACC)<sup>t</sup> + PV(残值)</div>
+  <p>要点：权重 E/V、D/V 用<b>市值</b>而非账面价值；股权无税盾，r<sub>E</sub> 不调整；债务利息抵税，用税后成本 r<sub>D</sub>(1−τ<sub>c</sub>)。</p>
+  <div class="callout teacher">「几乎每一次考试都有少数同学，方法都对，最后告诉我贴现出来的是股权价值——不对！<b>FCF 用 WACC 贴现出来的是公司价值</b>。要得到股权价值，还要减去债务（以及优先股、可转债等）。」</div>
+  <p><b>APV 的税盾贴现规则（选择题考点）：</b>债务<b>总额</b>固定不变 → 税盾像债务利息一样确定，用 r<sub>D</sub> 贴现；负债<b>比率</b>固定不变 → 债务随企业价值波动，税盾风险与企业整体一致，用 r<sub>A</sub> 贴现。老师原话：「针对债务的利息税盾贴现，你用 rD 贴现，我永远不会认为你是错的——不管是比例不变还是总量不变。这些方法理论上没有高下之分。」记忆：<b>WACC 法调整的是资本成本，APV 法调整的是价值本身。</b></p>
+  <p>三种方法理论上无优劣、结论相同；若企业有目标负债比，可假设 WACC 不变以简化；若资本结构大幅变动，需逐年估计（课堂例题显示近似误差极小：87.9 vs 88.08）。</p>
+
+  <h2><span class="no">四</span>公式从哪来：六条式子的来路（懂了就不会背错）</h2>
+  <p>Pet-One 题用到的每条公式都源自同一个底座——<b>永续现金流的市值 = 年现金流 ÷ 折现率</b>（PV = C/r）。逐条拆：</p>
+
+  <h3>1. 股权价值 E = (EBIT − r<sub>D</sub>·D)(1−τ<sub>c</sub>) / r<sub>E</sub></h3>
+  <p>分子是<b>股东每年实际到手的钱</b>：公司赚 EBIT，先付利息 r<sub>D</sub>·D（利息在税前扣除），剩下的按 τ<sub>c</sub> 交税，税后全归股东。这笔钱年年如此（永续），股东要求的回报率是 r<sub>E</sub>，所以市值 = 年现金流 ÷ r<sub>E</sub>。</p>
+
+  <h3>2. 税盾现值为什么恰好 = τ<sub>c</sub>·D（约分演示）</h3>
+  <div class="formula">每年少交的税 = 利息 × 税率 = D·r<sub>D</sub>·τ<sub>c</sub>　⟹　永续现值 = D·r<sub>D</sub>·τ<sub>c</sub> / r<sub>D</sub> = τ<sub>c</sub>·D</div>
+  <p>税盾现金流与债务利息一样确定，所以按 r<sub>D</sub> 贴现——分子分母的 r<sub>D</sub> <b>恰好约掉</b>，结果里不含利率。这就是为什么「每 1 元永久债务创造 τ<sub>c</sub> 元价值」，与债务利率无关。</p>
+
+  <h3>3. r<sub>A</sub> = EBIT(1−τ<sub>c</sub>) / V<sub>U</sub>：分母为什么必须是 V<sub>U</sub></h3>
+  <p>r<sub>A</sub> 的定义是「假设公司<b>无债</b>」时资产的回报率。无债时没有利息可扣，公司年现金流恰好就是 EBIT(1−τ<sub>c</sub>)，对应的市值是无杠杆价值 V<sub>U</sub>——所以分母是 V<sub>U</sub>。<b>若误用 V<sub>L</sub> 作分母，算出来的其实是 WACC</b>（Pet-One 里 360/3000 = 12% 正是 WACC，360/2600 = 13.85% 才是 r<sub>A</sub>）。</p>
+
+  <h3>4. WACC 的两种算法为什么必然相等（验算的原理）</h3>
+  <div class="formula">定义法：WACC = (E/V)·r<sub>E</sub> + (D/V)·r<sub>D</sub>·(1−τ<sub>c</sub>)　　现金流法：WACC = EBIT(1−τ<sub>c</sub>) / V<sub>L</sub></div>
+  <p>股东年现金流 = E·r<sub>E</sub>（第 1 条），债权人给公司造成的税后成本 = D·r<sub>D</sub>(1−τ<sub>c</sub>)，两者加总恰好 = EBIT(1−τ<sub>c</sub>)。两边同除以 V 就得到「定义法 = 现金流法」。<b>这就是第 6 步验算的原理：两种算法必须相等，不等说明前面某步算错了</b>——考场上 10 秒自查。</p>
+
+  <h3>5. 加杠杆隐式方程的通解（一行出答案）</h3>
+  <div class="formula">目标债务率 w（即 D′ = w·V′）时：V′ = V<sub>U</sub> + τ<sub>c</sub>·w·V′　⟹　<b>V′ = V<sub>U</sub> / (1 − τ<sub>c</sub>·w)</b></div>
+  <p>验证：Pet-One　2600/(1−0.4×0.5) = <b>3250</b> ✓；19 级版　5775/(1−0.3×0.5) = <b>6794</b> ✓。为什么是隐式的：多发的债本身创造税盾 → V 变大 → 50% 对应的债务也变大，互相咬合，必须解方程而不能拿旧 V×50%。<b>背下这个通式，第（ii）问第一步一行写完。</b></p>
+
+  <h3>6. 有税 MMⅡ 从哪来（帮助记对公式，不要求会推）</h3>
+  <p>总回报守恒：公司资产 + 税盾每年产出的现金流，必须恰好分给股东和债权人：V<sub>U</sub>·r<sub>A</sub> + τ<sub>c</sub>D·r<sub>D</sub> = E·r<sub>E</sub> + D·r<sub>D</sub>。代入 V<sub>U</sub> = E + (1−τ<sub>c</sub>)D 整理即得 r<sub>E</sub> = r<sub>A</sub> + (1−τ<sub>c</sub>)(r<sub>A</sub>−r<sub>D</sub>)·D/E。<b>记忆点：</b>r<sub>E</sub> = 资产回报 + 杠杆风险补偿；有税时补偿打了 (1−τ<sub>c</sub>) 折——因为一部分风险由政府（税盾）分担了。无税版就是把 (1−τ<sub>c</sub>) 拿掉。</p>
+
+  <h2><span class="no">五</span>Pet-One 标准模板（真题原题，连考三届）</h2>
+  <p><b>题目：</b>Pet-One 公司：EBIT = 600 万美元/年，所得税率 40%，权益资本成本 15%，永久债务 1000 万美元，债务利率 10%。<br>（i）假设股价处于均衡状态，公司整体价值、无负债资本成本 r<sub>A</sub>、WACC 各是多少？<br>（ii）公司发行新债回购股份，使债务率增至 50%，新债利率仍 10%。需发行多少新债？WACC 变为多少？对股东财富有什么影响？</p>
+  <p class="try-first">✍️ 先在纸上完整做一遍两问，再逐步展开核对。第（i）问六步、第（ii）问三步。</p>
+
+  <h3>第（i）问 · 六步走</h3>
+  <details class="step">
+    <summary><span class="n">1</span>求股权价值 E</summary>
+    <div class="body">
+      <div class="formula">E = (EBIT − r<sub>D</sub>·D)(1−τ<sub>c</sub>) / r<sub>E</sub> = (600 − 1000×10%)×0.6 / 0.15 = 300/0.15 = <b>2000 万</b></div>
+      <p>股权是永续现金流：股东每年拿到（EBIT − 利息）×(1−τ)，按 r<sub>E</sub> 折现。</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">2</span>公司整体价值 V</summary>
+    <div class="body"><div class="formula">V<sub>L</sub> = E + D = 2000 + 1000 = <b>3000 万</b></div></div>
+  </details>
+  <details class="step">
+    <summary><span class="n">3</span>税盾现值</summary>
+    <div class="body">
+      <div class="formula">τ<sub>c</sub>·D = 40% × 1000 = <b>400 万</b></div>
+      <p>年税盾 = D·r<sub>D</sub>·τ<sub>c</sub> = 40 万，永续按 r<sub>D</sub> 贴现：40 ÷ 0.1 = 400 万。</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">4</span>无杠杆价值 V<sub>U</sub></summary>
+    <div class="body"><div class="formula">V<sub>U</sub> = V<sub>L</sub> − τ<sub>c</sub>·D = 3000 − 400 = <b>2600 万</b></div></div>
+  </details>
+  <details class="step">
+    <summary><span class="n">5</span>资产回报率 r<sub>A</sub></summary>
+    <div class="body">
+      <div class="formula">r<sub>A</sub> = EBIT·(1−τ<sub>c</sub>) / V<sub>U</sub> = 600×0.6 / 2600 = 360/2600 = <b>13.85%</b></div>
+      <p><b>分母必须用 V<sub>U</sub></b>——r<sub>A</sub> 是「假设无债」时的资产回报率，用 V 算出来的是 WACC。</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">6</span>WACC + 验算</summary>
+    <div class="body">
+      <div class="formula">WACC = (2000/3000)×15% + (1000/3000)×10%×(1−40%) = 10% + 2% = <b>12%</b><br>验算：EBIT(1−τ)/V<sub>L</sub> = 360/3000 = 12% ✓</div>
+    </div>
+  </details>
+
+  <h3>第（ii）问 · 加杠杆三步</h3>
+  <details class="step">
+    <summary><span class="n">1</span>解隐式方程求新公司价值 V′，得新发债额</summary>
+    <div class="body">
+      <p>债务率 50% 即 D′ = 0.5·V′，方程是<b>隐式</b>的：</p>
+      <div class="formula">V′ = V<sub>U</sub> + τ<sub>c</sub>·D′ = 2600 + 0.4×0.5×V′　⟹　V′(1−0.2) = 2600　⟹　V′ = <b>3250 万</b></div>
+      <p>D′ = 3250×50% = 1625 万 → 需新发债 = 1625 − 1000 = <b>625 万</b>。</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">2</span>新 r<sub>E</sub>（有税 MMⅡ）与新 WACC</summary>
+    <div class="body">
+      <div class="formula">D/E = 1：r<sub>E</sub>′ = 13.85% + (1−0.4)×(13.85% − 10%)×1 = <b>16.16%</b><br>WACC′ = ½×16.16% + ½×10%×0.6 = 8.08% + 3% = <b>11.08%</b>（下降——税盾增强）</div>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">3</span>对股东财富的影响</summary>
+    <div class="body">
+      <p>= <b>新增税盾</b> = 新发债 × τ<sub>c</sub> = 625×40% = <b>+250 万</b>，全部归原股东所有（宣布时点股价上涨体现）。</p>
+    </div>
+  </details>
+
+  <div class="callout trap">三大易错（阅卷扣分点）：① 第（ii）问不能拿旧 V×50% 减旧债当新发债——V 本身会因税盾变大，<b>必须解隐式方程</b>；② r<sub>A</sub> 的分母用 V<sub>U</sub>，别用 V；③「对股东财富的影响」标准答案<b>只答新增税盾（+250 万）</b>。</div>
+
+  <h3>考场技巧：这 20 分怎么写才不丢分</h3>
+  <div class="card">
+    <b>① 每步先写字母式再代数字：</b>「E = (EBIT − r<sub>D</sub>D)(1−τ<sub>c</sub>)/r<sub>E</sub> = (600−100)×0.6/0.15 = 2000 万」——公式对了即使算错数也能拿大半步骤分；只写数字则一步错全错。<br><br>
+    <b>② 三招自查（各 10 秒）：</b>WACC 双算必须相等（加权法 vs EBIT(1−τ<sub>c</sub>)/V）；E + D 必须等于 V；股东财富变化必须恰好 = 新发债 × τ<sub>c</sub>。任何一个对不上，立刻回头找错。<br><br>
+    <b>③ 审题三个关键词：</b>「债务<b>率</b> 50%」是 D/V = 0.5 而不是 D/E（D/E=1 是由 50% 推出来的）；「新债利率」若与旧债不同，MMⅡ 里的 r<sub>D</sub> 要用<b>新</b>利率；「均衡状态」= 市价反映公允价值，是让你放心用永续公式的信号词。<br><br>
+    <b>④ 单位与量纲：</b>全程统一「万」或「百万」，百分比换小数再进公式（40% → 0.4）；最后答案带单位，rE、WACC 保留两位小数。<br><br>
+    <b>⑤ 时间分配：</b>第（i）问 10 分钟、第（ii）问 8 分钟、检查 2 分钟；若卡在某步，把已知公式全部列出再往下凑——阅卷按步骤给分。
+  </div>
+
+  <h3>换数字自练（19 级真题版，套路一步不差）</h3>
+  <p>EBIT 900 万、τ 30%、r<sub>E</sub> 12%、永久债 1000 万、r<sub>D</sub> 3%，第（ii）问债务率提至 50%、新债利率仍 3%：</p>
+  <details class="step">
+    <summary><span class="n">✓</span>核对答案（先自己算完再展开）</summary>
+    <div class="body">
+      <p>（i）E = (900−30)×0.7/0.12 = <b>5075 万</b>；V = <b>6075 万</b>；税盾 = 300 万；V<sub>U</sub> = <b>5775 万</b>；r<sub>A</sub> = 630/5775 = <b>10.91%</b>；WACC = 630/6075 = <b>10.37%</b>。<br>
+      （ii）V′ = 5775/(1−0.5×0.3) = <b>6794 万</b>；D′ = 3397 万 → 新发债 <b>2397 万</b>；r<sub>E</sub>′ = 10.91% + 0.7×(10.91%−3%) = <b>16.45%</b>；WACC′ = 0.5×16.45% + 0.5×3%×0.7 = <b>9.27%</b>；股东财富增加 = 2397×30% ≈ <b>+719 万</b>。</p>
+    </div>
+  </details>
+
+  <h2><span class="no">六</span>备选问法：宣布发债回购后的股价与回购数量</h2>
+  <p>若题目问「宣布发债回购后股价如何变化、能回购多少股」：① 先算新公司价值 V<sub>L</sub> = V<sub>U</sub> + τ<sub>c</sub>D；② <b>新股价 = V<sub>L</sub> ÷ 原股数（公告日即涨）</b>；③ 回购股数 = 发债额 ÷ 新股价。数字演示见<a href="0004-capital-structure.html">第 4 课</a>课堂例题（1 万元公司发 5000 债：股价当天 20→24 元，按 24 元回购 208.33 股）。<b>最常见错误：用旧股价 20 元算回购数量（250 股）。</b></p>
+  <p><b>无税对照（概念题精华）：</b>无税 MM 下发债回购，V 不变、股价不变、股东财富不变——发债回购只是价值的重新切分，不创造价值；便宜的债被更高的股权成本抵消，WACC 不变。<b>有税才创造价值，增量 = 税盾，全部归原股东。</b></p>
+
+  <h2><span class="no">七</span>自测</h2>
+
+  <div class="quiz" data-answer="D" data-explain="两条匹配原则：①风险匹配——贴现率反映被估资产的风险，收购估值时用目标公司 B 的 WACC，与收购方 A 的资本成本无关；②口径匹配——WACC 法配自由现金流（FCF），贴出来的是公司价值。">
+    <div class="qsrc">19 级期末 · 2021.1</div>
+    <h4>A 公司准备收购 B 公司，决定采用 WACC 方法（自由现金流法）估计 B 公司的价值，那么应该用——贴现——。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>A 公司的 WACC；B 公司的股权现金流</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>A 公司的 WACC；B 公司的自由现金流</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>B 公司的 WACC；B 公司的股权现金流</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>B 公司的 WACC；B 公司的自由现金流</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="C" data-explain="rA 由资产端经营风险决定，跟怎么融资无关——杠杆再高，资产还是那些资产。税后 WACC 含税盾项 (1−τc)，杠杆上升→抵税利息增多→WACC 下降。补一个易混点：无税 MM 世界里 WACC 才恒定不变。">
+    <div class="qsrc">19 级期末 · 2021.1 · 明示必考</div>
+    <h4>关于资产资本成本（rA）和税后加权平均资本成本（WACC）的论断中，——是正确的。</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>rA 和 WACC 都与资产负债比例相关</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>rA 和 WACC 都与资产负债比例无关</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>rA 与资产负债比例无关，WACC 与资产负债比例相关</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>rA 与资产负债比例相关，WACC 与资产负债比例无关</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="C" data-explain="rA = EBIT(1−τ)/VU = 360/2600 = 13.85%。分母必须用无杠杆价值 VU = 2600；若用 V = 3000，算出的 12% 其实是 WACC。">
+    <div class="qsrc">Pet-One 模板 · 第 5 步</div>
+    <h4>Pet-One 数字（EBIT=600、τ=40%、V=3000、V<sub>U</sub>=2600）：r<sub>A</sub> = ？</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>360/3000 = 12%</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>600/2600 = 23.08%</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>360/2600 = 13.85%</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>600/3000 = 20%</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="D" data-explain="必须解隐式方程：V′ = VU + τc×0.5V′ → V′ = 2600/0.8 = 3250，D′ = 1625，新发债 = 1625 − 1000 = 625 万。直接 3000×50% − 1000 = 500 是最常见错误——加杠杆后 V 本身因税盾变大。">
+    <div class="qsrc">Pet-One 模板 · 第（ii）问</div>
+    <h4>Pet-One 债务率提高到 50% 后，需要新发行多少债务？</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>500 万（3000×50% − 1000）</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>300 万（2600×50% − 1000）</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>1625 万（新债务总额）</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>625 万（解得 V′=3250、D′=1625，减原债 1000）</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="quiz" data-answer="B" data-explain="标准答案只答新增税盾：625×40% = 250 万，全部归原股东（宣布时点股价上涨体现）。rE 上升是风险补偿，不改变财富结论。">
+    <div class="qsrc">Pet-One 模板 · 第（ii）问</div>
+    <h4>Pet-One 改变资本结构对股东财富的影响，标准答案是？</h4>
+    <div class="q-opts">
+      <div class="q-opt" data-key="A"><span class="k">A</span>无影响（MM 价值无关命题）</div>
+      <div class="q-opt" data-key="B"><span class="k">B</span>增加 250 万（新增税盾 625×40%）</div>
+      <div class="q-opt" data-key="C"><span class="k">C</span>增加 650 万（总税盾 1625×40%）</div>
+      <div class="q-opt" data-key="D"><span class="k">D</span>减少，因为 rE 上升使股权风险加大</div>
+    </div>
+    <div class="q-feedback"></div>
+  </div>
+
+  <div class="pager">
+    <a href="0004-capital-structure.html"><span class="dir">← 上一课</span><div class="name">第 4 课 · 资本结构</div></a>
+    <a class="next" href="0006-payout.html"><span class="dir">下一课 →</span><div class="name">第 6 课 · 公司分配与问答题</div></a>
+  </div>
+
+  <div class="foot">过关标准：Pet-One 两问限时 20 分钟闭卷独立写出（六步 + 三步），换 19 级数字再做一遍全对。</div>
+</div>
+<script src="../assets/app.js"></script>
+</body>
+</html>
