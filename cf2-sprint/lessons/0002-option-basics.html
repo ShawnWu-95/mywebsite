@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>第 2 课 · 期权基础与策略应用 — 公司财务Ⅱ期末冲刺</title>
 <link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
 </head>
 <body>
 <div id="readbar"></div>
@@ -28,17 +29,17 @@
   <h2><span class="no">一</span>衍生品与远期：三句话 + 一个公式</h2>
   <p>四类衍生证券：<em class="term">远期 Forwards</em>、<em class="term">期货 Futures</em>、<em class="term">期权 Options</em>、<em class="term">互换 Swaps</em>。交易市场：交易所（约 5% 交易量，标准化、低信用风险）vs 柜台 OTC（约 95%，定制化、有信用风险）。</p>
   <p>课上三句话（选择/判断素材）：① 实业（非金融）企业永远不应该在衍生品交易上做投机；② 套期保值的目的不是更多利润，而是减少或消除风险、缩小利润波动；③ 所有衍生品交易是零和游戏，不创造财富，头寸可以无限创造。</p>
-  <div class="formula"><span class="fname">远期定价（无成本收益时）</span>F = S<sub>0</sub> × (1 + r)　　（一般形式：现货价 + FV(持有成本) − FV(持有收益)）</div>
+  <div class="formula"><span class="fname">远期定价（无成本收益时）</span>$$F = S_0 \times (1+r)$$（一般形式：现货价 + FV(持有成本) − FV(持有收益)）</div>
   <p><b>真题一行算：</b>黄金现价 1700 美元、一年期利率 3.5%，一年期黄金远期价格 = 1700 × 1.035 = <b>1759.5 美元</b>。逻辑：今天借钱买金持有到期，成本就是本息，远期价高于此就可套利。</p>
   <p><b>期权 vs 远期：</b>期权多头方有权利无义务（付期权费买选择权）；远期双方都有履约义务（初始现金流为零）。</p>
 
   <h2><span class="no">二</span>四种基本头寸：payoff 与盈亏图（画图题母版）</h2>
   <table>
     <tr><th>头寸</th><th>到期支付 payoff</th><th>盈亏（含期权费）</th><th>风险特征</th></tr>
-    <tr><td><b>Call 多头</b>（买入看涨）</td><td>max(S<sub>T</sub>−X, 0)</td><td>支付 − c</td><td>最大损失 = 期权费 c；上涨收益无限</td></tr>
-    <tr><td><b>Call 空头</b>（卖出看涨）</td><td>−max(S<sub>T</sub>−X, 0)</td><td>+ c − 支付</td><td>最大收益 = c；<b>上涨损失无上限（最危险！）</b></td></tr>
-    <tr><td><b>Put 多头</b>（买入看跌）</td><td>max(X−S<sub>T</sub>, 0)</td><td>支付 − p</td><td>最大损失 = 期权费 p；下跌最大收益 X − p</td></tr>
-    <tr><td><b>Put 空头</b>（卖出看跌）</td><td>−max(X−S<sub>T</sub>, 0)</td><td>+ p − 支付</td><td>最大收益 = p；下跌最大损失接近 X</td></tr>
+    <tr><td><b>Call 多头</b>（买入看涨）</td><td>\(\max(S_T-X,\,0)\)</td><td>支付 − c</td><td>最大损失 = 期权费 c；上涨收益无限</td></tr>
+    <tr><td><b>Call 空头</b>（卖出看涨）</td><td>\(-\max(S_T-X,\,0)\)</td><td>+ c − 支付</td><td>最大收益 = c；<b>上涨损失无上限（最危险！）</b></td></tr>
+    <tr><td><b>Put 多头</b>（买入看跌）</td><td>\(\max(X-S_T,\,0)\)</td><td>支付 − p</td><td>最大损失 = 期权费 p；下跌最大收益 X − p</td></tr>
+    <tr><td><b>Put 空头</b>（卖出看跌）</td><td>\(-\max(X-S_T,\,0)\)</td><td>+ p − 支付</td><td>最大收益 = p；下跌最大损失接近 X</td></tr>
   </table>
 
   <div class="chart-grid">
@@ -153,6 +154,11 @@
   </div>
   <p><b>答题格式（三步）：</b>① 说明买入什么期权（方向 + 执行价）；② 解释两种情形下的结果；③ 画图（标出 X、组合支付线）。</p>
 
+  <h3>组合收益计算：逐腿写 payoff 再相加（真题一行算）</h3>
+  <p><b>【21-22 期末】</b>SC 航空公司购买了为期 3 个月、执行价 110 美元的 100 万桶石油看涨期权，同时购买了为期 3 个月、执行价 125 美元的 100 万桶石油看跌期权。3 个月后油价 116 美元，求收益（不考虑期权费）。</p>
+  <p><b>逐腿相加：</b>call 腿 \(\max(116-110,\,0) = 6\) 美元/桶；put 腿 \(\max(125-116,\,0) = 9\) 美元/桶；合计 15 美元/桶 × 100 万桶 = <b>1500 万美元</b>。</p>
+  <div class="callout trap">关键识别：这里 X<sub>call</sub>(110) ＜ X<sub>put</sub>(125)，油价落在两个执行价之间时<b>两个期权同时处于实值、同时行权</b>——不同于第三节单一执行价的跨式组合（中间区间两权都不行权）。技巧：任何组合题都不要背图形，老老实实<b>逐腿写 payoff 再求和</b>。</div>
+
   <h2><span class="no">四</span>期权价值的六个决定因素（每年必考的表）</h2>
   <div class="callout teacher">「这个表的结论肯定是我们会考的，而且每年都会考。」</div>
   <table>
@@ -161,7 +167,7 @@
     <tr><td>执行价格 X</td><td class="c dn">↓</td><td class="c up">↑</td><td>买入价越高越不划算；卖出价越高越划算</td></tr>
     <tr><td>到期时间 T</td><td class="c up">↑（美式确定）</td><td class="c up">↑（美式确定）</td><td>时间越长选择越多（欧式一般也成立，理论上有例外）</td></tr>
     <tr><td>波动率 σ</td><td class="c up">↑</td><td class="c up">↑</td><td>上行收益无限、下行损失有底（期权费），不确定性对期权持有人是好事</td></tr>
-    <tr><td>无风险利率 r</td><td class="c up">↑</td><td class="c dn">↓</td><td>行权价现值 X/(1+r)<sup>T</sup> 变小</td></tr>
+    <tr><td>无风险利率 r</td><td class="c up">↑</td><td class="c dn">↓</td><td>行权价现值 \(X/(1+r)^T\) 变小</td></tr>
     <tr><td>现金股利 δ</td><td class="c dn">↓</td><td class="c up">↑</td><td>分红使股价除息下跌</td></tr>
   </table>
   <div class="callout memo">对 Call 的口诀：<b>标↑、价↓、期↑、波↑、利↑、红↓</b>。Put 除了 T、σ 同向为 ↑，其余全部与 Call 反向。σ 和 T 是「同向双升」——记住这两个特例。</div>
@@ -228,6 +234,8 @@
 
   <div class="foot">过关标准：闭卷手画四种头寸盈亏图（标 X 与期权费截距）；六因素方向表默写全对。不懂就随时问你的 AI 复习教练。</div>
 </div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/auto-render.min.js"></script>
 <script src="../assets/app.js"></script>
 </body>
 </html>

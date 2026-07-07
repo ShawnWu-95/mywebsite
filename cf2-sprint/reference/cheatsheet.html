@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>考前速记页 · 公式 / 结论 / 流程卡 — 公司财务Ⅱ期末冲刺</title>
 <link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
 </head>
 <body>
 <div id="readbar"></div>
@@ -27,23 +28,23 @@
   <h2><span class="no">一</span>必背公式表（闭卷，全部默写）</h2>
   <table>
     <tr><th style="width:34%">主题</th><th>公式</th></tr>
-    <tr><td>MM Ⅰ（无税）</td><td class="blur-target">V<sub>L</sub> = V<sub>U</sub> = V<sub>A</sub></td></tr>
-    <tr><td>MM Ⅱ（无税）</td><td class="blur-target">r<sub>E</sub> = r<sub>A</sub> + (r<sub>A</sub> − r<sub>D</sub>)·D/E</td></tr>
-    <tr><td>MM Ⅰ（有税）</td><td class="blur-target">V<sub>L</sub> = V<sub>U</sub> + τ<sub>c</sub>·D　（永久债税盾现值 = τ<sub>c</sub>·D）</td></tr>
-    <tr><td>MM Ⅱ（有税）</td><td class="blur-target">r<sub>E</sub> = r<sub>A</sub> + (1−τ<sub>c</sub>)(r<sub>A</sub> − r<sub>D</sub>)·D/E</td></tr>
-    <tr><td>WACC</td><td class="blur-target">WACC = (E/V)·r<sub>E</sub> + (D/V)·r<sub>D</sub>·(1−τ<sub>c</sub>)</td></tr>
-    <tr><td>股权价值（永续）</td><td class="blur-target">E = (EBIT − r<sub>D</sub>·D)(1−τ<sub>c</sub>) / r<sub>E</sub></td></tr>
-    <tr><td>资产回报率</td><td class="blur-target">r<sub>A</sub> = EBIT·(1−τ<sub>c</sub>) / V<sub>U</sub>　（分母必须是 V<sub>U</sub>！）</td></tr>
-    <tr><td>自由现金流</td><td class="blur-target">FCF = EBIT(1−τ<sub>c</sub>) + 折旧摊销 − 资本支出 − ΔNWC（+ 最后处置年份的资产销售税后收入）</td></tr>
-    <tr><td>年金现值</td><td class="blur-target">PV = (C/r)·[1 − (1+r)<sup>−T</sup>]</td></tr>
-    <tr><td>常增长（Gordon）/ 残值</td><td class="blur-target">PV = C<sub>1</sub>/(r−g)；残值 TV<sub>T</sub> = CF<sub>T+1</sub>/(r−g)，<b>还要再贴现回 0 时刻</b></td></tr>
-    <tr><td>APV</td><td class="blur-target">APV = V<sub>U</sub>（FCF 按 r<sub>A</sub> 贴现）+ 税盾现值（r<sub>D</sub> 或 r<sub>A</sub> 贴现）</td></tr>
-    <tr><td>加杠杆隐式方程（通解）</td><td class="blur-target">V′ = V<sub>U</sub> / (1 − τ<sub>c</sub>·w)　（w = 目标债务率 D′/V′；新发债 = w·V′ − 旧债）</td></tr>
-    <tr><td>期权平价定理</td><td class="blur-target">c + X/(1+r)<sup>T</sup> = p + S<sub>0</sub>　（连续复利版：c + X·e<sup>−rT</sup> = p + S<sub>0</sub>；有股利：左边 + D）</td></tr>
-    <tr><td>期权支付</td><td class="blur-target">call 多头 max(S<sub>T</sub>−X, 0)；put 多头 max(X−S<sub>T</sub>, 0)；空头取负号</td></tr>
-    <tr><td>远期价格</td><td class="blur-target">F = S<sub>0</sub>·(1+r)　（+ FV 持有成本 − FV 持有收益）</td></tr>
-    <tr><td>二项式复制</td><td class="blur-target">解 Δ·S<sub>u</sub> + B(1+r) = c<sub>u</sub>，Δ·S<sub>d</sub> + B(1+r) = c<sub>d</sub>；价格 = Δ·S<sub>0</sub> + B</td></tr>
-    <tr><td>配股除权价</td><td class="blur-target">P′ = (N·P<sub>0</sub> + M·S)/(N+M)；配股权价值 = P′ − S</td></tr>
+    <tr><td>MM Ⅰ（无税）</td><td class="blur-target">\(V_L = V_U = V_A\)</td></tr>
+    <tr><td>MM Ⅱ（无税）</td><td class="blur-target">\(r_E = r_A + (r_A - r_D)\cdot\frac{D}{E}\)</td></tr>
+    <tr><td>MM Ⅰ（有税）</td><td class="blur-target">\(V_L = V_U + \tau_c D\)　（永久债税盾现值 \(= \tau_c D\)）</td></tr>
+    <tr><td>MM Ⅱ（有税）</td><td class="blur-target">\(r_E = r_A + (1-\tau_c)(r_A - r_D)\cdot\frac{D}{E}\)</td></tr>
+    <tr><td>WACC</td><td class="blur-target">\(WACC = \frac{E}{V} r_E + \frac{D}{V} r_D (1-\tau_c)\)</td></tr>
+    <tr><td>股权价值（永续）</td><td class="blur-target">\(E = \frac{(EBIT - r_D D)(1-\tau_c)}{r_E}\)</td></tr>
+    <tr><td>资产回报率</td><td class="blur-target">\(r_A = \frac{EBIT(1-\tau_c)}{V_U}\)　（分母必须是 V<sub>U</sub>！）</td></tr>
+    <tr><td>自由现金流</td><td class="blur-target">\(FCF = EBIT(1-\tau_c) + \text{折旧摊销} - \text{资本支出} - \Delta NWC\)（+ 最后处置年份的资产销售税后收入）</td></tr>
+    <tr><td>年金现值</td><td class="blur-target">\(PV = \frac{C}{r}\left[1 - (1+r)^{-T}\right]\)</td></tr>
+    <tr><td>常增长（Gordon）/ 残值</td><td class="blur-target">\(PV = \frac{C_1}{r-g}\)；残值 \(TV_T = \frac{CF_{T+1}}{r-g}\)，<b>还要再贴现回 0 时刻</b></td></tr>
+    <tr><td>APV</td><td class="blur-target">\(APV = V_U\)（FCF 按 r<sub>A</sub> 贴现）\(+\ PV(\text{税盾})\)（r<sub>D</sub> 或 r<sub>A</sub> 贴现）</td></tr>
+    <tr><td>加杠杆隐式方程（通解）</td><td class="blur-target">\(V' = \frac{V_U}{1-\tau_c w}\)　（w = 目标债务率 D′/V′；新发债 \(= w V' -\) 旧债）</td></tr>
+    <tr><td>期权平价定理</td><td class="blur-target">\(c + \frac{X}{(1+r)^T} = p + S_0\)　（连续复利版：\(c + X e^{-rT} = p + S_0\)；有股利：左边 \(+ D\)）</td></tr>
+    <tr><td>期权支付</td><td class="blur-target">call 多头 \(\max(S_T - X,\,0)\)；put 多头 \(\max(X - S_T,\,0)\)；空头取负号</td></tr>
+    <tr><td>远期价格</td><td class="blur-target">\(F = S_0(1+r)\)　（+ FV 持有成本 − FV 持有收益）</td></tr>
+    <tr><td>二项式复制</td><td class="blur-target">解 \(\Delta S_u + B(1+r) = c_u\)，\(\Delta S_d + B(1+r) = c_d\)；价格 \(= \Delta S_0 + B\)</td></tr>
+    <tr><td>配股除权价</td><td class="blur-target">\(P' = \frac{N P_0 + M S}{N+M}\)；配股权价值 \(= P' - S\)</td></tr>
   </table>
   <div class="callout trap">两版平价公式完全等价，做题以题目的利率口径为准：给「非年化期间利率」用离散版；给连续复利才用 e<sup>−rT</sup> 版。往届考卷给过公式表但符号写法可能不同——公式表只能救急、不能依赖。</div>
 
@@ -120,6 +121,8 @@
 
   <div class="foot">建议考前一晚：开默写模式把本页过一遍，卡壳的条目回到对应课复习。打印版：⌘/Ctrl+P（默写模糊不会被打印）。</div>
 </div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/auto-render.min.js"></script>
 <script src="../assets/app.js"></script>
 </body>
 </html>

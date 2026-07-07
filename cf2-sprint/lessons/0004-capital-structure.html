@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>第 4 课 · 资本结构 — 公司财务Ⅱ期末冲刺</title>
 <link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
 </head>
 <body>
 <div id="readbar"></div>
@@ -38,8 +39,8 @@
 
   <h2><span class="no">二</span>MM 定理（无税）</h2>
   <p>MM 世界 = 完全完美资本市场：无税、无交易成本、个人与企业借贷利率相同、无成本解决利益冲突（信息对称）。</p>
-  <div class="formula"><span class="fname">MM 命题Ⅰ（无税）</span>V<sub>L</sub> = V<sub>U</sub> = V<sub>A</sub>　（公司价值与资本结构无关）</div>
-  <div class="formula"><span class="fname">MM 命题Ⅱ（无税）</span>r<sub>E</sub> = r<sub>A</sub> + (r<sub>A</sub> − r<sub>D</sub>)·D/E</div>
+  <div class="formula"><span class="fname">MM 命题Ⅰ（无税）</span>$$V_L = V_U = V_A$$（公司价值与资本结构无关）</div>
+  <div class="formula"><span class="fname">MM 命题Ⅱ（无税）</span>$$r_E = r_A + (r_A - r_D)\cdot\frac{D}{E}$$</div>
   <p><b>命题Ⅰ实质：</b>公司价值取决于资金的使用（资产、盈利能力、风险），而非资金来源（融资方式）。「披萨比喻」：饼的大小不因切法而改变。</p>
   <p><b>命题Ⅱ实质：</b>举债虽然用了便宜的债（r<sub>D</sub> ＜ r<sub>E</sub>），但同时推高了股权风险和股权成本，两者恰好抵消——所以无税时 WACC 恒定、公司价值不变。</p>
   <p><b>方法论意义：</b>MM 定理首次引入无套利定价方法，是现代金融学最重要的分析工具（第 3 课期权平价定理用的正是同一方法）。</p>
@@ -71,11 +72,35 @@
   </div>
   <div class="callout trap">「MM 定理成立是因为资本市场很有效率」是<b>错误理解</b>。正确表述：<b>投资决策决定公司的价值，融资决策决定价值的分配</b>。（真题原题，见自测）</div>
 
+  <div class="card">
+    <b>问答弹药 · 若考「投资决定价值、融资决定分配」论述题（历届问答真题），按三层展开：</b><br>
+    ① <b>陈述含义</b>：这是 MM 命题Ⅰ的实质——完美市场中公司价值由资产端（投资项目的盈利能力与风险）决定，「饼的大小」由投资定；融资结构只决定价值在债权人与股东之间的切分，「切法」不改变饼的大小。<br>
+    ② <b>机制</b>：无税下举债虽用了便宜的债，但股权风险与股权成本恰好同步上升、两者抵消，WACC 恒定。<br>
+    ③ <b>边界讨论（体现深度）</b>：放松假设后——税盾使举债创造价值（V<sub>L</sub> = V<sub>U</sub> + τ<sub>c</sub>D）、财务危机成本使过度举债毁灭价值（权衡理论）、信息不对称使融资顺序有讲究（优序理论）——但这些都是对「分配」环节的修正，「投资创造价值」的主线不变。
+  </div>
+
+  <h3>数字演示：用套利证明 MM 命题Ⅰ（往届计算真题）</h3>
+  <p><b>【21-22 期末】</b>ZD 公司与 HD 公司净利润相关系数 +1，每年预期息税前利润均为 120 万且全部分配。HD 负债市值 500 万、利率 6%，发行 10 万股、每股市价 80（股权 800 万）→ V<sub>HD</sub> = 1300 万；ZD 发行 20 万股、每股 60、无负债 → V<sub>ZD</sub> = 1200 万。假设无税、市场完美，构造套利组合。</p>
+  <p class="try-first">✍️ 思路先行：现金流完全同步的两家公司本应同价——HD 整体贵了 100 万，卖贵买贱。先自己写三笔，再展开核对。</p>
+  <details class="step">
+    <summary><span class="n">✓</span>套利构造（按 1% 规模）与验证</summary>
+    <div class="body">
+      <ol>
+        <li>卖空 1% 的 HD 股票，得 800×1% = <b>8 万</b>；</li>
+        <li>按 6% 借入 <b>5 万</b>（= 1%×HD 债务 500 万，<b>自制杠杆</b>，复制 HD 的债务）；</li>
+        <li>买入 1% 的 ZD 股票，付 <b>12 万</b>。</li>
+      </ol>
+      <p><b>当期净现金流</b> = 8 + 5 − 12 = <b>+1 万</b> ＞ 0（正好是 100 万价差的 1%）。</p>
+      <p><b>以后每期</b>：收 ZD 股息 1%×120 = 1.2 万；赔付 HD 股息 1%×(120 − 500×6%) = 0.9 万；付借款利息 5×6% = 0.3 万；净额 = 1.2 − 0.9 − 0.3 = <b>0</b>——组合风险完全对冲，今天的 1 万是无风险利润。</p>
+      <div class="callout trap">三个易错：① 做空 HD 股票只需赔付 HD 的「股息」= EBIT − 利息 = 90 万的对应比例，<b>不是 EBIT 本身</b>；② 借款腿不能漏——它复制了 HD 的债务，组合才能对冲干净；③ 结论句要点破「这正是 MM 命题Ⅰ无套利证明的原型」——与期权平价套利同一招：<b>算复制成本 → 卖贵买复制</b>。</div>
+    </div>
+  </details>
+
   <h2><span class="no">三</span>MM 定理（有税）：利息税盾</h2>
-  <div class="formula"><span class="fname">税盾现值（永久债务）</span>D·r<sub>D</sub>·τ<sub>c</sub> / r<sub>D</sub> = τ<sub>c</sub>·D</div>
-  <div class="formula"><span class="fname">MM 命题Ⅰ（有税）</span>V<sub>L</sub> = V<sub>U</sub> + τ<sub>c</sub>·D</div>
-  <div class="formula"><span class="fname">MM 命题Ⅱ（有税）</span>r<sub>E</sub> = r<sub>A</sub> + (1−τ<sub>c</sub>)(r<sub>A</sub> − r<sub>D</sub>)·D/E</div>
-  <div class="formula"><span class="fname">税后加权平均资本成本</span>WACC = (E/V)·r<sub>E</sub> + (D/V)·r<sub>D</sub>·(1−τ<sub>c</sub>)</div>
+  <div class="formula"><span class="fname">税盾现值（永久债务）</span>$$\frac{D\cdot r_D\cdot \tau_c}{r_D} = \tau_c\cdot D$$</div>
+  <div class="formula"><span class="fname">MM 命题Ⅰ（有税）</span>$$V_L = V_U + \tau_c\cdot D$$</div>
+  <div class="formula"><span class="fname">MM 命题Ⅱ（有税）</span>$$r_E = r_A + (1-\tau_c)(r_A - r_D)\cdot\frac{D}{E}$$</div>
+  <div class="formula"><span class="fname">税后加权平均资本成本</span>$$WACC = \frac{E}{V}\cdot r_E + \frac{D}{V}\cdot r_D\cdot(1-\tau_c)$$</div>
   <p>利息在税前扣除，减少应纳税所得额，政府「分饼」的份额变小，股东与债权人可分配的总价值变大——这就是举债创造价值的本质（价值守恒逻辑不变，只是分配方改变）。<b>数字直觉：</b>每增加 1 亿元永久债务，25% 税率下创造 2500 万税盾价值；35% 税率下 3500 万。税率越高，举债动力越强。</p>
 
   <h3>课堂例题：杠杆化策略（发债回购股票）</h3>
@@ -101,7 +126,7 @@
     <tr><td><b>代理成本</b></td><td>困境中股东与债权人利益冲突引发的价值损失</td><td>过度风险投资、投资不足、过度投资（见下节）</td></tr>
   </table>
   <p><b>事前承担原则：</b>财务危机成本事后由多方分担，但<b>事前全部由股东承担</b>——体现为债权人要求更高的信用利差，抬高融资成本。</p>
-  <div class="formula"><span class="fname">权衡理论</span>V<sub>L</sub> = V<sub>U</sub> + 税盾现值 − 财务危机成本现值</div>
+  <div class="formula"><span class="fname">权衡理论</span>$$V_L = V_U + \text{税盾现值} - \text{财务危机成本现值}$$</div>
   <figure class="chart">
     <svg viewBox="0 0 340 170" role="img" aria-label="权衡理论倒U形">
       <line class="ax" x1="24" y1="146" x2="326" y2="146"/><line class="ax" x1="28" y1="14" x2="28" y2="156"/>
@@ -219,6 +244,8 @@
 
   <div class="foot">过关标准：MM 四条命题（无税/有税 × Ⅰ/Ⅱ）+ WACC 公式闭卷默写；优序融资顺序倒背如流；代理成本三类型能判断「哪些是、哪些不是」。</div>
 </div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/auto-render.min.js"></script>
 <script src="../assets/app.js"></script>
 </body>
 </html>

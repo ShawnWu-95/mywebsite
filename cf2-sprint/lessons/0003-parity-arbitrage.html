@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>第 3 课 · 平价定理与套利 — 公司财务Ⅱ期末冲刺</title>
 <link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
 </head>
 <body>
 <div id="readbar"></div>
@@ -26,15 +27,15 @@
   </div>
 
   <h2><span class="no">一</span>欧式期权平价定理（Put-Call Parity）</h2>
-  <div class="formula"><span class="fname">平价定理 · 离散利率版（考题常给「非年化」期间利率，直接用）</span>c + X/(1+r)<sup>T</sup> = p + S<sub>0</sub></div>
-  <div class="formula"><span class="fname">连续复利版（完全等价，题目给连续复利才用）</span>c + X·e<sup>−rT</sup> = p + S<sub>0</sub></div>
-  <p>适用条件：欧式期权、相同标的、相同执行价 X、相同到期日 T。r 为对应期限的无风险利率。若标的在期内分红，公式左边加股利现值 D：c + X·e<sup>−rT</sup> + D = p + S<sub>0</sub>。</p>
+  <div class="formula"><span class="fname">平价定理 · 离散利率版（考题常给「非年化」期间利率，直接用）</span>$$c + \frac{X}{(1+r)^T} = p + S_0$$</div>
+  <div class="formula"><span class="fname">连续复利版（完全等价，题目给连续复利才用）</span>$$c + X\,e^{-rT} = p + S_0$$</div>
+  <p>适用条件：欧式期权、相同标的、相同执行价 X、相同到期日 T。r 为对应期限的无风险利率。若标的在期内分红，公式左边加股利现值 D：\(c + X e^{-rT} + D = p + S_0\)。</p>
 
   <h3>公式拆解：这条式子到底在说什么</h3>
   <table>
     <tr><th style="width:22%">符号</th><th>含义</th><th>怎么理解</th></tr>
     <tr><td>c</td><td>欧式看涨期权现价</td><td>「涨了跟涨」的权利，今天值多少钱</td></tr>
-    <tr><td>X/(1+r)<sup>T</sup></td><td>执行价 X 的<b>现值</b></td><td>今天存入这么多钱，到期恰好变成 X——一张「保底 X」的无风险债券</td></tr>
+    <tr><td>\(X/(1+r)^T\)</td><td>执行价 X 的<b>现值</b></td><td>今天存入这么多钱，到期恰好变成 X——一张「保底 X」的无风险债券</td></tr>
     <tr><td>p</td><td>欧式看跌期权现价</td><td>「跌破 X 可按 X 卖出」的保险，今天的保费</td></tr>
     <tr><td>S<sub>0</sub></td><td>标的股票现价</td><td>—</td></tr>
   </table>
@@ -46,9 +47,9 @@
   <p><b>移项就是合成——四种资产任取三种可复制第四种：</b></p>
   <table>
     <tr><th>想合成什么</th><th>移项结果</th><th>操作</th></tr>
-    <tr><td>股票</td><td>S<sub>0</sub> = c − p + X/(1+r)<sup>T</sup></td><td>买 call、卖 put、存入 X 的现值（受限不能直接持股的机构这样「持股」）</td></tr>
-    <tr><td>看涨期权</td><td>c = p + S<sub>0</sub> − X/(1+r)<sup>T</sup></td><td>买 put、买股票、借入 X 的现值</td></tr>
-    <tr><td>看跌期权</td><td>p = c − S<sub>0</sub> + X/(1+r)<sup>T</sup></td><td>买 call、卖空股票、存入 X 的现值</td></tr>
+    <tr><td>股票</td><td>\(S_0 = c - p + X/(1+r)^T\)</td><td>买 call、卖 put、存入 X 的现值（受限不能直接持股的机构这样「持股」）</td></tr>
+    <tr><td>看涨期权</td><td>\(c = p + S_0 - X/(1+r)^T\)</td><td>买 put、买股票、借入 X 的现值</td></tr>
+    <tr><td>看跌期权</td><td>\(p = c - S_0 + X/(1+r)^T\)</td><td>买 call、卖空股票、存入 X 的现值</td></tr>
   </table>
   <div class="callout memo">记忆口诀：<b>「看涨带保底 = 看跌抱股票」</b>（c + PV(X) = p + S₀）。套利题的本质就一句：市价偏离哪一边，就<b>卖那一边、买另一边的合成品</b>——四笔交易正是「卖高估的它 + 买它的三件套复制品」。</div>
 
@@ -84,7 +85,7 @@
   <details class="step">
     <summary><span class="n">1</span>用平价公式算理论价</summary>
     <div class="body">
-      <div class="formula">p<sup>fair</sup> = c + X/(1+r) − S<sub>0</sub> = 2.5 + 30/1.02 − 29 = 2.5 + 29.41 − 29 = <b>2.91</b></div>
+      <div class="formula">$$p^{\text{fair}} = c + \frac{X}{1+r} - S_0 = 2.5 + \frac{30}{1.02} - 29 = 2.5 + 29.41 - 29 = \mathbf{2.91}$$</div>
       <p>平价公式把四种资产绑在一起：给定 call、股票、债券三个价格，put 的公平价格就被锁死为 2.91。</p>
     </div>
   </details>
@@ -147,11 +148,11 @@
   <h2><span class="no">三</span>平价公式的五种问法（防变式）</h2>
   <p>平价公式五个量 c、p、S<sub>0</sub>、X、r——<b>任意给四个都能解第五个</b>。往届练习把所有问法都考过：</p>
   <ul>
-    <li><b>反推股价：</b>call $10、put $8、X=80、一年期、r=12%：S<sub>0</sub> = c + X/(1+r) − p = 10 + 80/1.12 − 8 = <b>73.43</b>。</li>
-    <li><b>反解利率：</b>股价 $50，call $12 与 put $2 执行价均 $48、一年期：12 + 48/(1+r) = 2 + 50 → 48/(1+r) = 40 → <b>r = 20%</b>。</li>
+    <li><b>反推股价：</b>call $10、put $8、X=80、一年期、r=12%：\(S_0 = c + X/(1+r) - p = 10 + 80/1.12 - 8 = \mathbf{73.43}\)。</li>
+    <li><b>反解利率：</b>股价 $50，call $12 与 put $2 执行价均 $48、一年期：\(12 + 48/(1+r) = 2 + 50 \Rightarrow 48/(1+r) = 40 \Rightarrow r = \mathbf{20\%}\)。</li>
     <li><b>买 put 最大获利：</b>股价跌到 0 时行权收入最大 = X；扣除权费后最大净获利 = X − p（题目说明不考虑期权费则答 X）。</li>
     <li><b>买 call 最大获利：</b>股价上不封顶，获利无限——这正是 call 与 put 的不对称。</li>
-    <li><b>call 错价套利：</b>由平价推 call 公平价 c<sup>fair</sup> = p + S<sub>0</sub> − X/(1+r)。市场 c ＞ c<sup>fair</sup> → 卖 call、买股票、买 put、借入 X/(1+r)；c ＜ c<sup>fair</sup> → 四笔全反向。</li>
+    <li><b>call 错价套利：</b>由平价推 call 公平价 \(c^{\text{fair}} = p + S_0 - X/(1+r)\)。市场 c ＞ c<sup>fair</sup> → 卖 call、买股票、买 put、借入 X/(1+r)；c ＜ c<sup>fair</sup> → 四笔全反向。</li>
   </ul>
 
   <h2><span class="no">四</span>二项式定价：复制组合三步法（备选计算）</h2>
@@ -163,22 +164,22 @@
   <details class="step">
     <summary><span class="n">2</span>用「Δ 股股票 + B 元无风险资产」复制期权支付</summary>
     <div class="body">
-      <p>解方程组：Δ×45 + B×1.02 = 0 且 Δ×35 + B×1.02 = 5。两式相减：10Δ = −5 → <b>Δ = −0.5</b>（负号 = 卖空半股）；代回 <b>B = 22.06</b>（正号 = 存钱）。</p>
+      <p>解方程组：\(\Delta\times 45 + B\times 1.02 = 0\) 且 \(\Delta\times 35 + B\times 1.02 = 5\)。两式相减：\(10\Delta = -5 \Rightarrow \Delta = \mathbf{-0.5}\)（负号 = 卖空半股）；代回得 <b>B = 22.06</b>（正号 = 存钱）。</p>
     </div>
   </details>
   <details class="step">
     <summary><span class="n">3</span>无套利定价：期权价值 = 复制成本</summary>
     <div class="body">
-      <p>p = Δ·S<sub>0</sub> + B = −0.5×40 + 22.06 = <b>2.06</b>。逻辑：复制组合与期权到期支付完全相同，今天必须同价，否则可套利。</p>
+      <p>\(p = \Delta\, S_0 + B = -0.5\times 40 + 22.06 = \mathbf{2.06}\)。逻辑：复制组合与期权到期支付完全相同，今天必须同价，否则可套利。</p>
     </div>
   </details>
   <div class="callout memo">复制组合法三步：<b>列支付 → 解 Δ 和 B → 价格 = Δ·S₀ + B</b>。Δ 的直觉：<b>Δ =（期权上行支付 − 下行支付）÷（股价上行 − 下行）</b>，就是期权支付对股价的「斜率」（对冲比率）——put 的支付随股价上涨而减少，斜率为负，所以复制 put 要卖空股票；B 是把剩余支付配平的无风险头寸。镜像规律：复制 call 的 Δ 为正（买股票）、B 为负（借钱）；复制 put 的 Δ 为负（卖空）、B 为正（存钱）。</div>
-  <p><b>call 版对照（往届练习）：</b>股价 $50，2 个月后 $53 或 $48，r=1%（非年化），X=49：c<sub>u</sub>=4、c<sub>d</sub>=0 → Δ = 4÷(53−48) = 0.8（买入 0.8 股），B = −38.02（借入）→ c = 0.8×50 − 38.02 = <b>1.98</b>。</p>
+  <p><b>call 版对照（往届练习）：</b>股价 $50，2 个月后 $53 或 $48，r=1%（非年化），X=49：c<sub>u</sub>=4、c<sub>d</sub>=0 → \(\Delta = 4/(53-48) = 0.8\)（买入 0.8 股），B = −38.02（借入）→ \(c = 0.8\times 50 - 38.02 = \mathbf{1.98}\)。</p>
   <p><b>思想的一般化（状态价格套利）：</b>两个经济状态下，任何证券的支付都可由另两个线性无关的证券组合出来。若复制成本 ≠ 市价，就套利——平价套利、二项式、MM 套利本质是同一招：<b>算复制成本 → 卖贵买复制</b>。</p>
 
   <h2><span class="no">五</span>美式期权与 Black-Scholes（概念题）</h2>
   <ul>
-    <li><b>美式买权（无分红标的）不应提前行权：</b>由平价关系可推 c ≥ S<sub>0</sub> − X/(1+r)<sup>T</sup> ＞ S<sub>0</sub> − X（未到期时），持有期权的价值始终高于立即行权的内在价值，最优策略是等到到期——因此无分红美式 call 价值 = 欧式 call。可转债内嵌转股权是美式期权，<b>同理提前转股非理性</b>。</li>
+    <li><b>美式买权（无分红标的）不应提前行权：</b>由平价关系可推 \(c \ge S_0 - X/(1+r)^T > S_0 - X\)（未到期时），持有期权的价值始终高于立即行权的内在价值，最优策略是等到到期——因此无分红美式 call 价值 = 欧式 call。可转债内嵌转股权是美式期权，<b>同理提前转股非理性</b>。</li>
     <li><b>美式卖权无解析解</b>：只能数值方法近似。</li>
     <li><b>Black-Scholes：</b>为欧式期权提供解析解，假设股价服从几何布朗运动；N(d₁)、N(d₂) 为累积正态分布。只需知道其地位，不考推导计算。</li>
   </ul>
@@ -279,6 +280,8 @@
 
   <div class="foot">过关标准：任选一组数字变式，限时 15 分钟闭卷写出完整四步（含现金流表）。这 20 分是全卷确定性最高的分数。</div>
 </div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/auto-render.min.js"></script>
 <script src="../assets/app.js"></script>
 </body>
 </html>

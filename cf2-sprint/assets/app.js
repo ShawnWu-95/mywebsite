@@ -2,6 +2,17 @@
    功能：① quiz 即时判分 ② 模拟卷计分条 ③ 公式默写模式 ④ 阅读进度条 ⑤ 打印时展开分步 */
 document.addEventListener('DOMContentLoaded', function () {
 
+  /* ⓪ KaTeX 公式渲染（页面引入 katex + auto-render 时生效） */
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '\\(', right: '\\)', display: false }
+      ],
+      throwOnError: false
+    });
+  }
+
   /* ① quiz：点选项即时判分 + 解析（retrieval practice） */
   var total = 0, done = 0, ok = 0;
   var quizzes = document.querySelectorAll('.quiz');

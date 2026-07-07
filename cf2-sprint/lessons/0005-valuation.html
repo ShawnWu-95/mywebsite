@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>第 5 课 · 公司估值：拿下计算题② — 公司财务Ⅱ期末冲刺</title>
 <link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
 </head>
 <body>
 <div id="readbar"></div>
@@ -27,7 +28,7 @@
 
   <h2><span class="no">一</span>两种现金流：自由现金流 vs 资本现金流</h2>
   <p><em class="term">资本现金流</em>：归属于股东和债权人的全部现金流。<em class="term">自由现金流 FCF</em>：假设公司全股权融资（无债）情形下产生的现金流，是一个「人造」但应用最广的概念。FCF = 资本现金流 − 利息税盾。</p>
-  <div class="formula"><span class="fname">自由现金流（从 EBIT 出发）</span>FCF = EBIT·(1−τ<sub>c</sub>) + 折旧摊销 − 资本支出 − ΔNWC（净流动资金投资）<br>　　　+ 资产销售税后收入（最后处置的年份需要加，中间运营的年份不需要加）</div>
+  <div class="formula"><span class="fname">自由现金流（从 EBIT 出发）</span>$$FCF = EBIT\,(1-\tau_c) + \text{折旧摊销} - \text{资本支出} - \Delta NWC\;(+\;\text{资产销售税后收入})$$（资产销售税后收入：最后处置的年份需要加，中间运营的年份不需要加）</div>
   <p>计算起点是 EBIT（息税前利润），EBIT×(1−τc) 称为 EBIAT。<b>注意：利息不扣</b>——因为假设全股权融资；税盾的价值在贴现率（WACC）或单独项（APV）中体现，<b>不能两头都算</b>。</p>
 
   <h2><span class="no">二</span>估值框架与残值</h2>
@@ -46,7 +47,7 @@
     <tr><td><b>APV 法</b></td><td>无杠杆 FCF + 税盾单列</td><td>FCF 按 r<sub>A</sub> 贴；税盾按 r<sub>D</sub> 或 r<sub>A</sub> 贴</td><td>V = V<sub>U</sub> + PV(税盾)；适合融资副作用复杂的情形（LBO、项目融资）</td></tr>
     <tr><td><b>FTE 法</b></td><td>股权现金流</td><td>股权成本 r<sub>E</sub></td><td>直接得到股权价值 E；了解即可</td></tr>
   </table>
-  <div class="formula"><span class="fname">WACC 法</span>WACC = (E/V)·r<sub>E</sub> + (D/V)·r<sub>D</sub>·(1−τ<sub>c</sub>)　　公司价值 V = Σ FCF<sub>t</sub>/(1+WACC)<sup>t</sup> + PV(残值)</div>
+  <div class="formula"><span class="fname">WACC 法</span>$$WACC = \frac{E}{V} r_E + \frac{D}{V} r_D (1-\tau_c) \qquad V = \sum_t \frac{FCF_t}{(1+WACC)^t} + PV(\text{残值})$$</div>
   <p>要点：权重 E/V、D/V 用<b>市值</b>而非账面价值；股权无税盾，r<sub>E</sub> 不调整；债务利息抵税，用税后成本 r<sub>D</sub>(1−τ<sub>c</sub>)。</p>
   <div class="callout teacher">「几乎每一次考试都有少数同学，方法都对，最后告诉我贴现出来的是股权价值——不对！<b>FCF 用 WACC 贴现出来的是公司价值</b>。要得到股权价值，还要减去债务（以及优先股、可转债等）。」</div>
   <p><b>APV 的税盾贴现规则（选择题考点）：</b>债务<b>总额</b>固定不变 → 税盾像债务利息一样确定，用 r<sub>D</sub> 贴现；负债<b>比率</b>固定不变 → 债务随企业价值波动，税盾风险与企业整体一致，用 r<sub>A</sub> 贴现。老师原话：「针对债务的利息税盾贴现，你用 rD 贴现，我永远不会认为你是错的——不管是比例不变还是总量不变。这些方法理论上没有高下之分。」记忆：<b>WACC 法调整的是资本成本，APV 法调整的是价值本身。</b></p>
@@ -55,26 +56,26 @@
   <h2><span class="no">四</span>公式从哪来：六条式子的来路（懂了就不会背错）</h2>
   <p>Pet-One 题用到的每条公式都源自同一个底座——<b>永续现金流的市值 = 年现金流 ÷ 折现率</b>（PV = C/r）。逐条拆：</p>
 
-  <h3>1. 股权价值 E = (EBIT − r<sub>D</sub>·D)(1−τ<sub>c</sub>) / r<sub>E</sub></h3>
+  <h3>1. 股权价值 \(E = \dfrac{(EBIT - r_D D)(1-\tau_c)}{r_E}\)</h3>
   <p>分子是<b>股东每年实际到手的钱</b>：公司赚 EBIT，先付利息 r<sub>D</sub>·D（利息在税前扣除），剩下的按 τ<sub>c</sub> 交税，税后全归股东。这笔钱年年如此（永续），股东要求的回报率是 r<sub>E</sub>，所以市值 = 年现金流 ÷ r<sub>E</sub>。</p>
 
-  <h3>2. 税盾现值为什么恰好 = τ<sub>c</sub>·D（约分演示）</h3>
-  <div class="formula">每年少交的税 = 利息 × 税率 = D·r<sub>D</sub>·τ<sub>c</sub>　⟹　永续现值 = D·r<sub>D</sub>·τ<sub>c</sub> / r<sub>D</sub> = τ<sub>c</sub>·D</div>
+  <h3>2. 税盾现值为什么恰好 = \(\tau_c D\)（约分演示）</h3>
+  <div class="formula">$$\text{每年少交的税} = D\cdot r_D\cdot\tau_c \;\Longrightarrow\; \text{永续现值} = \frac{D\cdot r_D\cdot \tau_c}{r_D} = \tau_c\cdot D$$</div>
   <p>税盾现金流与债务利息一样确定，所以按 r<sub>D</sub> 贴现——分子分母的 r<sub>D</sub> <b>恰好约掉</b>，结果里不含利率。这就是为什么「每 1 元永久债务创造 τ<sub>c</sub> 元价值」，与债务利率无关。</p>
 
-  <h3>3. r<sub>A</sub> = EBIT(1−τ<sub>c</sub>) / V<sub>U</sub>：分母为什么必须是 V<sub>U</sub></h3>
-  <p>r<sub>A</sub> 的定义是「假设公司<b>无债</b>」时资产的回报率。无债时没有利息可扣，公司年现金流恰好就是 EBIT(1−τ<sub>c</sub>)，对应的市值是无杠杆价值 V<sub>U</sub>——所以分母是 V<sub>U</sub>。<b>若误用 V<sub>L</sub> 作分母，算出来的其实是 WACC</b>（Pet-One 里 360/3000 = 12% 正是 WACC，360/2600 = 13.85% 才是 r<sub>A</sub>）。</p>
+  <h3>3. \(r_A = \dfrac{EBIT(1-\tau_c)}{V_U}\)：分母为什么必须是 V<sub>U</sub></h3>
+  <p>r<sub>A</sub> 的定义是「假设公司<b>无债</b>」时资产的回报率。无债时没有利息可扣，公司年现金流恰好就是 EBIT(1−τ<sub>c</sub>)，对应的市值是无杠杆价值 V<sub>U</sub>——所以分母是 V<sub>U</sub>。<b>若误用 V<sub>L</sub> 作分母，算出来的其实是 WACC</b>（Pet-One 里 360/3000 = 12% 正是 WACC，360/2600 = 13.85% 才是 r<sub>A</sub>）。往届习题版还专门多问一句「当前的 r<sub>A</sub> 与负债为 0 时的 r<sub>A</sub> 各是多少」——<b>答案相同</b>（该题数字下均为 12.71%）：r<sub>A</sub> 由资产经营风险决定、与杠杆无关，正是选择题「rA 与杠杆」考点的数字验证。</p>
 
   <h3>4. WACC 的两种算法为什么必然相等（验算的原理）</h3>
-  <div class="formula">定义法：WACC = (E/V)·r<sub>E</sub> + (D/V)·r<sub>D</sub>·(1−τ<sub>c</sub>)　　现金流法：WACC = EBIT(1−τ<sub>c</sub>) / V<sub>L</sub></div>
+  <div class="formula">$$\text{定义法: } WACC = \frac{E}{V} r_E + \frac{D}{V} r_D (1-\tau_c) \qquad \text{现金流法: } WACC = \frac{EBIT(1-\tau_c)}{V_L}$$</div>
   <p>股东年现金流 = E·r<sub>E</sub>（第 1 条），债权人给公司造成的税后成本 = D·r<sub>D</sub>(1−τ<sub>c</sub>)，两者加总恰好 = EBIT(1−τ<sub>c</sub>)。两边同除以 V 就得到「定义法 = 现金流法」。<b>这就是第 6 步验算的原理：两种算法必须相等，不等说明前面某步算错了</b>——考场上 10 秒自查。</p>
 
   <h3>5. 加杠杆隐式方程的通解（一行出答案）</h3>
-  <div class="formula">目标债务率 w（即 D′ = w·V′）时：V′ = V<sub>U</sub> + τ<sub>c</sub>·w·V′　⟹　<b>V′ = V<sub>U</sub> / (1 − τ<sub>c</sub>·w)</b></div>
+  <div class="formula">目标债务率 w（即 \(D' = w\,V'\)）时：$$V' = V_U + \tau_c\, w\, V' \;\Longrightarrow\; V' = \frac{V_U}{1-\tau_c\, w}$$</div>
   <p>验证：Pet-One　2600/(1−0.4×0.5) = <b>3250</b> ✓；19 级版　5775/(1−0.3×0.5) = <b>6794</b> ✓。为什么是隐式的：多发的债本身创造税盾 → V 变大 → 50% 对应的债务也变大，互相咬合，必须解方程而不能拿旧 V×50%。<b>背下这个通式，第（ii）问第一步一行写完。</b></p>
 
   <h3>6. 有税 MMⅡ 从哪来（帮助记对公式，不要求会推）</h3>
-  <p>总回报守恒：公司资产 + 税盾每年产出的现金流，必须恰好分给股东和债权人：V<sub>U</sub>·r<sub>A</sub> + τ<sub>c</sub>D·r<sub>D</sub> = E·r<sub>E</sub> + D·r<sub>D</sub>。代入 V<sub>U</sub> = E + (1−τ<sub>c</sub>)D 整理即得 r<sub>E</sub> = r<sub>A</sub> + (1−τ<sub>c</sub>)(r<sub>A</sub>−r<sub>D</sub>)·D/E。<b>记忆点：</b>r<sub>E</sub> = 资产回报 + 杠杆风险补偿；有税时补偿打了 (1−τ<sub>c</sub>) 折——因为一部分风险由政府（税盾）分担了。无税版就是把 (1−τ<sub>c</sub>) 拿掉。</p>
+  <p>总回报守恒：公司资产 + 税盾每年产出的现金流，必须恰好分给股东和债权人：\(V_U\, r_A + \tau_c D\, r_D = E\, r_E + D\, r_D\)。代入 \(V_U = E + (1-\tau_c)D\) 整理即得 \(r_E = r_A + (1-\tau_c)(r_A - r_D)\cdot D/E\)。<b>记忆点：</b>r<sub>E</sub> = 资产回报 + 杠杆风险补偿；有税时补偿打了 (1−τ<sub>c</sub>) 折——因为一部分风险由政府（税盾）分担了。无税版就是把 (1−τ<sub>c</sub>) 拿掉。</p>
 
   <h2><span class="no">五</span>Pet-One 标准模板（真题原题，连考三届）</h2>
   <p><b>题目：</b>Pet-One 公司：EBIT = 600 万美元/年，所得税率 40%，权益资本成本 15%，永久债务 1000 万美元，债务利率 10%。<br>（i）假设股价处于均衡状态，公司整体价值、无负债资本成本 r<sub>A</sub>、WACC 各是多少？<br>（ii）公司发行新债回购股份，使债务率增至 50%，新债利率仍 10%。需发行多少新债？WACC 变为多少？对股东财富有什么影响？</p>
@@ -84,36 +85,36 @@
   <details class="step">
     <summary><span class="n">1</span>求股权价值 E</summary>
     <div class="body">
-      <div class="formula">E = (EBIT − r<sub>D</sub>·D)(1−τ<sub>c</sub>) / r<sub>E</sub> = (600 − 1000×10%)×0.6 / 0.15 = 300/0.15 = <b>2000 万</b></div>
+      <div class="formula">$$E = \frac{(EBIT - r_D D)(1-\tau_c)}{r_E} = \frac{(600 - 1000\times 10\%)\times 0.6}{0.15} = \frac{300}{0.15} = \mathbf{2000}\ \text{万}$$</div>
       <p>股权是永续现金流：股东每年拿到（EBIT − 利息）×(1−τ)，按 r<sub>E</sub> 折现。</p>
     </div>
   </details>
   <details class="step">
     <summary><span class="n">2</span>公司整体价值 V</summary>
-    <div class="body"><div class="formula">V<sub>L</sub> = E + D = 2000 + 1000 = <b>3000 万</b></div></div>
+    <div class="body"><div class="formula">$$V_L = E + D = 2000 + 1000 = \mathbf{3000}\ \text{万}$$</div></div>
   </details>
   <details class="step">
     <summary><span class="n">3</span>税盾现值</summary>
     <div class="body">
-      <div class="formula">τ<sub>c</sub>·D = 40% × 1000 = <b>400 万</b></div>
-      <p>年税盾 = D·r<sub>D</sub>·τ<sub>c</sub> = 40 万，永续按 r<sub>D</sub> 贴现：40 ÷ 0.1 = 400 万。</p>
+      <div class="formula">$$\tau_c\cdot D = 40\%\times 1000 = \mathbf{400}\ \text{万}$$</div>
+      <p>年税盾 = \(D\, r_D\, \tau_c = 40\) 万，永续按 r<sub>D</sub> 贴现：40 ÷ 0.1 = 400 万。</p>
     </div>
   </details>
   <details class="step">
     <summary><span class="n">4</span>无杠杆价值 V<sub>U</sub></summary>
-    <div class="body"><div class="formula">V<sub>U</sub> = V<sub>L</sub> − τ<sub>c</sub>·D = 3000 − 400 = <b>2600 万</b></div></div>
+    <div class="body"><div class="formula">$$V_U = V_L - \tau_c D = 3000 - 400 = \mathbf{2600}\ \text{万}$$</div></div>
   </details>
   <details class="step">
     <summary><span class="n">5</span>资产回报率 r<sub>A</sub></summary>
     <div class="body">
-      <div class="formula">r<sub>A</sub> = EBIT·(1−τ<sub>c</sub>) / V<sub>U</sub> = 600×0.6 / 2600 = 360/2600 = <b>13.85%</b></div>
+      <div class="formula">$$r_A = \frac{EBIT(1-\tau_c)}{V_U} = \frac{600\times 0.6}{2600} = \frac{360}{2600} = \mathbf{13.85\%}$$</div>
       <p><b>分母必须用 V<sub>U</sub></b>——r<sub>A</sub> 是「假设无债」时的资产回报率，用 V 算出来的是 WACC。</p>
     </div>
   </details>
   <details class="step">
     <summary><span class="n">6</span>WACC + 验算</summary>
     <div class="body">
-      <div class="formula">WACC = (2000/3000)×15% + (1000/3000)×10%×(1−40%) = 10% + 2% = <b>12%</b><br>验算：EBIT(1−τ)/V<sub>L</sub> = 360/3000 = 12% ✓</div>
+      <div class="formula">$$WACC = \tfrac{2000}{3000}\times 15\% + \tfrac{1000}{3000}\times 10\%\times(1-40\%) = 10\% + 2\% = \mathbf{12\%}$$验算：\(EBIT(1-\tau_c)/V_L = 360/3000 = 12\%\) ✓</div>
     </div>
   </details>
 
@@ -121,15 +122,15 @@
   <details class="step">
     <summary><span class="n">1</span>解隐式方程求新公司价值 V′，得新发债额</summary>
     <div class="body">
-      <p>债务率 50% 即 D′ = 0.5·V′，方程是<b>隐式</b>的：</p>
-      <div class="formula">V′ = V<sub>U</sub> + τ<sub>c</sub>·D′ = 2600 + 0.4×0.5×V′　⟹　V′(1−0.2) = 2600　⟹　V′ = <b>3250 万</b></div>
+      <p>债务率 50% 即 \(D' = 0.5\,V'\)，方程是<b>隐式</b>的：</p>
+      <div class="formula">$$V' = V_U + \tau_c D' = 2600 + 0.4\times 0.5\,V' \;\Longrightarrow\; V'(1-0.2) = 2600 \;\Longrightarrow\; V' = \mathbf{3250}\ \text{万}$$</div>
       <p>D′ = 3250×50% = 1625 万 → 需新发债 = 1625 − 1000 = <b>625 万</b>。</p>
     </div>
   </details>
   <details class="step">
     <summary><span class="n">2</span>新 r<sub>E</sub>（有税 MMⅡ）与新 WACC</summary>
     <div class="body">
-      <div class="formula">D/E = 1：r<sub>E</sub>′ = 13.85% + (1−0.4)×(13.85% − 10%)×1 = <b>16.16%</b><br>WACC′ = ½×16.16% + ½×10%×0.6 = 8.08% + 3% = <b>11.08%</b>（下降——税盾增强）</div>
+      <div class="formula">D/E = 1：$$r_E' = 13.85\% + (1-0.4)\times(13.85\% - 10\%)\times 1 = \mathbf{16.16\%}$$$$WACC' = \tfrac{1}{2}\times 16.16\% + \tfrac{1}{2}\times 10\%\times 0.6 = 8.08\% + 3\% = \mathbf{11.08\%}$$（下降——税盾增强）</div>
     </div>
   </details>
   <details class="step">
@@ -233,6 +234,8 @@
 
   <div class="foot">过关标准：Pet-One 两问限时 20 分钟闭卷独立写出（六步 + 三步），换 19 级数字再做一遍全对。</div>
 </div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/auto-render.min.js"></script>
 <script src="../assets/app.js"></script>
 </body>
 </html>

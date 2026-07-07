@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>第 8 课 · 全真模拟卷 — 公司财务Ⅱ期末冲刺</title>
 <link rel="stylesheet" href="../assets/style.css">
+<link rel="stylesheet" href="../assets/katex/katex.min.css">
 </head>
 <body>
 <div id="readbar"></div>
@@ -19,9 +20,9 @@
 
 <div class="wrap">
   <p class="kicker">Lesson 08 · 全真模拟</p>
-  <h1>全真模拟卷：22 题限时自测</h1>
-  <p class="sub">第 1–20 题为 19 级期末原卷单选全套（题型与今年完全一致，单选最直接的参照），第 21–22 题为康得新案例选择题。<b>建议限时 30 分钟</b>，全部做完再复盘错题。目标：全对。</p>
-  <div class="meta"><span class="tag hot">19 级期末原卷</span><span class="tag">限时 30 分钟</span><span class="tag">目标 22/22</span></div>
+  <h1>全真模拟卷：覆盖全部题型</h1>
+  <p class="sub">按真实考卷结构编排：<b>第一部分单选 20 题（40 分，19 级期末原卷）→ 第二部分计算题·期权（20 分）→ 第三部分计算题·估值（20 分）→ 第四部分问答题（20 分）</b>，另附康得新案例 2 题。单选在页面上作答即时判分；计算与问答请在纸上限时完成，再展开参考答案自评。建议整卷一次性完成，练习用时约 90 分钟。</p>
+  <div class="meta"><span class="tag hot">19 级期末原卷</span><span class="tag">四种题型全覆盖</span><span class="tag">单选即时判分 · 大题纸上作答</span></div>
 
   <h2>开考前 3 分钟：单选题秒杀技巧</h2>
   <p>单选每题 2 分、平均 1 分钟。先背下这张<b>「题眼 → 条件反射」映射表</b>——本卷 22 题里能直接秒掉一大半：</p>
@@ -50,6 +51,7 @@
     ③ <b>数字题锚定区间</b>：WACC 题先算大头 0.7×18% = 12.6% 锚定下限，再加税后债 1.8% → 不用算到小数点后也能锁定区间选项；期权杠杆题记「收益率之比 = 收益金额之比」（本金相同）。
   </div>
 
+  <h2>第一部分 · 单选题（20 题 × 2 分 = 40 分 + 案例 2 题，建议限时 30 分钟）</h2>
   <div id="scorebar">📋 进度 <span data-sc="done">0</span> / <span data-sc="total">22</span>　✓ 对 <b data-sc="ok">0</b>　✗ 错 <span class="miss" data-sc="no">0</span><div class="bar"><i></i></div></div>
 
   <div class="quiz" data-answer="D" data-explain="董事会靠「选对人、看住人」控制公司，任免管理层是最重要的权力。A 重大筹资、B 重大投资虽需董事会批准，但提案与执行都在管理层手里；C 通过年度财报是程序性职责。">
@@ -316,8 +318,93 @@
     <div class="q-feedback"></div>
   </div>
 
+  <h2>第二部分 · 计算题①：期权定价关系（20 分，建议限时 20 分钟）</h2>
+  <p><b>【19 级期末 · 计算 1】</b>6 个月到期、执行价格为 $32 的欧式看涨期权的价格为 $2.00。标的股票的价格为 $30。利率收益曲线是水平的，6 个月的无风险利率为 3.0%（非年化利率）。如果同一标的股票的 6 个月到期、执行价格为 $32 的欧式看跌期权的价格为 $3.65，且标的股票在 6 个月内不分红，是否存在着套利机会？如果存在，请写出你的套利策略，并提供交易细节以及相应的现金流。</p>
+  <p class="try-first">✍️ 合上第 3 课，在纸上限时 20 分钟写完整过程（公式 → 理论价 → 判断 → 四笔交易 → 现金流表 → 结论句），再展开对照。</p>
+  <details class="step">
+    <summary><span class="n">✓</span>参考答案（完整过程）</summary>
+    <div class="body">
+      <p><b>① 平价公式算 put 理论价：</b></p>
+      <div class="formula">$$p^{\text{fair}} = c + \frac{X}{1+r} - S_0 = 2.00 + \frac{32}{1.03} - 30 = 2.00 + 31.07 - 30 = \mathbf{3.07}$$</div>
+      <p><b>② 判断：</b>市场 put 报价 3.65 ＞ 理论价 3.07 → <b>put 被高估 0.58</b>，存在套利机会。</p>
+      <p><b>③ 四笔交易：</b>卖出 put（+3.65）、卖空一股股票（+30）、买入 call（−2.00）、买入面值 $32 的 6 个月无风险债券（−32/1.03 = −31.07）。t=0 净现金流 = <b>+0.58</b>（恰好等于高估幅度）。</p>
+      <p><b>④ 到期现金流表：</b></p>
+      <table>
+        <tr><th>交易</th><th class="c">t = 0</th><th class="c">到期 S_T ≤ 32</th><th class="c">到期 S_T ＞ 32</th></tr>
+        <tr><td>卖出 put</td><td class="c">+3.65</td><td class="c">−(32−S_T)</td><td class="c">0</td></tr>
+        <tr><td>卖空股票（买回归还）</td><td class="c">+30</td><td class="c">−S_T</td><td class="c">−S_T</td></tr>
+        <tr><td>买入 call</td><td class="c">−2.00</td><td class="c">0</td><td class="c">+(S_T−32)</td></tr>
+        <tr><td>买入债券（到期收面值）</td><td class="c">−31.07</td><td class="c">+32</td><td class="c">+32</td></tr>
+        <tr><td><b>合计</b></td><td class="c"><b>+0.58</b></td><td class="c"><b>0</b></td><td class="c"><b>0</b></td></tr>
+      </table>
+      <p><b>⑤ 结论句：</b>t=0 锁定利润 $0.58，到期无论股价高低净现金流均为 0，该利润无风险，套利成立。</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">分</span>自评要点（对照给自己打分，满分 20）</summary>
+    <div class="body">
+      <ul>
+        <li>写出平价公式并正确代入算出理论价 3.07（约 4 分）</li>
+        <li>正确判断 put 高估 0.58 及「卖高估、买复制」方向（约 3 分）</li>
+        <li>四笔交易齐全、方向与金额正确（约 6 分——缺一笔或反一笔都要扣）</li>
+        <li>现金流表逐格写全，两种情形合计均为 0（约 5 分）</li>
+        <li>点破「无风险」的结论句（约 2 分）</li>
+      </ul>
+      <p>分值为练习自评参考。常见丢分：忘写现金流表（只写四笔）、利率口径再年化、t=0 净流入与 0.58 对不上没有回查。</p>
+    </div>
+  </details>
+
+  <h2>第三部分 · 计算题②：估值与资本结构（20 分，建议限时 20 分钟）</h2>
+  <p><b>【19 级期末 · 计算 2】</b>Pet-One 公司信息：EBIT（每年）900 万美元；公司所得税率 30%；权益资本成本 12.0%；公司债务（永久债务）1000 万美元；债务利率为每年 3.0%。<br>（i）假设股价处于均衡状态，公司的整体价值、无负债资本成本（rA）、WACC 各是多少？<br>（ii）公司计划发行新债务回购股份，使债务率（债务/公司价值）增加到 50%，新债利率仍为每年 3.0%。公司需要发行多少新的债务？WACC 又是多少？资本结构的改变对股东的财富有什么影响？</p>
+  <p class="try-first">✍️ 合上第 5 课，在纸上限时 20 分钟完成两问（六步 + 三步），再展开对照。</p>
+  <details class="step">
+    <summary><span class="n">✓</span>参考答案（完整过程）</summary>
+    <div class="body">
+      <p><b>第（i）问：</b></p>
+      <div class="formula">① \(E = \dfrac{(EBIT - r_D D)(1-\tau_c)}{r_E} = \dfrac{(900 - 1000\times 3\%)\times 0.7}{0.12} = \dfrac{870\times 0.7}{0.12} = \mathbf{5075}\ \text{万}\)<br>② \(V = E + D = 5075 + 1000 = \mathbf{6075}\ \text{万}\)<br>③ 税盾 \(= \tau_c D = 0.3\times 1000 = 300\) 万；\(V_U = 6075 - 300 = \mathbf{5775}\ \text{万}\)<br>④ \(r_A = EBIT(1-\tau_c)/V_U = 630/5775 = \mathbf{10.91\%}\)<br>⑤ \(WACC = \tfrac{5075}{6075}\times 12\% + \tfrac{1000}{6075}\times 3\%\times 0.7 = \mathbf{10.37\%}\)　验算：\(630/6075 = 10.37\%\) ✓</div>
+      <p><b>第（ii）问：</b></p>
+      <div class="formula">① 隐式方程：\(V' = \dfrac{V_U}{1-\tau_c w} = \dfrac{5775}{1-0.3\times 0.5} = \dfrac{5775}{0.85} = \mathbf{6794}\ \text{万}\)<br>　 \(D' = 0.5\times 6794 = 3397\) 万 → 需新发债 \(= 3397 - 1000 = \mathbf{2397}\ \text{万}\)<br>② 新 \(r_E\)（有税 MMⅡ，D/E = 1）\(= 10.91\% + (1-0.3)\times(10.91\% - 3\%)\times 1 = \mathbf{16.45\%}\)<br>　 新 \(WACC = 0.5\times 16.45\% + 0.5\times 3\%\times 0.7 = \mathbf{9.27\%}\)（下降——税盾增强）<br>③ 股东财富影响 = 新增税盾 \(= 2397\times 30\% \approx \mathbf{+719}\ \text{万}\)，全部归原股东</div>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">分</span>自评要点（对照给自己打分，满分 20）</summary>
+    <div class="body">
+      <ul>
+        <li>第（i）问：E、V 计算正确（约 4 分）；税盾与 V<sub>U</sub>（约 2 分）；r<sub>A</sub> 用 V<sub>U</sub> 作分母（约 3 分）；WACC 及验算（约 3 分）</li>
+        <li>第（ii）问：解隐式方程得 V′ 与新发债 2397 万（约 4 分——直接拿旧 V×50% 者此步全扣）；新 r<sub>E</sub> 与新 WACC（约 2 分）；股东财富 = 新增税盾 ≈ 719 万（约 2 分）</li>
+      </ul>
+      <p>分值为练习自评参考。三个高频丢分点：r<sub>A</sub> 分母误用 V；第（ii）问不解隐式方程；「对股东财富的影响」多答（只答新增税盾即可）。</p>
+    </div>
+  </details>
+
+  <h2>第四部分 · 问答题（2 小问 × 10 分 = 20 分，建议限时 20 分钟）</h2>
+  <p><b>【今年明示方向 · P5 班必答题】</b>A 股市场的回购与现金股利：近年 A 股每年现金分红总量约 2 万亿元，而回购仅约 1 千亿元，与美国（1997 年后回购超过现金股利）形成鲜明对比。请描述这一现象，并解释为什么 A 股上市公司如此不愿意回购、而偏好现金股利。</p>
+  <p class="try-first">✍️ 在纸上限时 20 分钟作答，两小问各写 150–250 字，再展开对照得分点。</p>
+  <details class="step">
+    <summary><span class="n">✓</span>参考答案（答题结构）</summary>
+    <div class="body">
+      <p><b>第一问 · 现象（用数据说话）：</b>A 股年现金分红 2 万亿元+，年回购仅约 1 千亿元+，约 20:1；美国恰好相反——1997 年后回购总额超过现金股利，2025 年全美回购支出首破 1 万亿美元，美股回购前十名合计约为 A 股全市场的 5 倍；对比全球前十大市场，美国一家回购超过其余九家总和，A 股市值全球第二但回购规模极不匹配。</p>
+      <p><b>第二问 · 成因（四层递进）：</b>① <b>估值判断（最根本）</b>：回购的前提是管理层认为股价被低估——A 股企业集体不回购，恰恰暴露企业家不认为自家股价低估甚至认为高估（大股东频繁减持、监管持续收紧减持规则是佐证）；美股大规模回购则反映其认为股价被低估。② <b>半强制分红制度</b>：2004 年起证监会将分红与再融资资格挂钩，分红带有半强制性、并非完全自愿；A 股分红需股东大会批准，美国只需董事会。③ <b>税收悖论（排除对立解释）</b>：A 股资本利得免税、散户实际股息税约 10%，税制本应更利好回购，但企业仍不回购——说明主导因素是估值与制度而非税收。④ <b>股权结构</b>：控股大股东偏好现金分红（按持股直接落袋、不稀释控制权），回购利好全体股东、对大股东吸引力弱；融资市生态下企业不愿把钱还给市场。</p>
+      <p><b>结论句：</b>「A 股重分红、轻回购，表面是分配方式的选择，实质是企业家对股价不低估的真实判断、半强制分红的监管约束与大股东主导的股权结构三者共同作用的结果。」</p>
+    </div>
+  </details>
+  <details class="step">
+    <summary><span class="n">分</span>自评要点（逐项核对）</summary>
+    <div class="body">
+      <ul>
+        <li>□ 数据对比出现：2 万亿 vs 1 千亿（≈20:1）——<b>必须有</b></li>
+        <li>□ 美国 1997 年分水岭出现——<b>必须有</b></li>
+        <li>□ 四层成因齐全且顺序合理（估值判断放最根本）</li>
+        <li>□ 点睛句「企业家行动是最真实的市场信号」——课堂反复强调，务必写上</li>
+        <li>□ 有中美对比与结论句收尾</li>
+        <li>□ 每小问 150–250 字，没有跑题到「A 股应该多回购」的政策建议</li>
+      </ul>
+      <p>提醒：<b>考场上只答自己班老师的问答题</b>，答错班级的题记 0 分。</p>
+    </div>
+  </details>
+
   <div class="card">
-    <b>复盘方法：</b>看顶部计分条——错的题按主题回到对应课重学：治理/融资 → <a href="0007-financing-governance.html">第 7 课</a>；分配 → <a href="0006-payout.html">第 6 课</a>；资本结构 → <a href="0004-capital-structure.html">第 4 课</a>；估值 → <a href="0005-valuation.html">第 5 课</a>；期权 → <a href="0002-option-basics.html">第 2</a>/<a href="0003-parity-arbitrage.html">3 课</a>。明天再回来重刷一遍全卷（间隔重复才能建立长期记忆）。别忘了两道计算大题与问答题的纸面限时练习——那 60 分不在本卷内。
+    <b>复盘方法：</b>单选看顶部计分条——错的题按主题回炉：治理/融资 → <a href="0007-financing-governance.html">第 7 课</a>；分配 → <a href="0006-payout.html">第 6 课</a>；资本结构 → <a href="0004-capital-structure.html">第 4 课</a>；估值 → <a href="0005-valuation.html">第 5 课</a>；期权 → <a href="0002-option-basics.html">第 2</a>/<a href="0003-parity-arbitrage.html">3 课</a>。计算题自评低于 16 分的，回到对应课把模板重新限时练一遍；问答题得分点缺项的，回<a href="0006-payout.html">第 6 课</a>把提纲再口述三遍。明天再回来重刷一遍全卷（间隔重复才能建立长期记忆）。
   </div>
 
   <div class="pager">
@@ -327,6 +414,8 @@
 
   <div class="foot">22 题全对才算过关；差几题就回炉几个考点。</div>
 </div>
+<script src="../assets/katex/katex.min.js"></script>
+<script src="../assets/katex/auto-render.min.js"></script>
 <script src="../assets/app.js"></script>
 </body>
 </html>
